@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Client</string>
+    <string name="http_ip">https://taller-proyectos-2.herokuapp.com</string>
 </resources>
