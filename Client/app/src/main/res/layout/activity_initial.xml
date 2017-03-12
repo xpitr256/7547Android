@@ -24,10 +24,18 @@
     android:text="Obtener Usuario"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/obtener_usuario"
+    android:id="@+id/get_user"
     android:layout_below="@+id/textView"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="39dp" />
+
+    <Button
+        android:text="Navegar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/navigate"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
 
     <!--<Button-->
         <!--android:text="Iniciar Sesion"-->

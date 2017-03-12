@@ -27,11 +27,20 @@ public class InitialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial);
 
-        Button mSignInButton = (Button) findViewById(R.id.obtener_usuario);
-        mSignInButton.setOnClickListener(new View.OnClickListener() {
+        Button getUserInButton = (Button) findViewById(R.id.get_user);
+        getUserInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getUserInfo();
+            }
+        });
+
+        Button navigateButton = (Button) findViewById(R.id.navigate);
+        navigateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentMaps = new Intent(InitialActivity.this, MapsActivity.class );
+                startActivity(intentMaps);
             }
         });
 
