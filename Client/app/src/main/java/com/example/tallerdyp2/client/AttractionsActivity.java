@@ -1,9 +1,12 @@
 package com.example.tallerdyp2.client;
 
+/**
+ * Created by Sebastian on 15/03/2017.
+ */
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,46 +29,48 @@ import java.util.List;
  * Created by Sebastian on 14/3/2017.
  */
 
-public class CityActivity extends AppCompatActivity{
+public class AttractionsActivity extends AppCompatActivity {
 
-    private ListView citiesList;
-    private CitiesAdapter citiesAdapter;
-    private List<String> cities;
+    private ListView attractionsList;
+    private AttractionsAdapter attractionsAdapter;
+    private List<String> attractions;
+    private String citySelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_city);
+        setContentView(R.layout.activity_attraction);
 
+        citySelected = getIntent().getExtras().getString("city");
 
+        getAttractionsInfo();
 
-        getCitiesInfo();
-
-        cities = new ArrayList<String>();
+        attractions = new ArrayList<String>();
 
         // Instancia del ListView.
-        citiesList = (ListView) findViewById(R.id.cities_list);
+        attractionsList = (ListView) findViewById(R.id.attractions_list);
 
         // Inicializar el adaptador con la fuente de datos.
-        citiesAdapter = new CitiesAdapter(this, cities);
+        attractionsAdapter = new AttractionsAdapter(this, attractions);
 
         //Relacionando la lista con el adaptador
-        citiesList.setAdapter(citiesAdapter);
+        attractionsList.setAdapter(attractionsAdapter);
 
-        citiesList.setVisibility(View.GONE);
+        attractionsList.setVisibility(View.GONE);
 
         // Eventos
-        citiesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        attractionsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(CityActivity.this, AttractionsActivity.class);
-                intent.putExtra("city", cities.get(position));
-                startActivity(intent);
+//                Intent intent = new Intent(CityActivity.this, AttractionsActivity.class);
+//                intent.putExtra("viaje", attractions.get(position));
+//                intent.putExtra("mostrar_fab", false);
+//                startActivity(intent);
             }
         });
     }
 
-    public void getCitiesInfo() {
+    public void getAttractionsInfo() {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = getResources().getString(R.string.http_ip) + "/user";
@@ -76,12 +81,12 @@ public class CityActivity extends AppCompatActivity{
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        cities.add("Buenos Aires");
-                        cities.add("Neuquen");
-                        cities.add("Pinamar");
-                        citiesAdapter.notifyDataSetChanged();
+                        attractions.add("Costanera");
+                        attractions.add("Luna Park");
+                        attractions.add("Parque de la costa");
+                        attractionsAdapter.notifyDataSetChanged();
                         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-                        citiesList.setVisibility(View.VISIBLE);
+                        attractionsList.setVisibility(View.VISIBLE);
                     }
                 }, new Response.ErrorListener() {
 

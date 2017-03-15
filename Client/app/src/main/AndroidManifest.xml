@@ -24,7 +24,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".InitialActivity">
+        <activity
+            android:name=".InitialActivity"
+            android:label="Bienvenido">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,7 +50,11 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"></activity>
         <activity
-            android:name=".CityActivity"></activity>
+            android:name=".CityActivity"
+            android:label="Seleccione Ciudad"></activity>
+        <activity
+            android:name=".AttractionsActivity"
+            android:label="Seleccione Attracción"></activity>
     </application>
 
 </manifest>

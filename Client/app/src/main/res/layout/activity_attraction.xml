@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.tallerdyp2.client.CityActivity">
+    tools:context="com.example.tallerdyp2.client.AttractionsActivity">
 
     <RelativeLayout
         android:id="@+id/loadingPanel"
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:id="@+id/cities_list"
+        android:id="@+id/attractions_list"
         android:layout_alignParentTop="true"
         android:padding="10dp"/>
 
