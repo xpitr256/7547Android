@@ -52,7 +52,8 @@ public class InitialActivity extends AppCompatActivity implements GoogleApiClien
         getCities.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getCitiesInfo();
+                Intent intentMain = new Intent(getApplicationContext(), CityActivity.class );
+                startActivity(intentMain);
             }
         });
 
@@ -134,40 +135,7 @@ public class InitialActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     public void onBackPressed() {}
 
-    public void getCitiesInfo() {
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = getResources().getString(R.string.http_ip) + "/user";
-        final Context context = getApplicationContext();
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Toast.makeText(context, response.toString(), Toast.LENGTH_LONG).show();
-                        Intent intentMain = new Intent(context, CityActivity.class );
-
-                        List<String> cities;
-                        cities = new ArrayList<String>();
-                        cities.add("Buenos Aires");
-                        cities.add("Neuquen");
-                        cities.add("Pinamar");
-                        intentMain.putStringArrayListExtra("cities", (ArrayList<String>) cities);
-                        startActivity(intentMain);
-
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, error.toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
-
-        // Add the request to the RequestQueue.
-        queue.add(jsObjRequest);
-    }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {

@@ -5,8 +5,7 @@
     android:orientation="vertical"
     android:paddingBottom="8dp"
     android:paddingLeft="8dp"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="8dp">
+    android:paddingRight="@dimen/activity_horizontal_margin">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -23,11 +22,10 @@
             <TextView
                 android:text="TextView"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/name"
                 android:textAppearance="?attr/textAppearanceListItem"
-                android:layout_weight="1"
-                android:textSize="42sp" />
+                android:layout_weight="1" />
 
     </LinearLayout>
 
