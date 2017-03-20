@@ -1,15 +1,18 @@
 package com.example.tallerdyp2.client;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tallerdyp2.client.Entities.City;
+import com.example.tallerdyp2.client.utils.ElementViewUtils;
 
 import java.util.List;
 
@@ -18,47 +21,20 @@ import java.util.List;
  */
 
 public class CitiesAdapter extends ArrayAdapter<City> {
-    public CitiesAdapter(Context context, List<City> cities) {
-        super(context, 0, cities);
-    }
 
-    private char contInicial = 'A';
+    private List<City> cities;
+
+    public CitiesAdapter(Context context, List<City> cities) {
+        super(context, R.layout.cities_item_list, cities);
+        this.cities = cities;
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Obtener inflater.
-        LayoutInflater inflater = (LayoutInflater) getContext()
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        ViewHolder holder;
-
-        // ¿Ya se infló este view?
-        if (null == convertView) {
-            //Si no existe, entonces inflarlo con image_list_view.xml
-            convertView = inflater.inflate(
-                    R.layout.cities_item_list,
-                    parent,
-                    false);
-
-            holder = new ViewHolder();
-            holder.name = (TextView) convertView.findViewById(R.id.name);
-
-
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-        // Client actual.
-        String name = getItem(position).getName();
-        contInicial++;
-
-        holder.name.setText(name);
-
-        return convertView;
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        View item = inflater.inflate(R.layout.cities_item_list, null);
+        ElementViewUtils.setText(item, R.id.name, cities.get(position).getName());
+        return (item);
     }
 
-    static class ViewHolder {
-        TextView name;
-    }
 }
