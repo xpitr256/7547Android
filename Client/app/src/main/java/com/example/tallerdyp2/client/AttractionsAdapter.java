@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.tallerdyp2.client.utils.ElementViewUtils;
+
 import java.util.List;
 
 /**
@@ -14,47 +16,22 @@ import java.util.List;
  */
 
 public class AttractionsAdapter extends ArrayAdapter<String> {
-    public AttractionsAdapter(Context context, List<String> attractions) {
-        super(context, 0, attractions);
-    }
 
-    private char contInicial = 'A';
+    private List<String> attractions;
+
+    public AttractionsAdapter(Context context, List<String> attractions) {
+        super(context, R.layout.attractions_item_list, attractions);
+        this.attractions = attractions;
+    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Obtener inflater.
-        LayoutInflater inflater = (LayoutInflater) getContext()
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        View item = inflater.inflate(R.layout.attractions_item_list, null);
+        ElementViewUtils.setText(item, R.id.name, attractions.get(position));
+        ElementViewUtils.setImage(item, R.id.image_view, "",getContext());
 
-        ViewHolder holder;
-
-        // ¿Ya se infló este view?
-        if (null == convertView) {
-            //Si no existe, entonces inflarlo con image_list_view.xml
-            convertView = inflater.inflate(
-                    R.layout.attractions_item_list,
-                    parent,
-                    false);
-
-            holder = new ViewHolder();
-            holder.name = (TextView) convertView.findViewById(R.id.name);
-
-
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-
-        // Client actual.
-        String name = getItem(position);
-        contInicial++;
-
-        holder.name.setText(name);
-
-        return convertView;
+        return (item);
     }
 
-    static class ViewHolder {
-        TextView name;
-    }
 }

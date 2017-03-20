@@ -34,6 +34,8 @@ public class CitiesAdapter extends ArrayAdapter<City> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View item = inflater.inflate(R.layout.cities_item_list, null);
         ElementViewUtils.setText(item, R.id.name, cities.get(position).getName());
+        ElementViewUtils.setImage(item, R.id.image_view, cities.get(position).getImageURL(),getContext());
+
         return (item);
     }
 
