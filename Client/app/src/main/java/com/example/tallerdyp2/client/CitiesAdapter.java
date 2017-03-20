@@ -9,14 +9,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.tallerdyp2.client.Entities.City;
+
 import java.util.List;
 
 /**
  * Created by Sebastian on 14/3/2017.
  */
 
-public class CitiesAdapter extends ArrayAdapter<String> {
-    public CitiesAdapter(Context context, List<String> cities) {
+public class CitiesAdapter extends ArrayAdapter<City> {
+    public CitiesAdapter(Context context, List<City> cities) {
         super(context, 0, cities);
     }
 
@@ -48,7 +50,7 @@ public class CitiesAdapter extends ArrayAdapter<String> {
         }
 
         // Client actual.
-        String name = getItem(position);
+        String name = getItem(position).getName();
         contInicial++;
 
         holder.name.setText(name);

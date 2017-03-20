@@ -26,7 +26,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".InitialActivity"
-            android:label="Bienvenido">
+            android:label="@string/title_activity_initial">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,7 +51,7 @@
             android:label="@string/title_activity_maps"></activity>
         <activity
             android:name=".CityActivity"
-            android:label="Seleccione Ciudad"></activity>
+            android:label="@string/title_activity_city"></activity>
         <activity
             android:name=".AttractionsActivity"
             android:label="Seleccione Attracción"></activity>

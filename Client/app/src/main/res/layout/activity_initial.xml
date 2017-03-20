@@ -12,22 +12,22 @@
 
 
     <Button
-    android:text="Obtener Ciudades"
+    android:text="@string/btn_get_cities"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/get_cities"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="39dp" />
 
-    <!--<Button-->
-        <!--android:text="Navegar"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/navigate"-->
-        <!--android:layout_below="@+id/get_user"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_marginTop="39dp" />-->
+    <Button
+        android:text="@string/btn_my_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/my_location"
+        android:layout_below="@+id/get_cities"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="39dp" />
 
     <!--<Button-->
         <!--android:text="Iniciar Sesion"-->

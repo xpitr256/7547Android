@@ -1,25 +1,19 @@
 package com.example.tallerdyp2.client;
 
-import android.app.Activity;
-import android.content.Context;
+import android.Manifest;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.tallerdyp2.client.utils.Constants;
+import com.example.tallerdyp2.client.utils.Helper;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -32,10 +26,9 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 
-import org.json.JSONObject;
-
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 public class InitialActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
@@ -57,28 +50,38 @@ public class InitialActivity extends AppCompatActivity implements GoogleApiClien
             }
         });
 
-//        Button getUserInButton = (Button) findViewById(R.id.get_user);
-//        getUserInButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                getUserInfo();
-//            }
-//        });
+        Button myLocation = (Button) findViewById(R.id.my_location);
+        myLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-//        Button navigateButton = (Button) findViewById(R.id.navigate);
-//        navigateButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intentMaps = new Intent(InitialActivity.this, MapsActivity.class );
-//                startActivity(intentMaps);
-//            }
-//        });
+                if (Helper.checkSelfPermission(InitialActivity.this,Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+                    Geocoder geocoder = new Geocoder(InitialActivity.this, Locale.getDefault());
+                    List<Address> addresses;
+                    try {
+                        addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                        Intent intent = new Intent(InitialActivity.this, AttractionsActivity.class);
+                        intent.putExtra("city", addresses.get(0).getLocality());
+                        startActivity(intent);
 
-        this.useLocation();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+
+        //POP UP ALLOW LOCATION FOR THE APP
+        Helper.requestPermission(this,Constants.PERMISSION_LOCATION);
+
+        //POP UP ALLOW LOCATION SERVICE
+        this.useLocationService();
 
     }
 
-    private void useLocation() {
+    private void useLocationService() {
         if (googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder(InitialActivity.this)
                     .addApi(LocationServices.API)
@@ -135,20 +138,14 @@ public class InitialActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     public void onBackPressed() {}
 
-
-
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_LONG).show();
+    public void onConnected(Bundle bundle) {
     }
 
     @Override
-    public void onConnectionSuspended(int i) {
-
-    }
+    public void onConnectionSuspended(int i) {}
 
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+    public void onConnectionFailed(ConnectionResult connectionResult) {
     }
 }

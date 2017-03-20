@@ -66,6 +66,8 @@ public class AttractionsActivity extends AppCompatActivity {
 //                intent.putExtra("viaje", attractions.get(position));
 //                intent.putExtra("mostrar_fab", false);
 //                startActivity(intent);
+
+
             }
         });
     }
@@ -87,6 +89,10 @@ public class AttractionsActivity extends AppCompatActivity {
                         attractionsAdapter.notifyDataSetChanged();
                         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                         attractionsList.setVisibility(View.VISIBLE);
+
+
+                        Toast.makeText(AttractionsActivity.this, "City: "+citySelected, Toast.LENGTH_LONG).show();
+
                     }
                 }, new Response.ErrorListener() {
 

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:paddingBottom="8dp"
     android:paddingLeft="8dp"
@@ -20,10 +21,11 @@
             android:layout_marginRight="16sp" />
 
             <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
+                tools:text="TextView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/name"
+                android:textSize="20sp"
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:layout_weight="1" />
 
