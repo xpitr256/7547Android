@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Client</string>
+    <string name="app_name">AttractionGO</string>
     <string name="http_ip">https://taller-proyectos-2.herokuapp.com</string>
 
     <!--Activities Title-->
-    <string name="title_activity_initial">Welcome</string>
+    <string name="title_activity_initial">AttractionGO</string>
     <string name="title_activity_city">Select City</string>
     <string name="title_activity_attraction">Select Attraction</string>
     <string name="title_activity_maps">Map</string>
@@ -11,5 +11,8 @@
     <!--Activity City-->
     <string name="btn_get_cities">Get Cities</string>
     <string name="btn_my_location">My Location</string>
+
+    <!--Activity list City-->
+    <string name="search_hint_city">Search City</string>
 
 </resources>

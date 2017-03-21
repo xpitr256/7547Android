@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Cliente</string>
+    <string name="app_name">AtracciónGO</string>
     <string name="http_ip">https://taller-proyectos-2.herokuapp.com</string>
 
     <!--Activities Title-->
-    <string name="title_activity_initial">Bienvenido</string>
+    <string name="title_activity_initial">AtracciónGO</string>
     <string name="title_activity_city">Seleccione Ciudad</string>
     <string name="title_activity_attraction">Seleccione Atracción</string>
     <string name="title_activity_maps">Mapa</string>
 
     <!--Activity City-->
     <string name="btn_get_cities">Obtener Ciudades</string>
+
+    <!--Activity list City-->
+    <string name="search_hint_city">Buscar Ciudad</string>
 
 </resources>

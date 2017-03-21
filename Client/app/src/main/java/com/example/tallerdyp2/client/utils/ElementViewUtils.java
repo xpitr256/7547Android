@@ -22,7 +22,7 @@ public class ElementViewUtils {
     public static void setImage(View rootView, int textContentId, String content, Context context)
     {
         ImageView imageContent = (ImageView) rootView.findViewById(textContentId);
-        Picasso.with(context).load("http://i.imgur.com/2IiKOVe.jpg").into(imageContent);
+        Picasso.with(context).load(content).into(imageContent);
     }
 
 }

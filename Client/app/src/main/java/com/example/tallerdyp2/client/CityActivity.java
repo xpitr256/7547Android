@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -32,6 +33,7 @@ import java.util.List;
 
 public class CityActivity extends AppCompatActivity{
 
+    private Toolbar mToolbar;
     private ListView citiesList;
     private CitiesAdapter citiesAdapter;
     private List<City> cities;
@@ -40,9 +42,7 @@ public class CityActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city);
-
-
-
+        
         getCitiesInfo();
 
         // Instancia del ListView.

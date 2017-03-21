@@ -29,7 +29,7 @@ public class AttractionsAdapter extends ArrayAdapter<String> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View item = inflater.inflate(R.layout.attractions_item_list, null);
         ElementViewUtils.setText(item, R.id.name, attractions.get(position));
-        ElementViewUtils.setImage(item, R.id.image_view, "",getContext());
+        ElementViewUtils.setImage(item, R.id.image_view,"http://i.imgur.com/2IiKOVe.jpg",getContext());
 
         return (item);
     }
