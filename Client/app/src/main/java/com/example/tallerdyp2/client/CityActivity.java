@@ -38,7 +38,6 @@ import java.util.List;
 
 public class CityActivity extends AppCompatActivity{
 
-    private Toolbar mToolbar;
     private ListView citiesList;
     private CitiesAdapter citiesAdapter;
     private List<City> cities;
@@ -67,7 +66,7 @@ public class CityActivity extends AppCompatActivity{
         citiesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(CityActivity.this, AttractionsActivity.class);
+                Intent intent = new Intent(CityActivity.this, InitialActivity.class);
                 intent.putExtra("city", cities.get(position).getName());
                 startActivity(intent);
             }
