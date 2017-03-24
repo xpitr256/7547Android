@@ -1,12 +1,14 @@
 package com.example.tallerdyp2.client;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 
 import java.util.List;
@@ -15,21 +17,30 @@ import java.util.List;
  * Created by Sebastian on 15/03/2017.
  */
 
-public class AttractionsAdapter extends ArrayAdapter<String> {
+public class AttractionsAdapter extends ArrayAdapter<Attraction> {
 
-    private List<String> attractions;
+    private List<Attraction> attractions;
 
-    public AttractionsAdapter(Context context, List<String> attractions) {
+    public AttractionsAdapter(Context context, List<Attraction> attractions) {
         super(context, R.layout.attractions_item_list, attractions);
         this.attractions = attractions;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View item = inflater.inflate(R.layout.attractions_item_list, null);
-        ElementViewUtils.setText(item, R.id.name, attractions.get(position));
-        ElementViewUtils.setImage(item, R.id.image_view,"http://i.imgur.com/2IiKOVe.jpg",getContext());
+        ElementViewUtils.setText(item, R.id.name, attractions.get(position).getName());
+        ElementViewUtils.setImage(item, R.id.image_view,attractions.get(position).getImageURL(),getContext());
+        item.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AttractionActivity.class);
+                intent.putExtra("Attraction", attractions.get(position));
+                getContext().startActivity(intent);
+            }
+        });
 
         return (item);
     }

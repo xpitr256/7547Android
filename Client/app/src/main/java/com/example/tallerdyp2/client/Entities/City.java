@@ -1,6 +1,7 @@
 package com.example.tallerdyp2.client.Entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Sebastian on 18/3/2017.
@@ -14,8 +15,9 @@ public class City implements Serializable {
     private String imageURL;
     private double latitude;
     private double longitude;
+    private List<Attraction> attractions;
 
-    public City(String id, String name, String description, String imageURL, double latitude, double longitude) {
+    public City(String id, String name, String description, String imageURL, double latitude, double longitude, List<Attraction> attractions) {
 
         this.id = id;
         this.name = name;
@@ -23,6 +25,7 @@ public class City implements Serializable {
         this.imageURL = imageURL;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.attractions = attractions;
     }
 
     public String getId() {
@@ -71,6 +74,14 @@ public class City implements Serializable {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public List<Attraction> getAttractions() {
+        return attractions;
+    }
+
+    public void setAttractions(List<Attraction> attractions) {
+        this.attractions = attractions;
     }
 
 }

@@ -13,7 +13,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -22,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.Entities.City;
 import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
@@ -46,6 +48,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.zip.Inflater;
 
 public class InitialActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
@@ -63,6 +66,7 @@ public class InitialActivity extends AppCompatActivity implements GoogleApiClien
         findViewById(R.id.image_view).setVisibility(View.GONE);
         findViewById(R.id.header_city).setVisibility(View.GONE);
         findViewById(R.id.description_city).setVisibility(View.GONE);
+        findViewById(R.id.attractions_list).setVisibility(View.GONE);
 
         this.cities = new ArrayList<>();
 
@@ -109,10 +113,17 @@ public class InitialActivity extends AppCompatActivity implements GoogleApiClien
         ElementViewUtils.setText(findViewById(R.id.header_city),R.id.header_city,city.getName());
         ElementViewUtils.setImage(findViewById(R.id.image_view),R.id.image_view,city.getImageURL(),getApplicationContext());
         ElementViewUtils.setText(findViewById(R.id.description_city),R.id.description_city,city.getDescription());
+        LinearLayout list = (LinearLayout) findViewById(R.id.attractions_list);
+        AttractionsAdapter adapter = new AttractionsAdapter(this, city.getAttractions());
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View view = adapter.getView(i, null, list);
+            list.addView(view);
+        }
 
         findViewById(R.id.image_view).setVisibility(View.VISIBLE);
         findViewById(R.id.header_city).setVisibility(View.VISIBLE);
         findViewById(R.id.description_city).setVisibility(View.VISIBLE);
+        findViewById(R.id.attractions_list).setVisibility(View.VISIBLE);
 
     }
 
@@ -213,18 +224,40 @@ public class InitialActivity extends AppCompatActivity implements GoogleApiClien
     public List<City> procesarResponse(JSONArray response) {
         List<City> cities = new ArrayList<>();
         JSONObject city;
+        try {
         for(int i  = 0; i < response.length(); i++) {
-            try {
+
                 city = response.getJSONObject(i);
+                List<Attraction> attractions = new ArrayList<>();
+                JSONArray attractionsJSON = city.getJSONArray("attractions");
+                for(int j = 0; j < attractionsJSON.length(); j++){
+                    attractions.add(
+                            new Attraction(
+                                    attractionsJSON.getJSONObject(j).getString("_id"),
+                                    attractionsJSON.getJSONObject(j).getString("name"),
+                                    attractionsJSON.getJSONObject(j).getString("description"),
+                                    attractionsJSON.getJSONObject(j).getString("imageURL"),
+                                    attractionsJSON.getJSONObject(j).getJSONObject("location").getDouble("lat"),
+                                    attractionsJSON.getJSONObject(j).getJSONObject("location").getDouble("lng"),
+                                    "FAMILY",
+                                    "00:00",
+                                    "00:00",
+//                                    attractionsJSON.getJSONObject(j).getString("type"),
+//                                    attractionsJSON.getJSONObject(j).getString("openTime"),
+//                                    attractionsJSON.getJSONObject(j).getString("closeTime"),
+                                    attractionsJSON.getJSONObject(j).getInt("price")
+                            ));
+                }
                 cities.add(new City(city.getString("_id"),
                         city.getString("name"),
                         city.getString("description"),
                         city.getString("imageURL"),
                         city.getJSONObject("location").getDouble("lat"),
-                        city.getJSONObject("location").getDouble("lng")));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+                        city.getJSONObject("location").getDouble("lng"), attractions));
+
+        }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
         return cities;

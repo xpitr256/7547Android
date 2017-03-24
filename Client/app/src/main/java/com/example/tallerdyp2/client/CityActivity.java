@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.Entities.City;
 
 import org.json.JSONArray;
@@ -105,15 +106,39 @@ public class CityActivity extends AppCompatActivity{
     public List<City> procesarResponse(JSONArray response) {
         List<City> cities = new ArrayList<>();
         JSONObject city;
+        JSONArray attractionsJSON;
+        List<Attraction> attractions ;
         for(int i  = 0; i < response.length(); i++) {
             try {
                 city = response.getJSONObject(i);
+                attractionsJSON = city.getJSONArray("attractions");
+                attractions = new ArrayList<>();
+                for(int j = 0; j < attractionsJSON.length(); j++){
+                    attractions.add(
+                            new Attraction(
+                                    attractionsJSON.getJSONObject(j).getString("_id"),
+                                    attractionsJSON.getJSONObject(j).getString("name"),
+                                    attractionsJSON.getJSONObject(j).getString("description"),
+                                    attractionsJSON.getJSONObject(j).getString("imageURL"),
+                                    attractionsJSON.getJSONObject(j).getJSONObject("location").getDouble("lat"),
+                                    attractionsJSON.getJSONObject(j).getJSONObject("location").getDouble("lng"),
+                                    "FAMILY",
+                                    "00:00",
+                                    "00:00",
+//                                    attractionsJSON.getJSONObject(j).getString("type"),
+//                                    attractionsJSON.getJSONObject(j).getString("openTime"),
+//                                    attractionsJSON.getJSONObject(j).getString("closeTime"),
+                                    attractionsJSON.getJSONObject(j).getInt("price")
+                                    ));
+                }
                 cities.add(new City(city.getString("_id"),
                         city.getString("name"),
                         city.getString("description"),
                         city.getString("imageURL"),
                         city.getJSONObject("location").getDouble("lat"),
-                        city.getJSONObject("location").getDouble("lng")));
+                        city.getJSONObject("location").getDouble("lng"),
+                        attractions));
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

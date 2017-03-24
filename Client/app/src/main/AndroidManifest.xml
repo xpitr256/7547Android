@@ -53,7 +53,7 @@
             android:name=".CityActivity"
             android:label="@string/title_activity_city"></activity>
         <activity
-            android:name=".AttractionsActivity"
+            android:name=".AttractionActivity"
             android:label="Seleccione Attracción"></activity>
     </application>
 
