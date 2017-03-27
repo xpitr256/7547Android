@@ -1,15 +1,8 @@
 package com.example.tallerdyp2.client;
 
-import android.Manifest;
-import android.content.Intent;
 import android.content.IntentSender;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
 
 import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.Helper;
@@ -25,10 +18,6 @@ import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-
 /**
  * Created by Sebastian on 21/3/2017.
  */
@@ -41,14 +30,14 @@ public class InitialActivityOld extends AppCompatActivity implements GoogleApiCl
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_initial);
+        setContentView(R.layout.activity_city);
 
 //        Button getCities = (Button) findViewById(R.id.get_cities);
 //
 //        getCities.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//                Intent intentMain = new Intent(getApplicationContext(), CityActivity.class );
+//                Intent intentMain = new Intent(getApplicationContext(), CitiesActivity.class );
 //                startActivity(intentMain);
 //            }
 //        });

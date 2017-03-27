@@ -11,8 +11,20 @@
     <!--Activity City-->
     <string name="btn_get_cities">Get Cities</string>
     <string name="btn_my_location">My Location</string>
+    <string name="welcome">Welcome to</string>
+    <string name="attractions_title">Attractions</string>
+    <string name="no_attractions">No attractions to be showed for this city</string>
+    <string name="distance_attraction">Distance:</string>
 
     <!--Activity list City-->
     <string name="search_hint_city">Search City</string>
+    <string name="attractions_list">Attractions: </string>
+    <string name="no_cities">No cities to be showed</string>
+
+    <!--Error request volley-->
+    <string name="error_request">Server offline, try again later</string>
+    <string name="location_denied">To use the app you need to activate Location</string>
+
+
 
 </resources>

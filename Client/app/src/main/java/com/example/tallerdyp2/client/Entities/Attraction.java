@@ -1,5 +1,7 @@
 package com.example.tallerdyp2.client.Entities;
 
+import com.example.tallerdyp2.client.utils.Helper;
+
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.sql.Time;
@@ -23,6 +25,7 @@ public class Attraction implements Serializable{
     private Date openTime;
     private Date closeTime;
     private int price;
+    private double distance;
 
     public Attraction(String id, String name, String description, String imageURL, double latitude, double longitude, String type, String openTime, String closeTime, int price) {
         this.id = id;
@@ -32,13 +35,19 @@ public class Attraction implements Serializable{
         this.latitude = latitude;
         this.longitude = longitude;
         this.type = TypeAttraction.fromString(type);
+
         try {
             this.openTime = new SimpleDateFormat("HH:mm").parse(openTime);
-            this.closeTime = new SimpleDateFormat("HH:mm").parse(closeTime);
-        } catch (ParseException e) {
-            this.openTime = Time.valueOf("00:00");
-            this.closeTime = Time.valueOf("00:00");
+        } catch (ParseException|NullPointerException e) {
+            this.openTime = Time.valueOf("00:00:00");
         }
+
+        try {
+            this.closeTime = new SimpleDateFormat("HH:mm").parse(closeTime);
+        } catch (ParseException|NullPointerException e) {
+            this.closeTime = Time.valueOf("00:00:00");
+        }
+
         this.price = price;
     }
 
@@ -121,6 +130,18 @@ public class Attraction implements Serializable{
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public void updateDistance(double lat, double lng) {
+        this.distance = Helper.distance(this.latitude, lat, this.longitude, lng, 0.0, 0.0);
     }
 
 

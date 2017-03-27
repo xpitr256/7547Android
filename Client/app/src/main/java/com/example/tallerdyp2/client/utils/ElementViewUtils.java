@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.tallerdyp2.client.R;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -16,11 +17,12 @@ public class ElementViewUtils {
 
     public static void setText(View rootView, int textContentId, String content)
     {
+
         TextView textContent = (TextView) rootView.findViewById(textContentId);
         textContent.setText(content);
     }
 
-    public static void setImage(View rootView, int textContentId,String content,final Context context)
+    public static void setImage(View rootView, int textContentId, final String content, final Context context)
     {
         final ImageView imageContent = (ImageView) rootView.findViewById(textContentId);
         if(content != null && !content.isEmpty()){
@@ -30,7 +32,7 @@ public class ElementViewUtils {
                 @Override
                 public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
                 {
-                    Picasso.with(context).load("http://i.imgur.com/2IiKOVe.jpg").into(imageContent);
+                    Picasso.with(context).load(R.drawable.no_photo).into(imageContent);
                 }
             });
             builder.build().load(content).into(imageContent);
@@ -39,7 +41,7 @@ public class ElementViewUtils {
     }
 
     private static void setDefaultImage(ImageView imageContent , final Context context) {
-        Picasso.with(context).load("http://i.imgur.com/2IiKOVe.jpg").into(imageContent);
+        Picasso.with(context).load(R.drawable.image_error).into(imageContent);
     }
 
 }

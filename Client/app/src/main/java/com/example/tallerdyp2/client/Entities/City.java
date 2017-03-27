@@ -1,6 +1,7 @@
 package com.example.tallerdyp2.client.Entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public class City implements Serializable {
         this.imageURL = imageURL;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.attractions = attractions;
+        this.attractions = attractions != null ? attractions : new ArrayList<Attraction>();
     }
 
     public String getId() {

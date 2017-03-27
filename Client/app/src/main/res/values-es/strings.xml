@@ -11,8 +11,18 @@
 
     <!--Activity City-->
     <string name="btn_get_cities">Obtener Ciudades</string>
+    <string name="welcome">Bienvenido a</string>
+    <string name="attractions_title">Atracciones</string>
+    <string name="no_attractions">No hay atracciones para mostrar para esta ciudad</string>
 
     <!--Activity list City-->
     <string name="search_hint_city">Buscar Ciudad</string>
+    <string name="attractions_list">Atracciones: </string>
+    <string name="no_cities">No hay ciudades para mostrar</string>
+    <string name="distance_attraction">Distancia:</string>
+
+    <!--Error request volley-->
+    <string name="error_request">El servidor se encuentra en mantenimiento, vuelva a intentar mas tarde</string>
+    <string name="location_denied">Para usar la aplicacion es necesario activar el servicio de Locacion</string>
 
 </resources>

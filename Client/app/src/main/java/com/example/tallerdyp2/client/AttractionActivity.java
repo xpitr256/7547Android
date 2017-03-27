@@ -7,14 +7,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.example.tallerdyp2.client.Entities.Attraction;
-import com.example.tallerdyp2.client.Entities.City;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Sebastian on 23/3/2017.
@@ -27,6 +22,7 @@ public class AttractionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_attraction);
         attraction = (Attraction) getIntent().getSerializableExtra("Attraction");
 
@@ -77,11 +73,15 @@ public class AttractionActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cities:
-                Intent intent = new Intent(AttractionActivity.this, CityActivity.class);
+                Intent intent = new Intent(AttractionActivity.this, CitiesActivity.class);
                 startActivity(intent);
-                break;
+                return true;
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return true;
     }
 
     @Override
