@@ -40,7 +40,7 @@ public class AttractionActivity extends AppCompatActivity {
         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 
         ElementViewUtils.setText(findViewById(R.id.header_attraction),R.id.header_attraction,attraction.getName());
-        ElementViewUtils.setImage(findViewById(R.id.image_view),R.id.image_view,attraction.getImageURL(),getApplicationContext());
+        ElementViewUtils.setImageFromURL(findViewById(R.id.image_view),R.id.image_view,attraction.getImageURL(),getApplicationContext());
         ElementViewUtils.setText(findViewById(R.id.description_attraction),R.id.description_attraction,attraction.getDescription());
 
 //        LinearLayout list = (LinearLayout) findViewById(R.id.attractions_list);

@@ -134,7 +134,7 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 
         ElementViewUtils.setText(findViewById(R.id.header_city),R.id.header_city,city.getName());
-        ElementViewUtils.setImage(findViewById(R.id.image_view),R.id.image_view,city.getImageURL(),getApplicationContext());
+        ElementViewUtils.setImageFromURL(findViewById(R.id.image_view),R.id.image_view,city.getImageURL(),getApplicationContext());
         ElementViewUtils.setText(findViewById(R.id.description_city),R.id.description_city,city.getDescription());
         LinearLayout list = (LinearLayout) findViewById(R.id.attractions_list);
         list.removeAllViews();

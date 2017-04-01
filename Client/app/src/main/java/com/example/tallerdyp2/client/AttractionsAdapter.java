@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
@@ -33,7 +32,7 @@ public class AttractionsAdapter extends ArrayAdapter<Attraction> {
         View item = inflater.inflate(R.layout.attractions_item_list, null);
         ElementViewUtils.setText(item, R.id.name, attractions.get(position).getName());
         ElementViewUtils.setText(item, R.id.distance, getContext().getString(R.string.distance_attraction)+" "+Helper.formatDistance(attractions.get(position).getDistance()));
-        ElementViewUtils.setImage(item, R.id.image_view,attractions.get(position).getImageURL(),getContext());
+        ElementViewUtils.setImageFromURL(item, R.id.image_view,attractions.get(position).getImageURL(),getContext());
         item.setOnClickListener(new View.OnClickListener() {
 
             @Override

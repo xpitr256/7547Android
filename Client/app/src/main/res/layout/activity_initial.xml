@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_initial"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp"
+    tools:context="com.example.tallerdyp2.client.CityActivity">
+
+    <TextView
+        tools:text="TextView"
+        android:text="@string/app_name"
+        android:id="@+id/header_welcome"
+        android:layout_marginTop="30dp"
+        style="@style/Title_welcome"/>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:id="@+id/image_view"
+        android:layout_below="@id/header_welcome"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        tools:text="TextView"
+        android:text="@string/slogan"
+        android:id="@+id/description"
+        android:layout_below="@+id/image_view"
+        android:layout_marginTop="10dp"
+        style="@style/Description" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@id/description"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp" />
+
+
+
+
+</RelativeLayout>

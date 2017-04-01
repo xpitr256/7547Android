@@ -22,7 +22,7 @@ public class ElementViewUtils {
         textContent.setText(content);
     }
 
-    public static void setImage(View rootView, int textContentId, final String content, final Context context)
+    public static void setImageFromURL(View rootView, int textContentId, final String content, final Context context)
     {
         final ImageView imageContent = (ImageView) rootView.findViewById(textContentId);
         if(content != null && !content.isEmpty()){
@@ -38,6 +38,22 @@ public class ElementViewUtils {
             builder.build().load(content).into(imageContent);
         }
         else ElementViewUtils.setDefaultImage(imageContent, context);
+    }
+
+    public static void setImage(View rootView, int textContentId, final int content, final Context context)
+    {
+        final ImageView imageContent = (ImageView) rootView.findViewById(textContentId);
+        Picasso.Builder builder = new Picasso.Builder(context);
+        builder.listener(new Picasso.Listener()
+        {
+            @Override
+            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
+            {
+                Picasso.with(context).load(R.drawable.no_photo).into(imageContent);
+            }
+        });
+        builder.build().load(content).into(imageContent);
+
     }
 
     private static void setDefaultImage(ImageView imageContent , final Context context) {

@@ -1,12 +1,17 @@
 <resources>
     <string name="app_name">AttractionGO</string>
     <string name="http_ip">https://taller-proyectos-2.herokuapp.com</string>
+    <string name="facebook_app_id">1374256585947172</string>
+    <string name="fb_login_protocol_scheme">fb1374256585947172</string>
 
     <!--Activities Title-->
     <string name="title_activity_initial">AttractionGO</string>
     <string name="title_activity_city">Select City</string>
     <string name="title_activity_attraction">Select Attraction</string>
     <string name="title_activity_maps">Map</string>
+
+    <!--Activity Initial-->
+    <string name="slogan">The best way to guide you on trip</string>
 
     <!--Activity City-->
     <string name="btn_get_cities">Get Cities</string>

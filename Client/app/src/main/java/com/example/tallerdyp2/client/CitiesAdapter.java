@@ -1,15 +1,10 @@
 package com.example.tallerdyp2.client;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.tallerdyp2.client.Entities.City;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
@@ -35,7 +30,7 @@ public class CitiesAdapter extends ArrayAdapter<City> {
         View item = inflater.inflate(R.layout.cities_item_list, null);
         ElementViewUtils.setText(item, R.id.name, cities.get(position).getName());
         ElementViewUtils.setText(item, R.id.count_attraction, getContext().getString(R.string.attractions_list)+" "+ cities.get(position).getAttractions().size());
-        ElementViewUtils.setImage(item, R.id.image_view, cities.get(position).getImageURL(),getContext());
+        ElementViewUtils.setImageFromURL(item, R.id.image_view, cities.get(position).getImageURL(),getContext());
 
         return (item);
     }
