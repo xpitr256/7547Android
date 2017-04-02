@@ -8,6 +8,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 
@@ -28,10 +31,9 @@ public class AttractionActivity extends AppCompatActivity {
 
         findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
 
-        findViewById(R.id.image_view).setVisibility(View.GONE);
+        findViewById(R.id.slider).setVisibility(View.GONE);
         findViewById(R.id.header_attraction).setVisibility(View.GONE);
         findViewById(R.id.description_attraction).setVisibility(View.GONE);
-//        findViewById(R.id.attractions_list).setVisibility(View.GONE);
 
         this.updateViewAttraction();
     }
@@ -40,25 +42,23 @@ public class AttractionActivity extends AppCompatActivity {
         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 
         ElementViewUtils.setText(findViewById(R.id.header_attraction),R.id.header_attraction,attraction.getName());
-        ElementViewUtils.setImageFromURL(findViewById(R.id.image_view),R.id.image_view,attraction.getImagesURL(),getApplicationContext());
         ElementViewUtils.setText(findViewById(R.id.description_attraction),R.id.description_attraction,attraction.getDescription());
 
-//        LinearLayout list = (LinearLayout) findViewById(R.id.attractions_list);
-//        List<Attraction> attractions = new ArrayList<>();
-//        attractions.addAll(city.getAttractions());
-//        attractions.addAll(city.getAttractions());
-//        attractions.addAll(city.getAttractions());
-//        attractions.addAll(city.getAttractions());
-//        AttractionsAdapter adapter = new AttractionsAdapter(this, attractions);
-//        for (int i = 0; i < adapter.getCount(); i++) {
-//            View view = adapter.getView(i, null, list);
-//            list.addView(view);
-//        }
+        SliderLayout mDemoSlider = (SliderLayout) findViewById(R.id.slider);
+        for(String url : attraction.getImagesURL()){
+            DefaultSliderView textSliderView = new DefaultSliderView(this);
+            textSliderView.image(url);
+            mDemoSlider.addSlider(textSliderView);
+        }
 
-        findViewById(R.id.image_view).setVisibility(View.VISIBLE);
+        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+        mDemoSlider.setDuration(4000);
+
+        findViewById(R.id.slider).setVisibility(View.VISIBLE);
         findViewById(R.id.header_attraction).setVisibility(View.VISIBLE);
         findViewById(R.id.description_attraction).setVisibility(View.VISIBLE);
-//        findViewById(R.id.attractions_list).setVisibility(View.VISIBLE);
 
     }
 

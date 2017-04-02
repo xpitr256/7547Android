@@ -16,6 +16,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.android.volley.VolleyError;
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.tallerdyp2.client.Entities.City;
 import com.example.tallerdyp2.client.Proxys.Proxy;
 import com.example.tallerdyp2.client.Proxys.ProxyNoLocation;
@@ -24,6 +29,7 @@ import com.example.tallerdyp2.client.utils.Callable;
 import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 import com.example.tallerdyp2.client.utils.Helper;
+import com.example.tallerdyp2.client.utils.Mocker;
 import com.example.tallerdyp2.client.utils.Parser;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -42,6 +48,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -61,7 +68,7 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
         setContentView(R.layout.activity_city);
 
         //hide views
-        findViewById(R.id.image_view).setVisibility(View.GONE);
+        findViewById(R.id.slider).setVisibility(View.GONE);
         findViewById(R.id.header_city).setVisibility(View.GONE);
         findViewById(R.id.header_welcome).setVisibility(View.GONE);
         findViewById(R.id.description_city).setVisibility(View.GONE);
@@ -134,7 +141,19 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 
         ElementViewUtils.setText(findViewById(R.id.header_city),R.id.header_city,city.getName());
-        ElementViewUtils.setImageFromURL(findViewById(R.id.image_view),R.id.image_view,city.getImageURL(),getApplicationContext());
+//        ElementViewUtils.setImageFromURL(findViewById(R.id.image_view),R.id.image_view,city.getImageURL(),getApplicationContext());
+        SliderLayout mDemoSlider = (SliderLayout) findViewById(R.id.slider);
+        for(String url : city.getImagesURL()){
+            DefaultSliderView textSliderView = new DefaultSliderView(this);
+            textSliderView.image(url);
+            mDemoSlider.addSlider(textSliderView);
+        }
+
+        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+        mDemoSlider.setDuration(4000);
+
         ElementViewUtils.setText(findViewById(R.id.description_city),R.id.description_city,city.getDescription());
         LinearLayout list = (LinearLayout) findViewById(R.id.attractions_list);
         list.removeAllViews();
@@ -150,7 +169,7 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
         }else
             findViewById(R.id.no_attractions).setVisibility(View.VISIBLE);
 
-        findViewById(R.id.image_view).setVisibility(View.VISIBLE);
+        findViewById(R.id.slider).setVisibility(View.VISIBLE);
         findViewById(R.id.header_city).setVisibility(View.VISIBLE);
         findViewById(R.id.header_welcome).setVisibility(View.VISIBLE);
         findViewById(R.id.description_city).setVisibility(View.VISIBLE);
@@ -251,7 +270,8 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
 
     @Override
     public void execute(JSONArray response) {
-        cities = Parser.parseCities(response);
+//        cities = Parser.parseCities(response);
+        cities = Mocker.parseCities(response);
         this.proxyLocation.getCity(this);
     }
 
@@ -274,7 +294,7 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
 
     private void hideInformation() {
         //hide views
-        findViewById(R.id.image_view).setVisibility(View.GONE);
+        findViewById(R.id.slider).setVisibility(View.GONE);
         findViewById(R.id.header_city).setVisibility(View.GONE);
         findViewById(R.id.header_welcome).setVisibility(View.GONE);
         findViewById(R.id.description_city).setVisibility(View.GONE);

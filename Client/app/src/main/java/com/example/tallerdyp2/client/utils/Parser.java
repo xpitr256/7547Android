@@ -55,7 +55,6 @@ public class Parser {
         } catch (JSONException e) {
             return cities;
         }
-
         return cities;
     }
 

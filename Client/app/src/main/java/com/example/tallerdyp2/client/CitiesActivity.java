@@ -16,6 +16,7 @@ import com.example.tallerdyp2.client.Entities.City;
 import com.example.tallerdyp2.client.utils.Callable;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 import com.example.tallerdyp2.client.utils.Helper;
+import com.example.tallerdyp2.client.utils.Mocker;
 import com.example.tallerdyp2.client.utils.Parser;
 
 import org.json.JSONArray;
@@ -132,7 +133,9 @@ public class CitiesActivity extends AppCompatActivity implements Callable{
     public void execute(JSONArray response) {
 
         // Inicializar el adaptador con la fuente de datos.
-        this.cities = Parser.parseCities(response);
+
+//        this.cities = Parser.parseCities(response);
+        this.cities = Mocker.parseCities(response);
         citiesAdapter.addAll(this.cities);
 
         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
