@@ -24,7 +24,7 @@ public class Mocker {
         Attraction parqueDeLaCosta = new Attraction(
                 "1",
                 "Parque de la costa",
-                "",
+                "Descripcion",
                 urls,
                 22.2,
                 21.1,

@@ -115,8 +115,12 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
             List<Address> addresses;
             try {
                 if(this.cityName == null){
-                    addresses = geocoder.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1);
-                    this.cityName = addresses.get(0).getLocality();
+                    if(myLocation != null){
+                        addresses = geocoder.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1);
+                        this.cityName = addresses.get(0).getLocality();
+                    }else{
+                        this.cityName = this.cities.get(0).getName();
+                    }
                 }
                 this.getMyCity();
             } catch (IOException e) {
