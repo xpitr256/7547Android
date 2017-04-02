@@ -47,7 +47,7 @@ public class Parser {
                 cities.add(new City(city.getString("_id"),
                         city.getString("name"),
                         city.getString("description"),
-                        city.getString("imageURL"),
+                        Parser.parseImagesURL(city.getJSONArray("imagesURL")),
                         city.getJSONObject("location").getDouble("lat"),
                         city.getJSONObject("location").getDouble("lng"), attractions));
 

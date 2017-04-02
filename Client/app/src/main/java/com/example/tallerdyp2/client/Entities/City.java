@@ -13,17 +13,17 @@ public class City implements Serializable {
     private String id;
     private String name;
     private String description;
-    private String imageURL;
+    private List<String> imagesURL;
     private double latitude;
     private double longitude;
     private List<Attraction> attractions;
 
-    public City(String id, String name, String description, String imageURL, double latitude, double longitude, List<Attraction> attractions) {
+    public City(String id, String name, String description, List<String> imagesURL, double latitude, double longitude, List<Attraction> attractions) {
 
         this.id = id;
         this.name = name;
         this.description = description;
-        this.imageURL = imageURL;
+        this.imagesURL = imagesURL;
         this.latitude = latitude;
         this.longitude = longitude;
         this.attractions = attractions != null ? attractions : new ArrayList<Attraction>();
@@ -53,12 +53,12 @@ public class City implements Serializable {
         this.description = description;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public List<String> getImagesURL() {
+        return imagesURL;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setImagesURL(List<String> imagesURL) {
+        this.imagesURL = imagesURL;
     }
 
     public double getLatitude() {
