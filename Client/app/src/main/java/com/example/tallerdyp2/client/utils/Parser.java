@@ -32,7 +32,7 @@ public class Parser {
                                     attractionsJSON.getJSONObject(j).getString("_id"),
                                     attractionsJSON.getJSONObject(j).getString("name"),
                                     attractionsJSON.getJSONObject(j).getString("description"),
-                                    attractionsJSON.getJSONObject(j).getString("imageURL"),
+                                    Parser.parseImagesURL(attractionsJSON.getJSONObject(j).getJSONArray("imagesURL")),
                                     attractionsJSON.getJSONObject(j).getJSONObject("location").getDouble("lat"),
                                     attractionsJSON.getJSONObject(j).getJSONObject("location").getDouble("lng"),
                                     "FAMILY",
@@ -57,5 +57,13 @@ public class Parser {
         }
 
         return cities;
+    }
+
+    public static List<String> parseImagesURL(JSONArray imagesURL) throws JSONException {
+        List<String> urls = new ArrayList<>();
+        for(int i = 0; i < imagesURL.length(); i++){
+            urls.add(imagesURL.getString(i));
+        }
+        return urls;
     }
 }

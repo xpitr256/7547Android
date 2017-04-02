@@ -3,6 +3,8 @@ package com.example.tallerdyp2.client;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
+import com.example.tallerdyp2.client.Services.FacebookService;
+import com.example.tallerdyp2.client.Services.SplexService;
 import com.example.tallerdyp2.client.Services.VolleyRequestService;
 
 /**
@@ -13,6 +15,8 @@ public class AttractionGOApplication extends MultiDexApplication {
 
     private static Context context;
     private static VolleyRequestService volleyRequestService;
+    private static FacebookService facebookService;
+    private static SplexService splexService;
 
 
     @Override
@@ -42,4 +46,20 @@ public class AttractionGOApplication extends MultiDexApplication {
         return volleyRequestService;
     }
 
+
+    public static FacebookService getFacebookService(){
+
+        if(facebookService == null)
+            facebookService = new FacebookService();
+
+        return facebookService;
+    }
+
+    public static SplexService getSplexService(){
+
+        if(splexService == null)
+            splexService = new SplexService();
+
+        return splexService;
+    }
 }

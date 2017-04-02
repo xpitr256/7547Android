@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -17,7 +20,7 @@ import com.facebook.login.widget.LoginButton;
 
 public class InitialActivity extends AppCompatActivity {
 
-    CallbackManager callbackManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,31 +30,19 @@ public class InitialActivity extends AppCompatActivity {
 
         ElementViewUtils.setImage(findViewById(R.id.image_view),R.id.image_view,R.drawable.logo,getApplicationContext());
 
-        callbackManager = CallbackManager.Factory.create();
+        AttractionGOApplication.getFacebookService().checkFacebookLogged();
+
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
 
-        // Callback registration
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                // App code
-            }
 
-            @Override
-            public void onCancel() {
-                // App code
-            }
 
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-            }
-        });
+        AttractionGOApplication.getFacebookService().registerCallbackInButtton(loginButton);
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        AttractionGOApplication.getFacebookService().onActivityResult(requestCode, resultCode, data);
     }
 }

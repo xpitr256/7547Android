@@ -241,8 +241,9 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cities:
-                Intent intent = new Intent(CityActivity.this, CitiesActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(CityActivity.this, CitiesActivity.class);
+//                startActivity(intent);
+                AttractionGOApplication.getFacebookService().logOut();
                 break;
         }
         return true;

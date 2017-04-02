@@ -3,11 +3,11 @@ package com.example.tallerdyp2.client.Entities;
 import com.example.tallerdyp2.client.utils.Helper;
 
 import java.io.Serializable;
-import java.lang.reflect.Type;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Sebastian on 23/3/2017.
@@ -18,7 +18,7 @@ public class Attraction implements Serializable{
     private String id;
     private String name;
     private String description;
-    private String imageURL;
+    private List<String> imagesURL;
     private double latitude;
     private double longitude;
     private TypeAttraction type;
@@ -27,11 +27,11 @@ public class Attraction implements Serializable{
     private int price;
     private double distance;
 
-    public Attraction(String id, String name, String description, String imageURL, double latitude, double longitude, String type, String openTime, String closeTime, int price) {
+    public Attraction(String id, String name, String description, List<String> imagesURL, double latitude, double longitude, String type, String openTime, String closeTime, int price) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.imageURL = imageURL;
+        this.imagesURL = imagesURL;
         this.latitude = latitude;
         this.longitude = longitude;
         this.type = TypeAttraction.fromString(type);
@@ -76,12 +76,12 @@ public class Attraction implements Serializable{
         this.description = description;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public List<String> getImagesURL() {
+        return imagesURL;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setImagesURL(List<String> imagesURL) {
+        this.imagesURL = imagesURL;
     }
 
     public double getLatitude() {
