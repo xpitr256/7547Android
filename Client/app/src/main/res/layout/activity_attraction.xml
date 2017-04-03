@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:EMVAudioView="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_attraction"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -55,23 +56,14 @@
                 android:layout_below="@+id/slider"
                 style="@style/Description"/>
 
-            <!--<TextView-->
-                <!--android:layout_below="@id/description_attraction"-->
-                <!--android:text="Points of interest"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:textAlignment="center"-->
-                <!--android:id="@+id/attractions_header"-->
-                <!--android:textColor="@color/text"-->
-                <!--android:textSize="24sp"/>-->
+            <com.devbrackets.android.exomedia.ui.widget.EMVideoView
+                android:id="@+id/audio_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/description_attraction"
+                android:visibility="visible"
+                EMVAudioView:useDefaultControls="true"/>
 
-            <!--<LinearLayout-->
-                <!--android:orientation="vertical"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:id="@+id/attractions_list"-->
-                <!--android:layout_below="@+id/attractions_header"-->
-                <!--android:padding="10dp"/>-->
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

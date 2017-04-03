@@ -1,6 +1,7 @@
 package com.example.tallerdyp2.client;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -11,6 +12,8 @@ import android.view.View;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
+import com.devbrackets.android.exomedia.listener.OnPreparedListener;
+import com.devbrackets.android.exomedia.ui.widget.EMVideoView;
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 
@@ -18,9 +21,10 @@ import com.example.tallerdyp2.client.utils.ElementViewUtils;
  * Created by Sebastian on 23/3/2017.
  */
 
-public class AttractionActivity extends AppCompatActivity {
+public class AttractionActivity extends AppCompatActivity implements OnPreparedListener {
 
     private Attraction attraction;
+    private EMVideoView emVideoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +38,6 @@ public class AttractionActivity extends AppCompatActivity {
         findViewById(R.id.slider).setVisibility(View.GONE);
         findViewById(R.id.header_attraction).setVisibility(View.GONE);
         findViewById(R.id.description_attraction).setVisibility(View.GONE);
-
         this.updateViewAttraction();
     }
 
@@ -59,7 +62,7 @@ public class AttractionActivity extends AppCompatActivity {
         findViewById(R.id.slider).setVisibility(View.VISIBLE);
         findViewById(R.id.header_attraction).setVisibility(View.VISIBLE);
         findViewById(R.id.description_attraction).setVisibility(View.VISIBLE);
-
+        this.setupVideoView();
     }
 
     @Override
@@ -90,4 +93,21 @@ public class AttractionActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    private void setupVideoView() {
+        emVideoView = (EMVideoView) findViewById(R.id.audio_view);
+        emVideoView.setOnPreparedListener(this);
+
+        //For now we just picked an arbitrary item to play.  More can be found at
+        //https://archive.org/details/more_animation
+        emVideoView.setVideoURI(Uri.parse("https://archive.org/download/Popeye_forPresident/Popeye_forPresident_512kb.mp4"));
+        emVideoView.setVisibility(View.VISIBLE);
+        emVideoView.clearAnimation();
+        emVideoView.getVideoControls().setCanHide(false);
+    }
+
+    @Override
+    public void onPrepared() {
+        //Starts the video playback as soon as it is ready
+        emVideoView.start();
+    }
 }
