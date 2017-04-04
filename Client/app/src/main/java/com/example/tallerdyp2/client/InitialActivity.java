@@ -3,6 +3,7 @@ package com.example.tallerdyp2.client;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 import com.facebook.AccessToken;
@@ -43,6 +44,18 @@ public class InitialActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        AttractionGOApplication.getFacebookService().onActivityResult(requestCode, resultCode, data);
+        if(resultCode < 0){
+            this.loadProgressBar();
+            AttractionGOApplication.getFacebookService().onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void loadProgressBar() {
+        findViewById(R.id.image_view).setVisibility(View.GONE);
+        findViewById(R.id.header_welcome).setVisibility(View.GONE);
+        findViewById(R.id.login_button).setVisibility(View.GONE);
+        findViewById(R.id.description).setVisibility(View.GONE);
+
+        findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
     }
 }

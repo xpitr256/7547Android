@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
@@ -18,9 +17,7 @@ import android.widget.LinearLayout;
 import com.android.volley.VolleyError;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.example.tallerdyp2.client.Entities.City;
 import com.example.tallerdyp2.client.Proxys.Proxy;
 import com.example.tallerdyp2.client.Proxys.ProxyNoLocation;
@@ -30,7 +27,6 @@ import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 import com.example.tallerdyp2.client.utils.Helper;
 import com.example.tallerdyp2.client.utils.Mocker;
-import com.example.tallerdyp2.client.utils.Parser;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -48,7 +44,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -92,16 +87,23 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
 
     }
 
-    public boolean outsideMyCityLocation(){
-        Geocoder geocoder = new Geocoder(CityActivity.this, Locale.getDefault());
-        List<Address> addresses;
-        try {
-            addresses = geocoder.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1);
-            return !addresses.get(0).getLocality().equals(this.cityName);
+    private String getCityFromLocation(){
 
-        } catch (IOException e) {
-        }
-        return true;
+            Geocoder geocoder = new Geocoder(CityActivity.this, Locale.getDefault());
+            try {
+                if(myLocation != null){
+                    return geocoder.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1).get(0).getLocality();
+                }
+            } catch (IOException e) {
+                this.showError(getResources().getString(R.string.error_request));
+            }
+
+
+        return null;
+    }
+
+    public boolean outsideMyCityLocation(){
+        return !this.cityName.equals(this.getCityFromLocation());
     }
 
     public boolean citySelected(){
@@ -109,27 +111,15 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
     }
 
     public void getMyCityLocation(){
-        if (Helper.checkSelfPermission(CityActivity.this,Manifest.permission.ACCESS_FINE_LOCATION)) {
-            myLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-            Geocoder geocoder = new Geocoder(CityActivity.this, Locale.getDefault());
-            List<Address> addresses;
-            try {
-                if(this.cityName == null){
-                    if(myLocation != null){
-                        addresses = geocoder.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1);
-                        this.cityName = addresses.get(0).getLocality();
-                    }else{
-                        this.cityName = this.cities.get(0).getName();
-                    }
-                }
-                this.getMyCity();
-            } catch (IOException e) {
-                this.showError(getResources().getString(R.string.error_request));
+        if(this.cityName == null){
+            String city = this.getCityFromLocation();
+            if(city != null){
+                this.cityName = city;
+            }else{
+                this.cityName = this.cities.get(0).getName();
             }
-
-        }else{
-            this.showError(getResources().getString(R.string.location_denied));
         }
+        this.getMyCity();
     }
 
     public void getMyCity() {
@@ -209,6 +199,7 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
                     final LocationSettingsStates state = result.getLocationSettingsStates();
                     switch (status.getStatusCode()) {
                         case LocationSettingsStatusCodes.SUCCESS:
+                            CityActivity.this.refreshLocation();
                             CityActivity.this.proxyLocation = new ProxyNormal();
                             CityActivity.this.proxyLocation.execute(CityActivity.this);
                             break;
@@ -233,6 +224,15 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
             });
         }
 
+    }
+
+    private void refreshLocation() {
+        if (Helper.checkSelfPermission(CityActivity.this,Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+            myLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        }else{
+            this.showError(getResources().getString(R.string.location_denied));
+        }
     }
 
     @Override
@@ -314,6 +314,7 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
             if (resultCode == RESULT_OK) {
                 // The user picked a contact.
                 // The Intent's data Uri identifies which contact was selected.
+                this.refreshLocation();
                 this.proxyLocation = new ProxyNormal();
                 this.proxyLocation.execute(this);
                 // Do something with the contact here (bigger example below)

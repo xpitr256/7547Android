@@ -45,9 +45,17 @@ public class Mocker {
                 24.1,
                 attractions
         );
+        City mendoza = new City(
+                "2",
+                "Mendoza",
+                "Ciudad del buen vino",
+                urls,
+                23.1,
+                24.1,
+                attractions
+        );
         cities.add(buenosAires);
-        cities.add(buenosAires);
-        cities.add(buenosAires);
+        cities.add(mendoza);
 
         return cities;
 

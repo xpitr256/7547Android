@@ -58,14 +58,14 @@ public class CitiesActivity extends AppCompatActivity implements Callable{
         citiesList.setAdapter(citiesAdapter);
 
         // Eventos
-        citiesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Intent intent = new Intent(CitiesActivity.this, CityActivity.class);
-                intent.putExtra("cityName", cities.get(position).getName());
-                startActivity(intent);
-            }
-        });
+//        citiesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//                Intent intent = new Intent(CitiesActivity.this, CityActivity.class);
+//                intent.putExtra("cityName", cities.get(position).getName());
+//                startActivity(intent);
+//            }
+//        });
     }
 
     public void getCitiesInfo() {
