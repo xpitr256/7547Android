@@ -15,6 +15,7 @@ import java.util.List;
 
 public class Attraction implements Serializable{
 
+    private String audioURL;
     private String id;
     private String name;
     private String description;
@@ -27,11 +28,12 @@ public class Attraction implements Serializable{
     private int price;
     private double distance;
 
-    public Attraction(String id, String name, String description, List<String> imagesURL, double latitude, double longitude, String type, String openTime, String closeTime, int price) {
+    public Attraction(String id, String name, String description, List<String> imagesURL, String audioURL, double latitude, double longitude, String type, String openTime, String closeTime, int price) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.imagesURL = imagesURL;
+        this.audioURL = audioURL;
         this.latitude = latitude;
         this.longitude = longitude;
         this.type = TypeAttraction.fromString(type);
@@ -138,6 +140,14 @@ public class Attraction implements Serializable{
 
     public void setDistance(double distance) {
         this.distance = distance;
+    }
+
+    public String getAudioURL() {
+        return audioURL;
+    }
+
+    public void setAudioURL(String audioURL) {
+        this.audioURL = audioURL;
     }
 
     public void updateDistance(double lat, double lng) {

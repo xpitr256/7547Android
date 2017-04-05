@@ -12,7 +12,7 @@ import android.view.View;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
-import com.devbrackets.android.exomedia.listener.OnPreparedListener;
+import com.devbrackets.android.exomedia.listener.OnErrorListener;
 import com.devbrackets.android.exomedia.ui.widget.EMVideoView;
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
@@ -21,7 +21,7 @@ import com.example.tallerdyp2.client.utils.ElementViewUtils;
  * Created by Sebastian on 23/3/2017.
  */
 
-public class AttractionActivity extends AppCompatActivity implements OnPreparedListener {
+public class AttractionActivity extends AppCompatActivity implements OnErrorListener{
 
     private Attraction attraction;
     private EMVideoView emVideoView;
@@ -38,6 +38,7 @@ public class AttractionActivity extends AppCompatActivity implements OnPreparedL
         findViewById(R.id.slider).setVisibility(View.GONE);
         findViewById(R.id.header_attraction).setVisibility(View.GONE);
         findViewById(R.id.description_attraction).setVisibility(View.GONE);
+        findViewById(R.id.audio_view).setVisibility(View.GONE);
         this.updateViewAttraction();
     }
 
@@ -93,21 +94,25 @@ public class AttractionActivity extends AppCompatActivity implements OnPreparedL
         super.onResume();
     }
 
+    @Override
+    protected void onPause()
+    {
+        emVideoView.pause();
+        super.onPause();
+    }
+
     private void setupVideoView() {
         emVideoView = (EMVideoView) findViewById(R.id.audio_view);
-        emVideoView.setOnPreparedListener(this);
-
-        //For now we just picked an arbitrary item to play.  More can be found at
-        //https://archive.org/details/more_animation
-        emVideoView.setVideoURI(Uri.parse("https://archive.org/download/Popeye_forPresident/Popeye_forPresident_512kb.mp4"));
         emVideoView.setVisibility(View.VISIBLE);
-        emVideoView.clearAnimation();
+        emVideoView.setOnErrorListener(this);
+        emVideoView.setVideoURI(Uri.parse(this.attraction.getAudioURL()));
         emVideoView.getVideoControls().setCanHide(false);
     }
 
     @Override
-    public void onPrepared() {
-        //Starts the video playback as soon as it is ready
-        emVideoView.start();
+    public boolean onError() {
+        findViewById(R.id.wrong_url).setVisibility(View.VISIBLE);
+        findViewById(R.id.audio_view).setVisibility(View.GONE);
+        return false;
     }
 }

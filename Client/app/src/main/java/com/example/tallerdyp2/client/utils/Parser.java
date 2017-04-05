@@ -33,6 +33,8 @@ public class Parser {
                                     attractionsJSON.getJSONObject(j).getString("name"),
                                     attractionsJSON.getJSONObject(j).getString("description"),
                                     Parser.parseImagesURL(attractionsJSON.getJSONObject(j).getJSONArray("imagesURL")),
+//                                    attractionsJSON.getJSONObject(j).getString("audioURL"),
+                                    "https://archive.org/download/Popeye_forPresident/Popeye_forPresident_512kb.mp4",
                                     attractionsJSON.getJSONObject(j).getJSONObject("location").getDouble("lat"),
                                     attractionsJSON.getJSONObject(j).getJSONObject("location").getDouble("lng"),
                                     "FAMILY",

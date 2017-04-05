@@ -26,6 +26,9 @@
     <string name="no_cities">No hay ciudades para mostrar</string>
     <string name="distance_attraction">Distancia:</string>
 
+    !--Activity list City-->
+    <string name="wrong_url">El audio no se encuentra disponible en este momento </string>
+
     <!--Error request volley-->
     <string name="error_request">El servidor se encuentra en mantenimiento, vuelva a intentar mas tarde</string>
     <string name="location_denied">Para usar la aplicacion es necesario activar el servicio de Locacion</string>

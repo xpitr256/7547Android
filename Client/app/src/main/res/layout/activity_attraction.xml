@@ -64,6 +64,14 @@
                 android:visibility="visible"
                 EMVAudioView:useDefaultControls="true"/>
 
+            <TextView
+                android:text="@string/wrong_url"
+                android:id="@+id/wrong_url"
+                android:layout_below="@+id/description_attraction"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                style="@style/ErrorDescription" />
+
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

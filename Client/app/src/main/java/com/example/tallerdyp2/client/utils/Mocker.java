@@ -4,8 +4,6 @@ import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.Entities.City;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +24,7 @@ public class Mocker {
                 "Parque de la costa",
                 "Descripcion",
                 urls,
+                "https://archive.org/download/Popeye_forPresident/Popeye_forPresident_512kb.mp4",
                 22.2,
                 21.1,
                 "FAMILY",

@@ -26,6 +26,9 @@
     <string name="attractions_list">Attractions: </string>
     <string name="no_cities">No cities to be showed</string>
 
+    <!--Activity list City-->
+    <string name="wrong_url">The audio is not available at this moment</string>
+
     <!--Error request volley-->
     <string name="error_request">Server offline, try again later</string>
     <string name="location_denied">To use the app you need to activate Location</string>
