@@ -32,6 +32,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.FusedLocationProviderApi;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
@@ -47,7 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class CityActivity extends AppCompatActivity implements Callable,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+public class CityActivity extends AppCompatActivity implements Callable,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
 
     private GoogleApiClient googleApiClient;
     private List<City> cities;
@@ -55,6 +56,8 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
     public City city;
     public Location myLocation;
     private Proxy proxyLocation;
+    private LocationRequest locationRequest;
+    private FusedLocationProviderApi fusedLocationProviderApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,14 +92,14 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
 
     private String getCityFromLocation(){
 
-            Geocoder geocoder = new Geocoder(CityActivity.this, Locale.getDefault());
-            try {
-                if(myLocation != null){
-                    return geocoder.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1).get(0).getLocality();
-                }
-            } catch (IOException e) {
-                this.showError(getResources().getString(R.string.error_request));
+        Geocoder geocoder = new Geocoder(CityActivity.this, Locale.getDefault());
+        try {
+            if(myLocation != null){
+                return geocoder.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1).get(0).getLocality();
             }
+        } catch (IOException e) {
+            this.showError(getResources().getString(R.string.error_request));
+        }
 
 
         return null;
@@ -172,59 +175,61 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
     }
 
     private void useLocationService() {
-        if (googleApiClient == null) {
-            googleApiClient = new GoogleApiClient.Builder(CityActivity.this)
-                    .addApi(LocationServices.API)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this).build();
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(30 * 1000);
+        locationRequest.setFastestInterval(5 * 1000);
+        fusedLocationProviderApi = LocationServices.FusedLocationApi;
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+        if (googleApiClient != null) {
             googleApiClient.connect();
-
-            LocationRequest locationRequest = LocationRequest.create();
-            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-            locationRequest.setInterval(30 * 1000);
-            locationRequest.setFastestInterval(5 * 1000);
-            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                    .addLocationRequest(locationRequest);
-
-            //**************************
-            builder.setAlwaysShow(true); //this is the key ingredient
-            //**************************
-
-            PendingResult<LocationSettingsResult> result =
-                    LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
-            result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
-                @Override
-                public void onResult(LocationSettingsResult result) {
-                    final Status status = result.getStatus();
-                    final LocationSettingsStates state = result.getLocationSettingsStates();
-                    switch (status.getStatusCode()) {
-                        case LocationSettingsStatusCodes.SUCCESS:
-                            CityActivity.this.refreshLocation();
-                            CityActivity.this.proxyLocation = new ProxyNormal();
-                            CityActivity.this.proxyLocation.execute(CityActivity.this);
-                            break;
-                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                            // Location settings are not satisfied. But could be fixed by showing the user
-                            // a dialog.
-                            try {
-                                // Show the dialog by calling startResolutionForResult(),
-                                // and check the result in onActivityResult().
-                                status.startResolutionForResult(CityActivity.this, Constants.LOCATION_SERVICE);
-                            } catch (IntentSender.SendIntentException e) {
-                                CityActivity.this.showError(getResources().getString(R.string.location_denied));
-                            }
-                            break;
-                        case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                            // Location settings are not satisfied. However, we have no way to fix the
-                            // settings so we won't show the dialog.
-                            CityActivity.this.showError(getResources().getString(R.string.location_denied));
-                            break;
-                    }
-                }
-            });
         }
 
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest);
+        //**************************
+        builder.setAlwaysShow(true); //this is the key ingredient
+        //**************************
+
+        PendingResult<LocationSettingsResult> result =
+                LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
+        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+            @Override
+            public void onResult(LocationSettingsResult result) {
+                final Status status = result.getStatus();
+                final LocationSettingsStates state = result.getLocationSettingsStates();
+                switch (status.getStatusCode()) {
+                    case LocationSettingsStatusCodes.SUCCESS:
+//                        CityActivity.this.refreshLocation();
+                        CityActivity.this.proxyLocation = new ProxyNormal();
+                        CityActivity.this.proxyLocation.execute(CityActivity.this);
+                        break;
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        // Location settings are not satisfied. But could be fixed by showing the user
+                        // a dialog.
+                        try {
+                            // Show the dialog by calling startResolutionForResult(),
+                            // and check the result in onActivityResult().
+                            status.startResolutionForResult(CityActivity.this, Constants.LOCATION_SERVICE);
+                        } catch (IntentSender.SendIntentException e) {
+                            CityActivity.this.showError(getResources().getString(R.string.location_denied));
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        // Location settings are not satisfied. However, we have no way to fix the
+                        // settings so we won't show the dialog.
+                        CityActivity.this.showError(getResources().getString(R.string.location_denied));
+                        break;
+                }
+            }
+        });
     }
+
+
 
     private void refreshLocation() {
         if (Helper.checkSelfPermission(CityActivity.this,Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -239,9 +244,17 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
     public void onBackPressed() {}
 
     @Override
-    public void onConnected(Bundle bundle) {
+    public void onConnected(Bundle arg0) {
+        if (Helper.checkSelfPermission(CityActivity.this,Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+            fusedLocationProviderApi.requestLocationUpdates(googleApiClient,  locationRequest, this);
+        }
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+        myLocation = location;
+    }
     @Override
     public void onConnectionSuspended(int i) {}
 
@@ -314,7 +327,7 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
             if (resultCode == RESULT_OK) {
                 // The user picked a contact.
                 // The Intent's data Uri identifies which contact was selected.
-                this.refreshLocation();
+//                this.refreshLocation();
                 this.proxyLocation = new ProxyNormal();
                 this.proxyLocation.execute(this);
                 // Do something with the contact here (bigger example below)
