@@ -26,8 +26,19 @@
     <string name="no_cities">No hay ciudades para mostrar</string>
     <string name="distance_attraction">Distancia:</string>
 
-    !--Activity list City-->
+    <!--Activity list City-->
     <string name="wrong_url">El audio no se encuentra disponible en este momento </string>
+
+    <!--Navigation Drawer-->
+    <string name="close_session">Cerrar Sesión</string>
+    <string name="cities">Ciudades</string>
+    <string name="drawer_open">abrir lateral</string>
+    <string name="drawer_close">cerrar lateral</string>
+
+    <!--Alert Close Session-->
+    <string name="msg_close_session">¿Desea cerrar session?</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
 
     <!--Error request volley-->
     <string name="error_request">El servidor se encuentra en mantenimiento, vuelva a intentar mas tarde</string>

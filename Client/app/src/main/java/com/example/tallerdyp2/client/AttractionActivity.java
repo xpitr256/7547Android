@@ -67,19 +67,8 @@ public class AttractionActivity extends AppCompatActivity implements OnErrorList
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_cities, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.cities:
-                Intent intent = new Intent(AttractionActivity.this, CitiesActivity.class);
-                startActivity(intent);
-                return true;
             case android.R.id.home:
                 this.finish();
                 return true;

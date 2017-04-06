@@ -1,18 +1,29 @@
 package com.example.tallerdyp2.client;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.location.Geocoder;
 import android.location.Location;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -22,6 +33,9 @@ import com.example.tallerdyp2.client.Entities.City;
 import com.example.tallerdyp2.client.Proxys.Proxy;
 import com.example.tallerdyp2.client.Proxys.ProxyNoLocation;
 import com.example.tallerdyp2.client.Proxys.ProxyNormal;
+import com.example.tallerdyp2.client.navigationDrawer.DrawerAction;
+import com.example.tallerdyp2.client.navigationDrawer.DrawerTransactionManager;
+import com.example.tallerdyp2.client.navigationDrawer.Transactional;
 import com.example.tallerdyp2.client.utils.Callable;
 import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
@@ -48,7 +62,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class CityActivity extends AppCompatActivity implements Callable,GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
+public class CityActivity extends AppCompatActivity implements Callable, Transactional, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
 
     private GoogleApiClient googleApiClient;
     private List<City> cities;
@@ -58,12 +72,20 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
     private Proxy proxyLocation;
     private LocationRequest locationRequest;
     private FusedLocationProviderApi fusedLocationProviderApi;
+    private DrawerLayout mDrawer;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private NavigationView nvDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.nav_menu);
+
+        initNavigationDrawer();
 
         //hide views
         findViewById(R.id.slider).setVisibility(View.GONE);
@@ -88,6 +110,99 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
             this.useLocationService();
         }
 
+    }
+
+    protected void initNavigationDrawer(){
+
+//        toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        nvDrawer = (NavigationView) findViewById(R.id.left_drawer);
+        setupDrawerContent(nvDrawer);
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawer,         /* DrawerLayout object */
+                R.drawable.nav_menu,  /* nav drawer icon to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+        ) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+//                getActionBar().setTitle(mTitle);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+//                getActionBar().setTitle(mDrawerTitle);
+            }
+        };
+
+        // Set the drawer toggle as the DrawerListener
+        mDrawer.addDrawerListener(mDrawerToggle);
+
+//        View header = nvDrawer.inflateHeaderView(R.layout.drawer_header);
+//        TextView tvHeader = (TextView) header.findViewById(R.id.header_title);
+//        tvHeader.setText(SharedPreferencesUtils.getNombreUsuario());
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                selectItem(menuItem);
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if(!mDrawer.isDrawerOpen(GravityCompat.START)){
+                    mDrawer.openDrawer(Gravity.START);  // OPEN DRAWER
+                }else{
+                    mDrawer.closeDrawer(Gravity.LEFT);  // CLOSE DRAWER
+                }
+                return true;
+
+        }
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void selectItem(MenuItem menuItem) {
+
+        DrawerAction action = DrawerAction.findByCode(menuItem.getItemId());
+        DrawerTransactionManager.getInstance().startTransaction(action, this);
+
+        menuItem.setChecked(true);
+
+//        if(action.allowsTitle) {
+//            tvSubtitle.setText(menuItem.getTitle());
+//        }
+
+        mDrawer.closeDrawers();
     }
 
     private String getCityFromLocation(){
@@ -204,7 +319,6 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
                 final LocationSettingsStates state = result.getLocationSettingsStates();
                 switch (status.getStatusCode()) {
                     case LocationSettingsStatusCodes.SUCCESS:
-//                        CityActivity.this.refreshLocation();
                         CityActivity.this.proxyLocation = new ProxyNormal();
                         CityActivity.this.proxyLocation.execute(CityActivity.this);
                         break;
@@ -227,17 +341,6 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
                 }
             }
         });
-    }
-
-
-
-    private void refreshLocation() {
-        if (Helper.checkSelfPermission(CityActivity.this,Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-            myLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-        }else{
-            this.showError(getResources().getString(R.string.location_denied));
-        }
     }
 
     @Override
@@ -266,24 +369,24 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
         AttractionGOApplication.getVolleyRequestService().getCities(this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_cities, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu_cities, menu);
+//        return true;
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.cities:
-//                Intent intent = new Intent(CityActivity.this, CitiesActivity.class);
-//                startActivity(intent);
-                AttractionGOApplication.getFacebookService().logOut();
-                break;
-        }
-        return true;
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.cities:
+////                Intent intent = new Intent(CityActivity.this, CitiesActivity.class);
+////                startActivity(intent);
+//                AttractionGOApplication.getFacebookService().logOut();
+//                break;
+//        }
+//        return true;
+//    }
 
     @Override
     public void execute(JSONArray response) {
@@ -327,7 +430,6 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
             if (resultCode == RESULT_OK) {
                 // The user picked a contact.
                 // The Intent's data Uri identifies which contact was selected.
-//                this.refreshLocation();
                 this.proxyLocation = new ProxyNormal();
                 this.proxyLocation.execute(this);
                 // Do something with the contact here (bigger example below)
@@ -366,5 +468,28 @@ public class CityActivity extends AppCompatActivity implements Callable,GoogleAp
             //POP UP ALLOW LOCATION SERVICE
             this.useLocationService();
         }
+    }
+
+    @Override
+    public void startActivity(Class activity) {
+        Intent intent = new Intent(this, activity);
+        this.startActivity(intent);
+    }
+
+    @Override
+    public void closeSession() {
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.msg_close_session)
+                .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        AttractionGOApplication.getFacebookService().logOut();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                    }
+                }).show();
     }
 }

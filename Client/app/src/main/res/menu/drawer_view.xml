@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_cities"
+            android:icon="@drawable/nav_cities"
+            android:title="@string/cities"
+            />
+    </group>
+    <group android:id="@+id/menu_bottom" android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_close_session"
+            android:icon="@drawable/nav_close_session"
+            android:title="@string/close_session"/>
+    </group>
+
+</menu>

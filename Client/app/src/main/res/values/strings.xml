@@ -29,6 +29,17 @@
     <!--Activity list City-->
     <string name="wrong_url">The audio is not available at this moment</string>
 
+    <!--Navigation Drawer-->
+    <string name="close_session">Close Session</string>
+    <string name="cities">Cities</string>
+    <string name="drawer_open">drawer open</string>
+    <string name="drawer_close">drawer close</string>
+
+    <!--Alert Close Session-->
+    <string name="msg_close_session">¿Do you want to close session?</string>
+    <string name="accept">Ok</string>
+    <string name="cancel">Cancel</string>
+
     <!--Error request volley-->
     <string name="error_request">Server offline, try again later</string>
     <string name="location_denied">To use the app you need to activate Location</string>

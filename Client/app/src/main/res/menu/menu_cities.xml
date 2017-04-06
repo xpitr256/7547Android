@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/cities"
-        android:icon="@drawable/ic_list_white_24dp"
+        android:icon="@drawable/nav_cities"
         android:orderInCategory="100"
         app:showAsAction="always"
         android:title="Cities"></item>

@@ -1,91 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_city"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="10dp"
+    android:fitsSystemWindows="true"
     tools:context="com.example.tallerdyp2.client.CityActivity">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/image_error"
-        android:background="@drawable/image_error"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:visibility="gone"
-        android:layout_marginTop="30dp" />
-
-    <TextView android:id="@+id/textErrorRequest"
-        android:visibility="gone"
-        style="@style/ErrorDescription"/>
-
-    <ProgressBar
-        android:id="@+id/loadingPanel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:indeterminate="true" />
-
-
-    <TextView
-        android:text="@string/welcome"
-        android:id="@+id/header_welcome"
-        style="@style/Subtitle"/>
-
-    <TextView
-        tools:text="TextView"
-        android:id="@+id/header_city"
-        android:layout_below="@+id/header_welcome"
-        style="@style/Title"/>
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/header_city"
-        >
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="@string/welcome"
+            android:id="@+id/header_welcome"
+            style="@style/Subtitle"/>
+
+        <TextView
+            tools:text="TextView"
+            android:id="@+id/header_city"
+            android:layout_below="@+id/header_welcome"
+            style="@style/Title"/>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <com.daimajia.slider.library.SliderLayout
-                android:id="@+id/slider"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                />
 
-            <!--<ImageView-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:adjustViewBounds="true"-->
-                <!--android:scaleType="fitCenter"-->
-                <!--android:id="@+id/image_view" />-->
-
-            <TextView
-                tools:text="TextView"
-                android:id="@+id/description_city"
-                android:layout_below="@+id/slider"
-                android:layout_marginTop="10dp"
-                style="@style/Description" />
-
-            <TextView
-                android:text="@string/no_attractions"
-                android:id="@+id/no_attractions"
-                android:layout_below="@+id/description_city"
-                android:layout_marginTop="10dp"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/image_error"
+                android:background="@drawable/image_error"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:visibility="gone"
-                style="@style/ErrorDescription" />
+                android:layout_marginTop="30dp" />
 
-            <LinearLayout
-                android:orientation="vertical"
+            <TextView android:id="@+id/textErrorRequest"
+                android:visibility="gone"
+                style="@style/ErrorDescription"/>
+
+            <ProgressBar
+                android:id="@+id/loadingPanel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:indeterminate="true" />
+
+
+
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/attractions_list"
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/description_city"
-                />
+                android:layout_height="wrap_content"
+                >
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.daimajia.slider.library.SliderLayout
+                        android:id="@+id/slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        />
+
+                    <!--<ImageView-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:adjustViewBounds="true"-->
+                    <!--android:scaleType="fitCenter"-->
+                    <!--android:id="@+id/image_view" />-->
+
+                    <TextView
+                        tools:text="TextView"
+                        android:id="@+id/description_city"
+                        android:layout_below="@+id/slider"
+                        android:layout_marginTop="10dp"
+                        style="@style/Description" />
+
+                    <TextView
+                        android:text="@string/no_attractions"
+                        android:id="@+id/no_attractions"
+                        android:layout_below="@+id/description_city"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone"
+                        style="@style/ErrorDescription" />
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/attractions_list"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/description_city"
+                        />
+                </RelativeLayout>
+            </ScrollView>
+
         </RelativeLayout>
-    </ScrollView>
-</RelativeLayout>
+
+    </LinearLayout>
+
+
+
+    <!--<android.support.design.widget.NavigationView-->
+        <!--android:id="@+id/nvView"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="start"-->
+        <!--menu="@menu/drawer_view"-->
+        <!--itemIconTint="@color/drawer_item_icon"-->
+        <!--itemTextColor="@color/drawer_item_text"-->
+
+        <!--/>-->
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/left_drawer"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
+        android:background="@color/colorPrimaryDark"
+        app:menu="@menu/drawer_view"
+        app:itemIconTint="@color/drawer_item_icon"
+        app:itemTextColor="@color/drawer_item_text"
+        />
+</android.support.v4.widget.DrawerLayout>
