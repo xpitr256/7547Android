@@ -1,13 +1,11 @@
 package com.example.tallerdyp2.client;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -22,7 +20,6 @@ import com.example.tallerdyp2.client.utils.Parser;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,8 +131,8 @@ public class CitiesActivity extends AppCompatActivity implements Callable{
 
         // Inicializar el adaptador con la fuente de datos.
 
-//        this.cities = Parser.parseCities(response);
-        this.cities = Mocker.parseCities(response);
+        this.cities = Parser.parseCities(response);
+//        this.cities = Mocker.parseCities(response);
         citiesAdapter.addAll(this.cities);
 
         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
