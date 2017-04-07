@@ -213,7 +213,6 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
                 return geocoder.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1).get(0).getLocality();
             }
         } catch (IOException e) {
-            this.showError(getResources().getString(R.string.error_request));
         }
 
 
