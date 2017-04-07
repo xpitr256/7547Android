@@ -27,4 +27,32 @@ public class SharedPreferencesUtils {
 
         editor.commit();
     }
+
+    public static String getFacebookUserId() {
+        String token = prefs.getString(Constants.FB_USER_ID, Constants.EMPTY_STRING);
+
+        return token;
+    }
+
+    public static void setFacebookUserId(String userId) {
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(Constants.FB_USER_ID, userId);
+
+        editor.commit();
+    }
+
+    public static String getSplexUserName() {
+        String token = prefs.getString(Constants.SPLEX_USER_NAME, Constants.EMPTY_STRING);
+
+        return token;
+    }
+
+    public static void setSplexUserName(String userId) {
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(Constants.SPLEX_USER_NAME, userId);
+
+        editor.commit();
+    }
 }

@@ -35,7 +35,10 @@ public class InitialActivity extends AppCompatActivity {
 
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
 
-
+        loginButton.setReadPermissions("user_friends");
+        loginButton.setReadPermissions("public_profile");
+        loginButton.setReadPermissions("email");
+        loginButton.setReadPermissions("user_birthday");
 
         AttractionGOApplication.getFacebookService().registerCallbackInButtton(loginButton);
 

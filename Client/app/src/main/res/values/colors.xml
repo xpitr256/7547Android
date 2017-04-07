@@ -7,4 +7,6 @@
     <color name="grey">#808080</color>
     <color name="grey_hard">#555151</color>
     <color name="text">#111</color>
+    <color name="tabs_selector">#616161</color>
+    <color name="tabs_background">#e0e0e0</color>
 </resources>

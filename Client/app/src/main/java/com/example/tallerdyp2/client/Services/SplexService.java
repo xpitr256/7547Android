@@ -2,14 +2,17 @@ package com.example.tallerdyp2.client.Services;
 
 import android.content.Intent;
 import android.telecom.Call;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.example.tallerdyp2.client.AttractionGOApplication;
 import com.example.tallerdyp2.client.CityActivity;
+import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.utils.Callable;
 import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.SharedPreferencesUtils;
+import com.example.tallerdyp2.client.utils.SplexCallable;
 import com.facebook.AccessToken;
 import com.facebook.login.LoginResult;
 
@@ -21,7 +24,7 @@ import org.json.JSONObject;
  * Created by Sebastian on 1/4/2017.
  */
 
-public class SplexService implements Callable{
+public class SplexService implements SplexCallable {
 
     String token;
     String provider = "facebook";
@@ -52,19 +55,32 @@ public class SplexService implements Callable{
     }
 
     @Override
-    public void execute(JSONArray response) {
-
-    }
-
-    @Override
-    public void execute(JSONObject response) {
+    public void executeUserData(JSONObject response) {
         try {
-            SharedPreferencesUtils.setTokenSplex(response.getString("splexUserToken"));
+            JSONArray data = response.getJSONObject("data").getJSONArray("socialAccounts");
+            for(int i  = 0; i < data.length(); i++) {
+                if(data.getJSONObject(i).getString("provider").equals("FACEBOOK")){
+                    SharedPreferencesUtils.setSplexUserName(data.getJSONObject(i).getJSONObject("data").getString("name"));
+                    SharedPreferencesUtils.setFacebookUserId(data.getJSONObject(i).getJSONObject("data").getString("user_id"));
+                }
+            }
+
         } catch (JSONException e) {
-            SharedPreferencesUtils.setTokenSplex(Constants.EMPTY_STRING);
+            SharedPreferencesUtils.setSplexUserName(Constants.EMPTY_STRING);
+            SharedPreferencesUtils.setFacebookUserId(Constants.EMPTY_STRING);
         }
         Intent intent = new Intent(AttractionGOApplication.getAppContext(), CityActivity.class);
         AttractionGOApplication.getAppContext().startActivity(intent);
+    }
+
+    @Override
+    public void executeLogIn(JSONObject response) {
+        try {
+            SharedPreferencesUtils.setTokenSplex(response.getJSONObject("data").getString("splexUserToken"));
+        } catch (JSONException e) {
+            SharedPreferencesUtils.setTokenSplex(Constants.EMPTY_STRING);
+        }
+        AttractionGOApplication.getVolleyRequestService().retrieveSplexUserData(this);
     }
 
     @Override
@@ -73,6 +89,9 @@ public class SplexService implements Callable{
         switch (error.networkResponse.statusCode){
             case 400 :
                 Toast.makeText(AttractionGOApplication.getAppContext(), "bad request", Toast.LENGTH_SHORT);
+                break;
+            case 401 :
+                Toast.makeText(AttractionGOApplication.getAppContext(), "bad token", Toast.LENGTH_SHORT);
                 break;
             case 422 :
                 this.logSplexWithFacebook();

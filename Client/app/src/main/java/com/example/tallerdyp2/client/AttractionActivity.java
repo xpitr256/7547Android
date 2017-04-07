@@ -1,11 +1,10 @@
 package com.example.tallerdyp2.client;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -15,55 +14,89 @@ import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.devbrackets.android.exomedia.listener.OnErrorListener;
 import com.devbrackets.android.exomedia.ui.widget.EMVideoView;
 import com.example.tallerdyp2.client.Entities.Attraction;
+import com.example.tallerdyp2.client.builders.TabFragmentBuilder;
+import com.example.tallerdyp2.client.customViews.SlidingTabLayout;
+import com.example.tallerdyp2.client.fragments.attraction.DescriptionFragment;
+import com.example.tallerdyp2.client.fragments.attraction.ReviewFragment;
+import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Sebastian on 23/3/2017.
  */
 
-public class AttractionActivity extends AppCompatActivity implements OnErrorListener{
+public class AttractionActivity extends AppCompatActivity{
 
     private Attraction attraction;
-    private EMVideoView emVideoView;
+    protected TabsAdapter tabPagerAdapter;
+    protected SlidingTabLayout tabs;
+
+    protected List<CharSequence> tabsTitles;
+    protected List<Fragment> fragments;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        tabsTitles = new ArrayList<>();
+        fragments = new ArrayList<>();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_attraction);
         attraction = (Attraction) getIntent().getSerializableExtra("Attraction");
 
-        findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
+        ElementViewUtils.setText(findViewById(R.id.header_attraction),R.id.header_attraction,attraction.getName());
 
-        findViewById(R.id.slider).setVisibility(View.GONE);
-        findViewById(R.id.header_attraction).setVisibility(View.GONE);
-        findViewById(R.id.description_attraction).setVisibility(View.GONE);
-        findViewById(R.id.audio_view).setVisibility(View.GONE);
-        this.updateViewAttraction();
+        setViewPager();
     }
 
-    private void updateViewAttraction() {
-        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+    private void setViewPager() {
 
-        ElementViewUtils.setText(findViewById(R.id.header_attraction),R.id.header_attraction,attraction.getName());
-        ElementViewUtils.setText(findViewById(R.id.description_attraction),R.id.description_attraction,attraction.getDescription());
+        setTabsAndFragments();
 
-        SliderLayout mDemoSlider = (SliderLayout) findViewById(R.id.slider);
-        for(String url : attraction.getImagesURL()){
-            DefaultSliderView textSliderView = new DefaultSliderView(this);
-            textSliderView.image(url);
-            mDemoSlider.addSlider(textSliderView);
+        tabPagerAdapter =  new TabsAdapter(getSupportFragmentManager(), fragments, tabsTitles);
+
+        viewPager = (ViewPager) findViewById(R.id.view_pager_attraction);
+        viewPager.setAdapter(tabPagerAdapter);
+
+        tabs = (SlidingTabLayout) findViewById(R.id.tabs_attraction);
+        tabs.setDistributeEvenly(false);
+        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.grey);
+            }
+        });
+        tabs.setViewPager(viewPager);
+    }
+
+    private void setTabsAndFragments() {
+
+        tabsTitles.clear();
+        fragments.clear();
+
+        Map<String, TabFragmentBuilder> tabsFragments = initTabFragments();
+
+        for(String tab: tabsFragments.keySet()){
+            tabsTitles.add(tab);
+            fragments.add(tabsFragments.get(tab).buildFragment());
         }
+    }
 
-        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
-        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-        mDemoSlider.setDuration(4000);
-
-        findViewById(R.id.slider).setVisibility(View.VISIBLE);
-        findViewById(R.id.header_attraction).setVisibility(View.VISIBLE);
-        findViewById(R.id.description_attraction).setVisibility(View.VISIBLE);
-        this.setupVideoView();
+    private Map<String, TabFragmentBuilder> initTabFragments(){
+        return new LinkedHashMap<String, TabFragmentBuilder>(){{
+            put(Constants.DESCRIPTION_AT, new TabFragmentBuilder<>(new DescriptionFragment(),
+                    Constants.DESCRIPTION_AT, attraction));
+            put(Constants.REVIEW_AT, new TabFragmentBuilder<>(new ReviewFragment(),
+                    Constants.REVIEW_AT, attraction));
+        }};
     }
 
     @Override
@@ -83,25 +116,4 @@ public class AttractionActivity extends AppCompatActivity implements OnErrorList
         super.onResume();
     }
 
-    @Override
-    protected void onPause()
-    {
-        emVideoView.pause();
-        super.onPause();
-    }
-
-    private void setupVideoView() {
-        emVideoView = (EMVideoView) findViewById(R.id.audio_view);
-        emVideoView.setVisibility(View.VISIBLE);
-        emVideoView.setOnErrorListener(this);
-        emVideoView.setVideoURI(Uri.parse(this.attraction.getAudioURL()));
-        emVideoView.getVideoControls().setCanHide(false);
-    }
-
-    @Override
-    public boolean onError() {
-        findViewById(R.id.wrong_url).setVisibility(View.VISIBLE);
-        findViewById(R.id.audio_view).setVisibility(View.GONE);
-        return false;
-    }
 }
