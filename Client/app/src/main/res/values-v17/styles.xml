@@ -50,4 +50,10 @@
         <item name="android:typeface">serif</item>
         <item name="colorControlNormal">@color/grey</item>
     </style>
+
+    <style name="comment" parent="@android:style/Widget.Holo.Light.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textStyle">italic</item>
+    </style>
 </resources>

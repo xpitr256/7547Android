@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.RatingBar;
 
 import com.devbrackets.android.exomedia.ui.widget.EMVideoView;
 import com.example.tallerdyp2.client.Entities.Review;
@@ -15,6 +16,7 @@ import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Sebastian on 6/4/2017.
@@ -24,7 +26,7 @@ public class ReviewFragment extends Fragment {
 
     private View rootView;
     private ListView reviewsList;
-    private ArrayList<Review> reviews;
+    private List<Review> reviews;
     private ReviewsAdapter reviewsAdapter;
 
     @Override
@@ -42,16 +44,13 @@ public class ReviewFragment extends Fragment {
     }
 
     private void setViewReview(Attraction attraction) {
-        
+
+        ((RatingBar) rootView.findViewById(R.id.rating)).setRating((float) attraction.getRating());
+
         // Instancia del ListView.
         reviewsList = (ListView) rootView.findViewById(R.id.reviews_list);
 
-        reviews = new ArrayList<>();
-        Review myReview = new Review("seba", "muy bueno", 4);
-
-        reviews.add(myReview);
-        reviews.add(myReview);
-        reviews.add(myReview);
+        reviews = attraction.getReviews();
 
         // Inicializar el adaptador con la fuente de datos.
         reviewsAdapter = new ReviewsAdapter(getContext(), reviews);

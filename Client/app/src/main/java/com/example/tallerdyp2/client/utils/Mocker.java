@@ -2,6 +2,7 @@ package com.example.tallerdyp2.client.utils;
 
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.Entities.City;
+import com.example.tallerdyp2.client.Entities.Review;
 
 import org.json.JSONArray;
 
@@ -16,13 +17,21 @@ public class Mocker {
     public static List<City> parseCities(JSONArray response) {
         List<City> cities = new ArrayList<>();
         List<Attraction> attractions = new ArrayList<>();
+        List<Review> reviews = new ArrayList<>();
         List<String> urls = new ArrayList<>();
+
         urls.add("http://i.imgur.com/sRvjuhY.jpg");
         urls.add("http://i.imgur.com/sRvjuhY.jpg");
+
+        Review review = new Review("Sebastian Vicario", SharedPreferencesUtils.getFacebookUserId(), "", "I love it!!!", 3.5);
+
+        reviews.add(review);
+
         Attraction parqueDeLaCosta = new Attraction(
                 "1",
                 "Parque de la costa",
                 "Descripcion",
+                3.5,
                 urls,
                 "https://archive.org/download/Popeye_forPresident/Popeye_forPresident_512kb.mp4",
                 22.2,
@@ -30,8 +39,8 @@ public class Mocker {
                 "FAMILY",
                 "00:00",
                 "00:00",
-                20
-        );
+                20,
+                reviews);
         attractions.add(parqueDeLaCosta);
         attractions.add(parqueDeLaCosta);
         attractions.add(parqueDeLaCosta);

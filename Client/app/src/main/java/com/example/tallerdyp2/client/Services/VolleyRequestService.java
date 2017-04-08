@@ -1,6 +1,7 @@
 package com.example.tallerdyp2.client.Services;
 
 import android.util.Log;
+import android.view.View;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -137,6 +138,23 @@ public class VolleyRequestService {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+        // Add the request to the RequestQueue.
+        Volley.newRequestQueue(AttractionGOApplication.getAppContext()).add(jsObjRequest);
+    }
+
+    public void sendReview(final Callable call, JSONObject data) {
+        final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, Constants.IP + "/review",
+                data, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                call.execute(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                call.error(error);
+            }
+        });
         // Add the request to the RequestQueue.
         Volley.newRequestQueue(AttractionGOApplication.getAppContext()).add(jsObjRequest);
     }

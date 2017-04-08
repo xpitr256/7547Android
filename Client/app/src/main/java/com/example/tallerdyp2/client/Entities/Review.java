@@ -7,22 +7,28 @@ import java.io.Serializable;
  */
 
 public class Review implements Serializable {
-    private String name;
+
+
+    private String userAvatarUrl;
+    private String userName;
+    private String userId;
     private String comment;
-    private int points;
+    private double rating;
 
-    public Review(String name, String comment, int points) {
-        this.name = name;
-        this.comment = comment;
-        this.points = points;
+    public Review(String userName, String userId, String userAvatarUrl, String comments, double rating) {
+        this.userName = userName;
+        this.userId = userId;
+        this.userAvatarUrl = userAvatarUrl;
+        this.comment = comments;
+        this.rating = rating;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getComment() {
@@ -33,11 +39,29 @@ public class Review implements Serializable {
         this.comment = comment;
     }
 
-    public int getPoints() {
-        return points;
+
+
+    public String getUserAvatarUrl() {
+        return userAvatarUrl;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
+    public void setUserAvatarUrl(String userAvatarUrl) {
+        this.userAvatarUrl = userAvatarUrl;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

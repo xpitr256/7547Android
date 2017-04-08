@@ -15,6 +15,8 @@ import java.util.List;
 
 public class Attraction implements Serializable{
 
+    private double rating;
+    private List<Review> reviews;
     private String audioURL;
     private String id;
     private String name;
@@ -28,10 +30,11 @@ public class Attraction implements Serializable{
     private int price;
     private double distance;
 
-    public Attraction(String id, String name, String description, List<String> imagesURL, String audioURL, double latitude, double longitude, String type, String openTime, String closeTime, int price) {
+    public Attraction(String id, String name, String description, double rating, List<String> imagesURL, String audioURL, double latitude, double longitude, String type, String openTime, String closeTime, int price, List<Review> reviews) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.rating = rating;
         this.imagesURL = imagesURL;
         this.audioURL = audioURL;
         this.latitude = latitude;
@@ -51,6 +54,7 @@ public class Attraction implements Serializable{
         }
 
         this.price = price;
+        this.reviews = reviews;
     }
 
 
@@ -152,6 +156,22 @@ public class Attraction implements Serializable{
 
     public void updateDistance(double lat, double lng) {
         this.distance = Helper.distance(this.latitude, lat, this.longitude, lng, 0.0, 0.0);
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 
 

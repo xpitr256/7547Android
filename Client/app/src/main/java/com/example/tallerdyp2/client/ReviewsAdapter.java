@@ -1,13 +1,11 @@
 package com.example.tallerdyp2.client;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.RatingBar;
-import android.widget.TextView;
 
 import com.example.tallerdyp2.client.Entities.Review;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
@@ -32,10 +30,10 @@ public class ReviewsAdapter extends ArrayAdapter<Review> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View item = inflater.inflate(R.layout.reviews_item_list, null);
-        ElementViewUtils.setText(item, R.id.name, SharedPreferencesUtils.getSplexUserName());
+        ElementViewUtils.setText(item, R.id.name, reviews.get(position).getUserName());
         RatingBar mRatingBar = (RatingBar) item.findViewById(R.id.rating);
-        mRatingBar.setRating(reviews.get(position).getPoints());
-        ElementViewUtils.setText(item, R.id.comment, "Excelent attraction, i love it!!! Excelent attraction, i love it!!!  Excelent attraction, i love it!!!  Excelent attraction, i love it!!!  Excelent attraction, i love it!!!  Excelent attraction, i love it!!! ");
+        mRatingBar.setRating((float)reviews.get(position).getRating());
+        ElementViewUtils.setText(item, R.id.comment, reviews.get(position).getComment());
 
         return (item);
     }

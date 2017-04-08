@@ -100,8 +100,9 @@ public class AttractionActivity extends AppCompatActivity{
             case android.R.id.home:
                 this.finish();
                 return true;
-            case R.id.attraction:
-                Intent intent = new Intent(this, CitiesActivity.class);
+            case R.id.review:
+                Intent intent = new Intent(this, MyReviewActivity.class);
+                intent.putExtra("Attraction", attraction);
                 startActivity(intent);
                 return true;
             default:

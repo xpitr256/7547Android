@@ -29,6 +29,10 @@
     <!--Activity list City-->
     <string name="wrong_url">El audio no se encuentra disponible en este momento </string>
 
+    <!--Activity MyReview-->
+    <string name="leave_comment">Deje su comentario aqui (0-255)</string>
+    <string name="send_comment">Enviar comentario</string>
+
     <!--Navigation Drawer-->
     <string name="close_session">Cerrar Sesión</string>
     <string name="cities">Ciudades</string>

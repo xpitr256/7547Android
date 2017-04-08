@@ -2,6 +2,7 @@ package com.example.tallerdyp2.client.utils;
 
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.Entities.City;
+import com.example.tallerdyp2.client.Entities.Review;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,6 +33,7 @@ public class Parser {
                                     attractionsJSON.getJSONObject(j).getString("_id"),
                                     attractionsJSON.getJSONObject(j).getString("name"),
                                     attractionsJSON.getJSONObject(j).getString("description"),
+                                    attractionsJSON.getJSONObject(j).getDouble("rating"),
                                     Parser.parseImagesURL(attractionsJSON.getJSONObject(j).getJSONArray("imagesURL")),
                                     attractionsJSON.getJSONObject(j).getString("audioURL"),
                                     attractionsJSON.getJSONObject(j).getJSONObject("location").getDouble("lat"),
@@ -42,7 +44,8 @@ public class Parser {
 //                                    attractionsJSON.getJSONObject(j).getString("type"),
 //                                    attractionsJSON.getJSONObject(j).getString("openTime"),
 //                                    attractionsJSON.getJSONObject(j).getString("closeTime"),
-                                    attractionsJSON.getJSONObject(j).getInt("price")
+                                    attractionsJSON.getJSONObject(j).getInt("price"),
+                                    Parser.parseReviews(attractionsJSON.getJSONObject(j).getJSONArray("reviews"))
                             ));
                 }
                 cities.add(new City(city.getString("_id"),
@@ -65,5 +68,19 @@ public class Parser {
             urls.add(imagesURL.getString(i));
         }
         return urls;
+    }
+
+    public static List<Review> parseReviews(JSONArray reviewsJson) throws JSONException {
+        List<Review> reviews = new ArrayList<>();
+        for(int i = 0; i < reviewsJson.length(); i++){
+            reviews.add(new Review(
+                    reviewsJson.getJSONObject(i).getString("userName"),
+                    reviewsJson.getJSONObject(i).getString("userId"),
+                    reviewsJson.getJSONObject(i).getString("userAvatarUrl"),
+                    reviewsJson.getJSONObject(i).getString("comments"),
+                    reviewsJson.getJSONObject(i).getDouble("rating")
+            ));
+        }
+        return reviews;
     }
 }
