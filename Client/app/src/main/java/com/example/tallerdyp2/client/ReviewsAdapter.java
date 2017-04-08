@@ -35,6 +35,7 @@ public class ReviewsAdapter extends ArrayAdapter<Review> {
         ElementViewUtils.setText(item, R.id.name, SharedPreferencesUtils.getSplexUserName());
         RatingBar mRatingBar = (RatingBar) item.findViewById(R.id.rating);
         mRatingBar.setRating(reviews.get(position).getPoints());
+        ElementViewUtils.setText(item, R.id.comment, "Excelent attraction, i love it!!! Excelent attraction, i love it!!!  Excelent attraction, i love it!!!  Excelent attraction, i love it!!!  Excelent attraction, i love it!!!  Excelent attraction, i love it!!! ");
 
         return (item);
     }

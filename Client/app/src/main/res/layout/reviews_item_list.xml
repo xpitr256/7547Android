@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:background="@color/tabs_background"
+            android:id="@+id/content"
             >
 
             <!--<ImageView-->
@@ -26,29 +27,33 @@
                 <!--android:layout_alignParentTop="true"-->
                 <!--android:layout_marginRight="16dp"-->
                 <!--/>-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/name"
+                tools:text="Sebastian Vicario"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                />
             <RatingBar
                 android:id="@+id/rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="?android:attr/ratingBarStyleSmall"
                 android:theme="@style/RatingBar"
+                android:layout_alignParentRight="true"
                 android:numStars="5"
                 android:stepSize="0.1"
                 android:isIndicator="true" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/name"
-                android:layout_below="@+id/rating"
-                android:textSize="16sp"
-                />
+
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/points"
+                android:id="@+id/comment"
                 android:layout_below="@+id/name"
+                android:textStyle="italic"
                 />
 
         </RelativeLayout>

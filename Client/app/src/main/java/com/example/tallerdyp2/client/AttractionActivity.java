@@ -1,18 +1,14 @@
 package com.example.tallerdyp2.client;
 
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
-import com.devbrackets.android.exomedia.listener.OnErrorListener;
-import com.devbrackets.android.exomedia.ui.widget.EMVideoView;
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.builders.TabFragmentBuilder;
 import com.example.tallerdyp2.client.customViews.SlidingTabLayout;
@@ -21,7 +17,6 @@ import com.example.tallerdyp2.client.fragments.attraction.ReviewFragment;
 import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -105,6 +100,10 @@ public class AttractionActivity extends AppCompatActivity{
             case android.R.id.home:
                 this.finish();
                 return true;
+            case R.id.attraction:
+                Intent intent = new Intent(this, CitiesActivity.class);
+                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -114,6 +113,13 @@ public class AttractionActivity extends AppCompatActivity{
     protected void onResume()
     {
         super.onResume();
+    }
+
+        @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_attraction, menu);
+        return true;
     }
 
 }

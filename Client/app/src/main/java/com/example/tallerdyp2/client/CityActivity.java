@@ -371,7 +371,7 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_cities, menu);
+//        inflater.inflate(R.menu.menu_attraction, menu);
 //        return true;
 //    }
 
