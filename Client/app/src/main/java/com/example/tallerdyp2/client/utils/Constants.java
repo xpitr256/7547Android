@@ -7,6 +7,7 @@ package com.example.tallerdyp2.client.utils;
 public class Constants {
     public static final int PERMISSION_LOCATION = 1;
     public static final int LOCATION_SERVICE = 1000;
+    public static final double MIN_DIST_REFRESH_LOC = 500;
 
     public static final String IP = "https://taller-proyectos-2-clone.herokuapp.com";
 
@@ -24,6 +25,5 @@ public class Constants {
     //TABS ATTRACTION
     public static final String DESCRIPTION_AT = "Description";
     public static final String REVIEW_AT = "Reviews";
-
 
 }

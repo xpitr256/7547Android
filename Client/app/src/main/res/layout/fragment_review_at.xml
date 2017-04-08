@@ -17,7 +17,7 @@
         android:layout_marginTop="10dp"
         android:numStars="5"
         android:stepSize=".5"
-        android:clickable="false"/>
+        android:isIndicator="true"/>
 
     <ListView
         android:layout_width="match_parent"
