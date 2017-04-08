@@ -254,6 +254,7 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
         ElementViewUtils.setText(findViewById(R.id.header_city),R.id.header_city,city.getName());
 //        ElementViewUtils.setImageFromURL(findViewById(R.id.image_view),R.id.image_view,city.getImageURL(),getApplicationContext());
         SliderLayout mDemoSlider = (SliderLayout) findViewById(R.id.slider);
+        mDemoSlider.removeAllSliders();
         for(String url : city.getImagesURL()){
             DefaultSliderView textSliderView = new DefaultSliderView(this);
             textSliderView.image(url);
@@ -266,6 +267,18 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
         mDemoSlider.setDuration(4000);
 
         ElementViewUtils.setText(findViewById(R.id.description_city),R.id.description_city,city.getDescription());
+
+        this.updateViewAttractions();
+
+        findViewById(R.id.slider).setVisibility(View.VISIBLE);
+        findViewById(R.id.header_city).setVisibility(View.VISIBLE);
+        findViewById(R.id.header_welcome).setVisibility(View.VISIBLE);
+        findViewById(R.id.description_city).setVisibility(View.VISIBLE);
+
+
+    }
+
+    private void updateViewAttractions(){
         LinearLayout list = (LinearLayout) findViewById(R.id.attractions_list);
         list.removeAllViews();
         if(!city.getAttractions().isEmpty()){
@@ -279,13 +292,6 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
             findViewById(R.id.attractions_list).setVisibility(View.VISIBLE);
         }else
             findViewById(R.id.no_attractions).setVisibility(View.VISIBLE);
-
-        findViewById(R.id.slider).setVisibility(View.VISIBLE);
-        findViewById(R.id.header_city).setVisibility(View.VISIBLE);
-        findViewById(R.id.header_welcome).setVisibility(View.VISIBLE);
-        findViewById(R.id.description_city).setVisibility(View.VISIBLE);
-
-
     }
 
     private void useLocationService() {
@@ -355,8 +361,23 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
 
     @Override
     public void onLocationChanged(Location location) {
+        Location locAux = myLocation;
         myLocation = location;
+
+        if(hasToRefreshView(locAux, location)){
+            if(this.city != null){
+                this.updateViewAttractions();
+            }
+        }
     }
+
+    private boolean hasToRefreshView(Location locAux, Location location) {
+        if(locAux == null) return true;
+        if(Helper.distance(locAux.getLatitude(), location.getLongitude(), locAux.getLatitude(), location.getLongitude(), 0.0, 0.0) > Constants.MIN_DIST_REFRESH_LOC) return true;
+
+        return false;
+    }
+
     @Override
     public void onConnectionSuspended(int i) {}
 

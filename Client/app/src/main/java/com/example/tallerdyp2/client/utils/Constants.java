@@ -17,4 +17,6 @@ public class Constants {
     public static final String PREFERENCES = "MyPreferences";
     public static final String EMPTY_STRING = "";
     public static final String TOKEN_SPLEX_SESSION = "TokenSplexSession";
+
+    public static final double MIN_DIST_REFRESH_LOC = 500;
 }
