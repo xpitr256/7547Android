@@ -32,7 +32,7 @@ public class AttractionsAdapter extends ArrayAdapter<Attraction> {
         View item = inflater.inflate(R.layout.attractions_item_list, null);
         ElementViewUtils.setText(item, R.id.name, attractions.get(position).getName());
         ElementViewUtils.setText(item, R.id.distance, getContext().getString(R.string.distance_attraction)+" "+Helper.formatDistance(attractions.get(position).getDistance()));
-        ElementViewUtils.setImageFromURL(item, R.id.image_view,attractions.get(position).getImagesURL().get(0),getContext());
+        ElementViewUtils.setImageFromURL(item, R.id.image_view,attractions.get(position).getImagesURL().isEmpty() ? null : attractions.get(position).getImagesURL().get(0),getContext());
         item.setOnClickListener(new View.OnClickListener() {
 
             @Override

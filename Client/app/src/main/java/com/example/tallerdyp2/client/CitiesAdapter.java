@@ -34,7 +34,7 @@ public class CitiesAdapter extends ArrayAdapter<City> {
         View item = inflater.inflate(R.layout.cities_item_list, null);
         ElementViewUtils.setText(item, R.id.name, cities.get(position).getName());
         ElementViewUtils.setText(item, R.id.count_attraction, getContext().getString(R.string.attractions_list)+" "+ cities.get(position).getAttractions().size());
-        ElementViewUtils.setImageFromURL(item, R.id.image_view, cities.get(position).getImagesURL().get(0),getContext());
+        ElementViewUtils.setImageFromURL(item, R.id.image_view, cities.get(position).getImagesURL().isEmpty() ? null : cities.get(position).getImagesURL().get(0),getContext());
 
         item.setOnClickListener(new View.OnClickListener() {
             @Override

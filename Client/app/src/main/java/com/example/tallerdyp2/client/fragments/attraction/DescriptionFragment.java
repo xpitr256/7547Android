@@ -17,6 +17,8 @@ import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 
+import java.io.FileNotFoundException;
+
 /**
  * Created by Sebastian on 6/4/2017.
  */
@@ -25,6 +27,7 @@ public class DescriptionFragment extends Fragment implements OnErrorListener {
 
     private View rootView;
     private EMVideoView emVideoView;
+    private SliderLayout mDemoSlider;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,10 +47,16 @@ public class DescriptionFragment extends Fragment implements OnErrorListener {
 
         ElementViewUtils.setText(rootView.findViewById(R.id.description_attraction),R.id.description_attraction,attraction.getDescription());
 
-        SliderLayout mDemoSlider = (SliderLayout) rootView.findViewById(R.id.slider);
-        for(String url : attraction.getImagesURL()){
+        mDemoSlider = (SliderLayout) rootView.findViewById(R.id.slider);
+        if(!attraction.getImagesURL().isEmpty()) {
+            for (String url : attraction.getImagesURL()) {
+                DefaultSliderView textSliderView = new DefaultSliderView(getContext());
+                textSliderView.image(url);
+                mDemoSlider.addSlider(textSliderView);
+            }
+        }else{
             DefaultSliderView textSliderView = new DefaultSliderView(getContext());
-            textSliderView.image(url);
+            textSliderView.image(R.drawable.no_photo);
             mDemoSlider.addSlider(textSliderView);
         }
 
@@ -61,11 +70,18 @@ public class DescriptionFragment extends Fragment implements OnErrorListener {
     }
 
     private void setupVideoView(View rootView, Attraction attraction) {
+        //INITIALIZE AUDIOVIEW
         emVideoView = (EMVideoView) rootView.findViewById(R.id.audio_view);
-        emVideoView.setVisibility(View.VISIBLE);
-        emVideoView.setOnErrorListener(this);
-        emVideoView.setVideoURI(Uri.parse(attraction.getAudioURL()));
-        emVideoView.getVideoControls().setCanHide(false);
+
+        //CHECK IF ATTRACTION HAS AUDIO
+        if(attraction.getAudioURL() != null && !attraction.getAudioURL().equals("")){
+            emVideoView.setVisibility(View.VISIBLE);
+            emVideoView.setOnErrorListener(this);
+            emVideoView.setVideoURI(Uri.parse(attraction.getAudioURL()));
+            emVideoView.getVideoControls().setCanHide(false);
+        }else{
+            this.onError();
+        }
     }
 
     @Override
@@ -86,11 +102,18 @@ public class DescriptionFragment extends Fragment implements OnErrorListener {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
+
         if (this.isVisible()) {
             if (!isVisibleToUser) {
                 emVideoView.pause();
             }
         }
+    }
+
+    @Override
+    public void onStop() {
+        mDemoSlider.stopAutoCycle();
+        super.onStop();
     }
 
 

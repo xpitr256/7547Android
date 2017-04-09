@@ -76,6 +76,7 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private NavigationView nvDrawer;
+    private SliderLayout mDemoSlider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -254,14 +255,19 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
 
         ElementViewUtils.setText(findViewById(R.id.header_city),R.id.header_city,city.getName());
 //        ElementViewUtils.setImageFromURL(findViewById(R.id.image_view),R.id.image_view,city.getImageURL(),getApplicationContext());
-        SliderLayout mDemoSlider = (SliderLayout) findViewById(R.id.slider);
+        mDemoSlider = (SliderLayout) findViewById(R.id.slider);
         mDemoSlider.removeAllSliders();
-        for(String url : city.getImagesURL()){
+        if(!city.getImagesURL().isEmpty()) {
+            for (String url : city.getImagesURL()) {
+                DefaultSliderView textSliderView = new DefaultSliderView(this);
+                textSliderView.image(url);
+                mDemoSlider.addSlider(textSliderView);
+            }
+        }else{
             DefaultSliderView textSliderView = new DefaultSliderView(this);
-            textSliderView.image(url);
+            textSliderView.image(R.drawable.no_photo);
             mDemoSlider.addSlider(textSliderView);
         }
-
         mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
         mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         mDemoSlider.setCustomAnimation(new DescriptionAnimation());
@@ -299,7 +305,7 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         locationRequest.setInterval(30 * 1000);
-        locationRequest.setFastestInterval(5 * 1000);
+//        locationRequest.setFastestInterval(5 * 1000);
         fusedLocationProviderApi = LocationServices.FusedLocationApi;
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
@@ -374,7 +380,8 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
 
     private boolean hasToRefreshView(Location locAux, Location location) {
         if(locAux == null) return true;
-        if(Helper.distance(locAux.getLatitude(), location.getLongitude(), locAux.getLatitude(), location.getLongitude(), 0.0, 0.0) > Constants.MIN_DIST_REFRESH_LOC) return true;
+        if(Helper.distance(locAux.getLatitude(), location.getLatitude(), locAux.getLongitude(), location.getLongitude(), 0.0, 0.0) > Constants.MIN_DIST_REFRESH_LOC)
+            return true;
 
         return false;
     }
@@ -512,5 +519,11 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
                     public void onClick(DialogInterface dialog, int whichButton) {
                     }
                 }).show();
+    }
+
+    @Override
+    protected void onStop() {
+        mDemoSlider.stopAutoCycle();
+        super.onStop();
     }
 }
