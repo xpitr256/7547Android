@@ -523,7 +523,7 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
 
     @Override
     protected void onStop() {
-        mDemoSlider.stopAutoCycle();
+        if(mDemoSlider != null) mDemoSlider.stopAutoCycle();
         super.onStop();
     }
 }
