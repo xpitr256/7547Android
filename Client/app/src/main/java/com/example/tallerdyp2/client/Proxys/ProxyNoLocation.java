@@ -2,8 +2,8 @@ package com.example.tallerdyp2.client.Proxys;
 
 import android.content.Intent;
 
-import com.example.tallerdyp2.client.CitiesActivity;
-import com.example.tallerdyp2.client.CityActivity;
+import com.example.tallerdyp2.client.ui.activities.CitiesActivity;
+import com.example.tallerdyp2.client.ui.activities.CityActivity;
 
 /**
  * Created by Sebastian on 25/3/2017.

@@ -1,4 +1,4 @@
-package com.example.tallerdyp2.client;
+package com.example.tallerdyp2.client.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +10,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.tallerdyp2.client.Entities.Attraction;
+import com.example.tallerdyp2.client.R;
+import com.example.tallerdyp2.client.ui.adapters.TabsAdapter;
 import com.example.tallerdyp2.client.builders.TabFragmentBuilder;
 import com.example.tallerdyp2.client.customViews.SlidingTabLayout;
-import com.example.tallerdyp2.client.fragments.attraction.DescriptionFragment;
-import com.example.tallerdyp2.client.fragments.attraction.ReviewFragment;
-import com.example.tallerdyp2.client.utils.Constants;
+import com.example.tallerdyp2.client.ui.fragments.attraction.DescriptionFragment;
+import com.example.tallerdyp2.client.ui.fragments.attraction.ReviewFragment;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ public class AttractionActivity extends AppCompatActivity{
         fragments = new ArrayList<>();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+
         setContentView(R.layout.activity_attraction);
         attraction = (Attraction) getIntent().getSerializableExtra("Attraction");
 
@@ -87,10 +90,10 @@ public class AttractionActivity extends AppCompatActivity{
 
     private Map<String, TabFragmentBuilder> initTabFragments(){
         return new LinkedHashMap<String, TabFragmentBuilder>(){{
-            put(Constants.DESCRIPTION_AT, new TabFragmentBuilder<>(new DescriptionFragment(),
-                    Constants.DESCRIPTION_AT, attraction));
-            put(Constants.REVIEW_AT, new TabFragmentBuilder<>(new ReviewFragment(),
-                    Constants.REVIEW_AT, attraction));
+            put(getString(R.string.description_at), new TabFragmentBuilder<>(new DescriptionFragment(),
+                    getString(R.string.description_at), attraction));
+            put(getString(R.string.review_at), new TabFragmentBuilder<>(new ReviewFragment(),
+                    getString(R.string.review_at), attraction));
         }};
     }
 

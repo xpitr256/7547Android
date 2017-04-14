@@ -9,6 +9,7 @@ import com.example.tallerdyp2.client.R;
 public enum DrawerAction {
 
     CITIES(R.id.nav_cities, true),
+    LANGUAGE(R.id.nav_language,false),
     CLOSE_SESSION(R.id.nav_close_session, false);
 
     int code;

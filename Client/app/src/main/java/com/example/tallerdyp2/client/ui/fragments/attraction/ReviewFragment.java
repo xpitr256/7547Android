@@ -1,4 +1,4 @@
-package com.example.tallerdyp2.client.fragments.attraction;
+package com.example.tallerdyp2.client.ui.fragments.attraction;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,14 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RatingBar;
 
-import com.devbrackets.android.exomedia.ui.widget.EMVideoView;
 import com.example.tallerdyp2.client.Entities.Review;
-import com.example.tallerdyp2.client.ReviewsAdapter;
+import com.example.tallerdyp2.client.ui.adapters.ReviewsAdapter;
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.R;
-import com.example.tallerdyp2.client.utils.Constants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +33,7 @@ public class ReviewFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_review_at, container, false);
 
         Attraction attraction = (Attraction) getArguments().
-                getSerializable(Constants.REVIEW_AT);
+                getSerializable(getString(R.string.review_at));
 
         setViewReview(attraction);
 

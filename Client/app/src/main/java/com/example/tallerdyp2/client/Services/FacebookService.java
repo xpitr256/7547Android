@@ -1,11 +1,10 @@
 package com.example.tallerdyp2.client.Services;
 
-import android.app.Activity;
 import android.content.Intent;
 
 import com.example.tallerdyp2.client.AttractionGOApplication;
-import com.example.tallerdyp2.client.CityActivity;
-import com.example.tallerdyp2.client.InitialActivity;
+import com.example.tallerdyp2.client.ui.activities.CityActivity;
+import com.example.tallerdyp2.client.ui.activities.InitialActivity;
 import com.example.tallerdyp2.client.utils.SharedPreferencesUtils;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;

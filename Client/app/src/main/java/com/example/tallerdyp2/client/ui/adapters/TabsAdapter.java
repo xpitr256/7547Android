@@ -1,4 +1,4 @@
-package com.example.tallerdyp2.client;
+package com.example.tallerdyp2.client.ui.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

@@ -1,18 +1,14 @@
-package com.example.tallerdyp2.client;
+package com.example.tallerdyp2.client.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.example.tallerdyp2.client.AttractionGOApplication;
+import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginResult;
+import com.example.tallerdyp2.client.utils.SharedPreferencesUtils;
 import com.facebook.login.widget.LoginButton;
 
 /**
@@ -27,6 +23,11 @@ public class InitialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+
+        AttractionGOApplication.getLanguageService().setLanguage(SharedPreferencesUtils.getLanguage());
+
         setContentView(R.layout.activity_initial);
 
         ElementViewUtils.setImage(findViewById(R.id.image_view),R.id.image_view,R.drawable.logo,getApplicationContext());

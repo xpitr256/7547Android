@@ -1,4 +1,4 @@
-package com.example.tallerdyp2.client;
+package com.example.tallerdyp2.client.ui.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +9,9 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 
 import com.android.volley.VolleyError;
+import com.example.tallerdyp2.client.AttractionGOApplication;
 import com.example.tallerdyp2.client.Entities.Attraction;
-import com.example.tallerdyp2.client.Entities.Review;
+import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.utils.Callable;
 import com.example.tallerdyp2.client.utils.SharedPreferencesUtils;
 
@@ -31,6 +32,7 @@ public class MyReviewActivity extends AppCompatActivity implements Callable{
         super.onCreate(savedInstanceState);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
 
         attraction = (Attraction) getIntent().getSerializableExtra("Attraction");
 

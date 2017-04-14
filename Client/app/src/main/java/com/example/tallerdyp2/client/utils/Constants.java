@@ -21,9 +21,9 @@ public class Constants {
     public static final String PREFERENCES = "MyPreferences";
     public static final String EMPTY_STRING = "";
     public static final String TOKEN_SPLEX_SESSION = "TokenSplexSession";
+    public static final String LANGUAGE = "Language";
 
-    //TABS ATTRACTION
-    public static final String DESCRIPTION_AT = "Description";
-    public static final String REVIEW_AT = "Reviews";
+    public static final String EN = "en";
+    public static final String ES = "es";
 
 }

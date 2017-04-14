@@ -1,7 +1,6 @@
-package com.example.tallerdyp2.client;
+package com.example.tallerdyp2.client.ui.activities;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,23 +15,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
+import com.example.tallerdyp2.client.AttractionGOApplication;
+import com.example.tallerdyp2.client.ui.adapters.AttractionsAdapter;
 import com.example.tallerdyp2.client.Entities.City;
 import com.example.tallerdyp2.client.Proxys.Proxy;
 import com.example.tallerdyp2.client.Proxys.ProxyNoLocation;
 import com.example.tallerdyp2.client.Proxys.ProxyNormal;
+import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.navigationDrawer.DrawerAction;
 import com.example.tallerdyp2.client.navigationDrawer.DrawerTransactionManager;
 import com.example.tallerdyp2.client.navigationDrawer.Transactional;
@@ -40,7 +38,6 @@ import com.example.tallerdyp2.client.utils.Callable;
 import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 import com.example.tallerdyp2.client.utils.Helper;
-import com.example.tallerdyp2.client.utils.Mocker;
 import com.example.tallerdyp2.client.utils.Parser;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -82,10 +79,13 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+//        Helper.setLanguage("es");
         setContentView(R.layout.activity_city);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.nav_menu);
+        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
 
         initNavigationDrawer();
 
@@ -519,6 +519,28 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
                     public void onClick(DialogInterface dialog, int whichButton) {
                     }
                 }).show();
+    }
+
+    @Override
+    public void changeLanguage() {
+
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.choose_language))
+                .setSingleChoiceItems(AttractionGOApplication.getLanguageService().getIdiomsName(), AttractionGOApplication.getLanguageService().getIdiomSelected(), new DialogInterface
+                        .OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+                        AttractionGOApplication.getLanguageService().setLanguage(AttractionGOApplication.getLanguageService().getIdiomCode(item));
+                        dialog.dismiss();
+                        restart();
+                    }
+                }).show();
+    }
+
+    private void restart(){
+        Intent intent = getIntent();
+        intent.putExtra("cityName", this.cityName);
+        finish();
+        startActivity(intent);
     }
 
     @Override

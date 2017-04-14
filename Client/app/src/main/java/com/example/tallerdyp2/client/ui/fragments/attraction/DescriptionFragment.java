@@ -1,4 +1,4 @@
-package com.example.tallerdyp2.client.fragments.attraction;
+package com.example.tallerdyp2.client.ui.fragments.attraction;
 
 import android.net.Uri;
 import android.support.v4.app.Fragment;
@@ -14,10 +14,7 @@ import com.devbrackets.android.exomedia.listener.OnErrorListener;
 import com.devbrackets.android.exomedia.ui.widget.EMVideoView;
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.R;
-import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
-
-import java.io.FileNotFoundException;
 
 /**
  * Created by Sebastian on 6/4/2017.
@@ -36,7 +33,7 @@ public class DescriptionFragment extends Fragment implements OnErrorListener {
         rootView = inflater.inflate(R.layout.fragment_description_at, container, false);
 
         Attraction attraction = (Attraction) getArguments().
-                getSerializable(Constants.DESCRIPTION_AT);
+                getSerializable(getString(R.string.description_at));
 
         setViewDescription(attraction);
 

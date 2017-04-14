@@ -1,4 +1,4 @@
-package com.example.tallerdyp2.client;
+package com.example.tallerdyp2.client.ui.activities;
 
 import android.Manifest;
 import android.content.IntentSender;
@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.tallerdyp2.client.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;

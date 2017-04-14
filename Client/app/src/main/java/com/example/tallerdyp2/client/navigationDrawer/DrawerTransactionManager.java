@@ -4,7 +4,7 @@ package com.example.tallerdyp2.client.navigationDrawer;
  * Created by Sebastian on 5/4/2017.
  */
 
-import com.example.tallerdyp2.client.CitiesActivity;
+import com.example.tallerdyp2.client.ui.activities.CitiesActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +26,11 @@ public class DrawerTransactionManager {
         transactionMap.put(DrawerAction.CLOSE_SESSION, new TransactionManager() {
             public void beginTransaction(Transactional transactional) {
                 transactional.closeSession();
+            }
+        });
+        transactionMap.put(DrawerAction.LANGUAGE, new TransactionManager() {
+            public void beginTransaction(Transactional transactional) {
+                transactional.changeLanguage();
             }
         });
     }

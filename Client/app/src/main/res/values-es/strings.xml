@@ -25,9 +25,12 @@
     <string name="attractions_list">Atracciones: </string>
     <string name="no_cities">No hay ciudades para mostrar</string>
     <string name="distance_attraction">Distancia:</string>
+    <string name="choose_language">Elige idioma:</string>
 
-    <!--Activity list City-->
+    <!--Activity Attraction-->
     <string name="wrong_url">El audio no se encuentra disponible en este momento </string>
+    <string name="description_at">Descripción</string>
+    <string name="review_at">Reseña</string>
 
     <!--Activity MyReview-->
     <string name="leave_comment">Deje su comentario aqui (0-255)</string>
@@ -35,6 +38,7 @@
 
     <!--Navigation Drawer-->
     <string name="close_session">Cerrar Sesión</string>
+    <string name="language">Idioma</string>
     <string name="cities">Ciudades</string>
     <string name="drawer_open">abrir lateral</string>
     <string name="drawer_close">cerrar lateral</string>
@@ -47,5 +51,9 @@
     <!--Error request volley-->
     <string name="error_request">El servidor se encuentra en mantenimiento, vuelva a intentar mas tarde</string>
     <string name="location_denied">Para usar la aplicacion es necesario activar el servicio de Locacion</string>
+
+    <!--Idioms-->
+    <string name="english">Ingles</string>
+    <string name="spanish">Español</string>
 
 </resources>

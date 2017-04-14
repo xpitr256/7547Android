@@ -1,6 +1,6 @@
 package com.example.tallerdyp2.client.Proxys;
 
-import com.example.tallerdyp2.client.CityActivity;
+import com.example.tallerdyp2.client.ui.activities.CityActivity;
 
 /**
  * Created by Sebastian on 25/3/2017.

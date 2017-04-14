@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
-import com.example.tallerdyp2.client.CityActivity;
 import com.example.tallerdyp2.client.Entities.Attraction;
 
 import java.text.Normalizer;
