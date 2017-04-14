@@ -2,6 +2,7 @@ package com.example.tallerdyp2.client.utils;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -25,7 +26,7 @@ public class Helper {
         }
     }
 
-    public static boolean checkSelfPermission(Activity activity, String permission) {
+    public static boolean checkSelfPermission(Context activity, String permission) {
         return ActivityCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED;
     }
 

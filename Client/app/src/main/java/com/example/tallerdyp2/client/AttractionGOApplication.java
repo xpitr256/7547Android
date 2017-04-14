@@ -5,6 +5,7 @@ import android.support.multidex.MultiDexApplication;
 
 import com.example.tallerdyp2.client.Services.FacebookService;
 import com.example.tallerdyp2.client.Services.LanguageService;
+import com.example.tallerdyp2.client.Services.LocationService;
 import com.example.tallerdyp2.client.Services.SplexService;
 import com.example.tallerdyp2.client.Services.VolleyRequestService;
 
@@ -20,6 +21,7 @@ public class AttractionGOApplication extends MultiDexApplication {
     private static SplexService splexService;
     private static Context baseContext;
     private static LanguageService laguageService;
+    private static LocationService locationService;
 
 
     @Override
@@ -78,4 +80,13 @@ public class AttractionGOApplication extends MultiDexApplication {
 
         return laguageService;
     }
+
+    public static LocationService getLocationService(){
+
+        if(locationService == null)
+            locationService = new LocationService();
+
+        return locationService;
+    }
+
 }

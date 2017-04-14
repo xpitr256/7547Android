@@ -1,6 +1,7 @@
 package com.example.tallerdyp2.client.ui.activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,6 +39,7 @@ import com.example.tallerdyp2.client.utils.Callable;
 import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 import com.example.tallerdyp2.client.utils.Helper;
+import com.example.tallerdyp2.client.utils.LocationCallable;
 import com.example.tallerdyp2.client.utils.Parser;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -60,16 +62,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class CityActivity extends AppCompatActivity implements Callable, Transactional, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
+public class CityActivity extends AppCompatActivity implements Callable, Transactional, LocationCallable{
 
     private GoogleApiClient googleApiClient;
     private List<City> cities;
     private String cityName;
     public City city;
-    public Location myLocation;
     private Proxy proxyLocation;
-    private LocationRequest locationRequest;
-    private FusedLocationProviderApi fusedLocationProviderApi;
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private NavigationView nvDrawer;
@@ -208,17 +207,7 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
     }
 
     private String getCityFromLocation(){
-
-        Geocoder geocoder = new Geocoder(CityActivity.this, Locale.getDefault());
-        try {
-            if(myLocation != null){
-                return geocoder.getFromLocation(myLocation.getLatitude(), myLocation.getLongitude(), 1).get(0).getLocality();
-            }
-        } catch (IOException e) {
-        }
-
-
-        return null;
+        return AttractionGOApplication.getLocationService().getCityFromLocation();
     }
 
     public boolean outsideMyCityLocation(){
@@ -302,96 +291,11 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
     }
 
     private void useLocationService() {
-        locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(30 * 1000);
-//        locationRequest.setFastestInterval(5 * 1000);
-        fusedLocationProviderApi = LocationServices.FusedLocationApi;
-        googleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(LocationServices.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-        if (googleApiClient != null) {
-            googleApiClient.connect();
-        }
-
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                .addLocationRequest(locationRequest);
-        //**************************
-        builder.setAlwaysShow(true); //this is the key ingredient
-        //**************************
-
-        PendingResult<LocationSettingsResult> result =
-                LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
-        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
-            @Override
-            public void onResult(LocationSettingsResult result) {
-                final Status status = result.getStatus();
-                final LocationSettingsStates state = result.getLocationSettingsStates();
-                switch (status.getStatusCode()) {
-                    case LocationSettingsStatusCodes.SUCCESS:
-                        CityActivity.this.proxyLocation = new ProxyNormal();
-                        CityActivity.this.proxyLocation.execute(CityActivity.this);
-                        break;
-                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                        // Location settings are not satisfied. But could be fixed by showing the user
-                        // a dialog.
-                        try {
-                            // Show the dialog by calling startResolutionForResult(),
-                            // and check the result in onActivityResult().
-                            status.startResolutionForResult(CityActivity.this, Constants.LOCATION_SERVICE);
-                        } catch (IntentSender.SendIntentException e) {
-                            CityActivity.this.showError(getResources().getString(R.string.location_denied));
-                        }
-                        break;
-                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                        // Location settings are not satisfied. However, we have no way to fix the
-                        // settings so we won't show the dialog.
-                        CityActivity.this.showError(getResources().getString(R.string.location_denied));
-                        break;
-                }
-            }
-        });
+        AttractionGOApplication.getLocationService().activeLocation(this);
     }
 
     @Override
     public void onBackPressed() {}
-
-    @Override
-    public void onConnected(Bundle arg0) {
-        if (Helper.checkSelfPermission(CityActivity.this,Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-            fusedLocationProviderApi.requestLocationUpdates(googleApiClient,  locationRequest, this);
-        }
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        Location locAux = myLocation;
-        myLocation = location;
-
-        if(hasToRefreshView(locAux, location)){
-            if(this.city != null){
-                this.updateViewAttractions();
-            }
-        }
-    }
-
-    private boolean hasToRefreshView(Location locAux, Location location) {
-        if(locAux == null) return true;
-        if(Helper.distance(locAux.getLatitude(), location.getLatitude(), locAux.getLongitude(), location.getLongitude(), 0.0, 0.0) > Constants.MIN_DIST_REFRESH_LOC)
-            return true;
-
-        return false;
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {}
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-    }
 
     public void getCitiesInfo() {
         AttractionGOApplication.getVolleyRequestService().getCities(this);
@@ -545,7 +449,42 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
 
     @Override
     protected void onStop() {
-        mDemoSlider.stopAutoCycle();
+        if(mDemoSlider != null) mDemoSlider.stopAutoCycle();
         super.onStop();
+    }
+
+    @Override
+    public void onLocationSuccess() {
+        this.proxyLocation = new ProxyNormal();
+        this.proxyLocation.execute(CityActivity.this);
+    }
+
+    @Override
+    public void onResolutionRequired(Status status) {
+        // Location settings are not satisfied. But could be fixed by showing the user
+        // a dialog.
+
+        try {
+            // Show the dialog by calling startResolutionForResult(),
+            // and check the result in onActivityResult().
+
+            status.startResolutionForResult(this, Constants.LOCATION_SERVICE);
+        } catch (IntentSender.SendIntentException e) {
+           this.showError(getResources().getString(R.string.location_denied));
+        }
+    }
+
+    @Override
+    public void onLocationChange() {
+        if(this.city != null){
+            this.updateViewAttractions();
+        }
+    }
+
+    @Override
+    public void onLocationFail() {
+        // Location settings are not satisfied. However, we have no way to fix the
+        // settings so we won't show the dialog.
+        this.showError(getResources().getString(R.string.location_denied));
     }
 }

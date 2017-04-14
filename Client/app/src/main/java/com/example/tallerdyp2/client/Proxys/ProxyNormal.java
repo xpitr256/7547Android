@@ -1,5 +1,6 @@
 package com.example.tallerdyp2.client.Proxys;
 
+import com.example.tallerdyp2.client.AttractionGOApplication;
 import com.example.tallerdyp2.client.ui.activities.CityActivity;
 
 /**
@@ -22,13 +23,13 @@ public class ProxyNormal implements Proxy{
     public double getLatitude(CityActivity activity) {
         if(activity.outsideMyCityLocation())
             return activity.city.getLatitude();
-        return activity.myLocation.getLatitude();
+        return AttractionGOApplication.getLocationService().getLocation().getLatitude();
     }
 
     @Override
     public double getLongitude(CityActivity activity) {
         if(activity.outsideMyCityLocation())
             return activity.city.getLongitude();
-        return activity.myLocation.getLongitude();
+        return AttractionGOApplication.getLocationService().getLocation().getLongitude();
     }
 }
