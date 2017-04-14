@@ -120,11 +120,30 @@ public class LocationService  implements GoogleApiClient.ConnectionCallbacks, Go
         return false;
     }
 
+    public void disableLocation(){
+        if (googleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+            googleApiClient.disconnect();
+            myLocation = null;
+            myCall = null;
+        }
+    }
+
     @Override
-    public void onConnectionSuspended(int i) {}
+    public void onConnectionSuspended(int i) {
+        //Disconnect from API onPause()
+
+    }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+        //Disconnect from API onPause()
+        if (googleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+            googleApiClient.disconnect();
+            myLocation = null;
+            myCall = null;
+        }
     }
 
     public String getCityFromLocation() {

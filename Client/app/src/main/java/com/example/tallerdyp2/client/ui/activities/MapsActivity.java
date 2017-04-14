@@ -1,209 +1,174 @@
 package com.example.tallerdyp2.client.ui.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.example.tallerdyp2.client.AttractionGOApplication;
+import com.example.tallerdyp2.client.Entities.Attraction;
+import com.example.tallerdyp2.client.Entities.City;
 import com.example.tallerdyp2.client.R;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
+import com.example.tallerdyp2.client.utils.Constants;
+import com.example.tallerdyp2.client.utils.Helper;
+import com.example.tallerdyp2.client.utils.LocationCallable;
+import com.example.tallerdyp2.client.utils.PicassoMarker;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Picasso;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, ConnectionCallbacks,
-        OnConnectionFailedListener,
-        LocationListener {
-
-    private static final int PERMISSION_LOCATION = 1;
-
-    //Define a request code to send to Google Play services
-    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
-    private GoogleApiClient mGoogleApiClient;
-    private LocationRequest mLocationRequest;
-    private double currentLatitude;
-    private double currentLongitude;
+public class MapsActivity extends AppCompatActivity implements LocationCallable, OnMapReadyCallback{
 
     private GoogleMap mMap;
+    private City city;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                // The next two lines tell the new client that “this” current class will handle connection stuff
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                //fourth line adds the LocationServices API endpoint from GooglePlayServices
-                .addApi(LocationServices.API)
-                .build();
+        city = (City) getIntent().getSerializableExtra("City");
 
-        // Create the LocationRequest object
-        mLocationRequest = LocationRequest.create()
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(10 * 1000)        // 10 seconds, in milliseconds
-                .setFastestInterval(1 * 1000); // 1 second, in milliseconds
+        //POP UP ALLOW LOCATION FOR THE APP
+        if(!Helper.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+            Helper.requestPermission(this, Constants.PERMISSION_LOCATION);
+        }else{
+            //POP UP ALLOW LOCATION SERVICE
+            this.useLocationService();
+        }
 
+    }
 
-
+    private void initMap(){
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        checkLocationPermission();
-    }
+        if(Helper.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)){
+            mMap = googleMap;
+            mMap.setMyLocationEnabled(true);
 
-    public void checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_LOCATION);
+            LatLng currentLoc = new LatLng(AttractionGOApplication.getLocationService().getLocation().getLatitude(), AttractionGOApplication.getLocationService().getLocation().getLongitude());
+            mMap.addMarker(new MarkerOptions().position(currentLoc).title("You are here"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLoc));
+
+            Toast.makeText(this, AttractionGOApplication.getLocationService().getLocation().getLatitude() + " WORKS " + AttractionGOApplication.getLocationService().getLocation().getLongitude() + "", Toast.LENGTH_LONG).show();
+
+            Marker marker;
+            for(final Attraction attraction : city.getAttractions()){
+                currentLoc = new LatLng(attraction.getLatitude(), attraction.getLongitude());
+                marker = mMap.addMarker(new MarkerOptions().position(currentLoc).title(attraction.getName()));
+                marker.setTag(attraction.getId());
+                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        String id = (String)(marker.getTag());
+                        for(Attraction attraction : city.getAttractions()){
+                            if(attraction.getId().equals(id)){
+                                Intent intent = new Intent(AttractionGOApplication.getAppContext(), AttractionActivity.class);
+                                intent.putExtra("Attraction", attraction);
+                                AttractionGOApplication.getAppContext().startActivity(intent);
+                            }
+                        }
+                        return true;
+                    }
+                });
+                PicassoMarker pmarker = new PicassoMarker(marker);
+                Picasso.with(MapsActivity.this).load(attraction.getImagesURL().get(0)).resize(200,200).into(pmarker);
+            }
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSION_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//    Marker marker =  map.addMarker(new MarkerOptions()
+//            .position(new LatLng(latitude, longitude)));
+//marker.setTag(position);
+//    getTag() on setOnMarkerClickListener listener
+//
+//map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//        @Override
+//        public boolean onMarkerClick(Marker marker) {
+//            int position = (int)(marker.getTag());
+//            //Using position get Value from arraylist
+//            return false;
+//        }
+//    });
 
-                    // permission was granted, yay!
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case Constants.PERMISSION_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if(Helper.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)){
                         mMap.setMyLocationEnabled(true);
+                        this.useLocationService();
                     }
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
+                }else{
                 }
                 return;
             }
-
         }
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        //Now lets connect to the API
-        mGoogleApiClient.connect();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.v(this.getClass().getSimpleName(), "onPause()");
-
-        //Disconnect from API onPause()
-        if (mGoogleApiClient.isConnected()) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-            mGoogleApiClient.disconnect();
-        }
-
-
-    }
-
-    /**
-     * If connected get lat and long
-     *
-     */
-    @Override
-    public void onConnected(Bundle bundle) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
-            if (location == null) {
-                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-
-            } else {
-                //If everything went fine lets get latitude and longitude
-                currentLatitude = location.getLatitude();
-                currentLongitude = location.getLongitude();
-
-                LatLng currentLoc = new LatLng(currentLatitude, currentLongitude);
-                mMap.addMarker(new MarkerOptions().position(currentLoc).title("You are here"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLoc));
-
-                Toast.makeText(this, currentLatitude + " WORKS " + currentLongitude + "", Toast.LENGTH_LONG).show();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == Constants.LOCATION_SERVICE) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                this.useLocationService();
+            }else{
+                this.finish();
             }
         }
-
     }
 
+    private void useLocationService() {
+        AttractionGOApplication.getLocationService().activeLocation(this);
+    }
 
     @Override
-    public void onConnectionSuspended(int i) {}
+    public void onLocationSuccess() {
+        this.initMap();
+    }
 
     @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-            /*
-             * Google Play services can resolve some errors it detects.
-             * If the error has a resolution, try sending an Intent to
-             * start a Google Play services activity that can resolve
-             * error.
-             */
-        if (connectionResult.hasResolution()) {
-            try {
-                // Start an Activity that tries to resolve the error
-                connectionResult.startResolutionForResult(this, CONNECTION_FAILURE_RESOLUTION_REQUEST);
-                    /*
-                     * Thrown if Google Play services canceled the original
-                     * PendingIntent
-                     */
-            } catch (IntentSender.SendIntentException e) {
-                // Log the error
-                e.printStackTrace();
-            }
-        } else {
-                /*
-                 * If no resolution is available, display a dialog to the
-                 * user with the error.
-                 */
-            Log.e("Error", "Location services connection failed with code " + connectionResult.getErrorCode());
+    public void onResolutionRequired(Status status) {
+        // Location settings are not satisfied. But could be fixed by showing the user
+        // a dialog.
+
+        try {
+            // Show the dialog by calling startResolutionForResult(),
+            // and check the result in onActivityResult().
+
+            status.startResolutionForResult(this, Constants.LOCATION_SERVICE);
+        } catch (IntentSender.SendIntentException e) {
+            this.finish();
         }
     }
 
-    /**
-     * If locationChanges change lat and long
-     *
-     *
-     * @param location
-     */
     @Override
-    public void onLocationChanged(Location location) {
-        currentLatitude = location.getLatitude();
-        currentLongitude = location.getLongitude();
+    public void onLocationChange() {
+        Toast.makeText(this, AttractionGOApplication.getLocationService().getLocation().getLatitude() + " WORKS " + AttractionGOApplication.getLocationService().getLocation().getLongitude() + "", Toast.LENGTH_LONG).show();
+    }
 
-        Toast.makeText(this, currentLatitude + " WORKS " + currentLongitude + "", Toast.LENGTH_LONG).show();
+    @Override
+    public void onLocationFail() {
+        // Location settings are not satisfied. However, we have no way to fix the
+        // settings so we won't show the dialog.
+        this.finish();
     }
 }

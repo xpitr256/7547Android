@@ -1,15 +1,12 @@
 package com.example.tallerdyp2.client.ui.activities;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.location.Geocoder;
-import android.location.Location;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,6 +14,8 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -41,26 +40,14 @@ import com.example.tallerdyp2.client.utils.ElementViewUtils;
 import com.example.tallerdyp2.client.utils.Helper;
 import com.example.tallerdyp2.client.utils.LocationCallable;
 import com.example.tallerdyp2.client.utils.Parser;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.FusedLocationProviderApi;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStates;
-import com.google.android.gms.location.LocationSettingsStatusCodes;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class CityActivity extends AppCompatActivity implements Callable, Transactional, LocationCallable{
 
@@ -184,12 +171,24 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
                     mDrawer.closeDrawer(Gravity.LEFT);  // CLOSE DRAWER
                 }
                 return true;
+            case R.id.map:
+                Intent intent = new Intent(this, MapsActivity.class);
+                intent.putExtra("City", city);
+                startActivity(intent);
+                break;
 
         }
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_city, menu);
+        return true;
     }
 
     private void selectItem(MenuItem menuItem) {
@@ -301,25 +300,6 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
         AttractionGOApplication.getVolleyRequestService().getCities(this);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_attraction, menu);
-//        return true;
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.cities:
-////                Intent intent = new Intent(CityActivity.this, CitiesActivity.class);
-////                startActivity(intent);
-//                AttractionGOApplication.getFacebookService().logOut();
-//                break;
-//        }
-//        return true;
-//    }
-
     @Override
     public void execute(JSONArray response) {
         cities = Parser.parseCities(response);
@@ -389,20 +369,6 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
     }
 
     @Override
-    protected void onRestart()
-    {
-        super.onRestart();
-
-        //POP UP ALLOW LOCATION FOR THE APP
-        if(!Helper.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)){
-            Helper.requestPermission(this,Constants.PERMISSION_LOCATION);
-        }else{
-            //POP UP ALLOW LOCATION SERVICE
-            this.useLocationService();
-        }
-    }
-
-    @Override
     public void startActivity(Class activity) {
         Intent intent = new Intent(this, activity);
         this.startActivity(intent);
@@ -448,12 +414,6 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
     }
 
     @Override
-    protected void onStop() {
-        if(mDemoSlider != null) mDemoSlider.stopAutoCycle();
-        super.onStop();
-    }
-
-    @Override
     public void onLocationSuccess() {
         this.proxyLocation = new ProxyNormal();
         this.proxyLocation.execute(CityActivity.this);
@@ -487,4 +447,25 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
         // settings so we won't show the dialog.
         this.showError(getResources().getString(R.string.location_denied));
     }
+
+    @Override
+    protected void onStop() {
+        if(mDemoSlider != null) mDemoSlider.stopAutoCycle();
+        super.onStop();
+    }
+
+    @Override
+    protected void onRestart()
+    {
+        super.onRestart();
+
+        //POP UP ALLOW LOCATION FOR THE APP
+        if(!Helper.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+            Helper.requestPermission(this,Constants.PERMISSION_LOCATION);
+        }else{
+            //POP UP ALLOW LOCATION SERVICE
+            this.useLocationService();
+        }
+    }
+
 }
