@@ -7,9 +7,12 @@ import android.view.View;
 
 import com.example.tallerdyp2.client.AttractionGOApplication;
 import com.example.tallerdyp2.client.R;
+import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 import com.example.tallerdyp2.client.utils.SharedPreferencesUtils;
 import com.facebook.login.widget.LoginButton;
+
+import java.util.Locale;
 
 /**
  * Created by Sebastian on 31/03/2017.
@@ -25,6 +28,10 @@ public class InitialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+
+        if(SharedPreferencesUtils.getLanguage().equals(Constants.EMPTY_STRING)){
+            SharedPreferencesUtils.setLanguage(Locale.getDefault().getLanguage());
+        }
 
         AttractionGOApplication.getLanguageService().setLanguage(SharedPreferencesUtils.getLanguage());
 

@@ -48,6 +48,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CityActivity extends AppCompatActivity implements Callable, Transactional, LocationCallable{
 
@@ -66,7 +67,6 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
 
         super.onCreate(savedInstanceState);
 
-//        Helper.setLanguage("es");
         setContentView(R.layout.activity_city);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
