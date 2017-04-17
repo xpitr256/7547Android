@@ -10,11 +10,15 @@ import com.example.tallerdyp2.client.ui.activities.MapsActivity;
 public class ProxyMapNormal implements ProxyMap {
     @Override
     public double getLatitude(MapsActivity activity) {
+        if(activity.outsideMyCityLocation())
+            return activity.getLatitude();
         return AttractionGOApplication.getLocationService().getLocation().getLatitude();
     }
 
     @Override
     public double getLongitude(MapsActivity activity) {
+        if(activity.outsideMyCityLocation())
+            return activity.getLongitude();
         return AttractionGOApplication.getLocationService().getLocation().getLongitude();
     }
 }

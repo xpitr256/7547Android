@@ -192,7 +192,8 @@ public class MapsActivity extends AppCompatActivity implements LocationCallable,
             if (resultCode == RESULT_OK) {
                 this.useLocationService();
             }else{
-                this.finish();
+                this.proxyLocation = new ProxyMapNoLocation();
+                this.initMap();
             }
         }
     }
@@ -225,7 +226,7 @@ public class MapsActivity extends AppCompatActivity implements LocationCallable,
 
     @Override
     public void onLocationChange() {
-        Toast.makeText(this, AttractionGOApplication.getLocationService().getLocation().getLatitude() + " WORKS " + AttractionGOApplication.getLocationService().getLocation().getLongitude() + "", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, AttractionGOApplication.getLocationService().getLocation().getLatitude() + " WORKS " + AttractionGOApplication.getLocationService().getLocation().getLongitude() + "", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -234,6 +235,14 @@ public class MapsActivity extends AppCompatActivity implements LocationCallable,
         // settings so we won't show the dialog.
         this.proxyLocation = new ProxyMapNoLocation();
         this.initMap();
+    }
+
+    private String getCityFromLocation(){
+        return AttractionGOApplication.getLocationService().getCityFromLocation();
+    }
+
+    public boolean outsideMyCityLocation(){
+        return !this.city.getName().equals(this.getCityFromLocation());
     }
 
     public double getLatitude() {
