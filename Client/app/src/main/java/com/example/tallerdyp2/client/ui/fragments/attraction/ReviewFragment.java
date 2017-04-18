@@ -1,6 +1,8 @@
 package com.example.tallerdyp2.client.ui.fragments.attraction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +11,11 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 
 import com.example.tallerdyp2.client.Entities.Review;
+import com.example.tallerdyp2.client.ui.activities.MyReviewActivity;
 import com.example.tallerdyp2.client.ui.adapters.ReviewsAdapter;
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.R;
+import com.example.tallerdyp2.client.utils.SharedPreferencesUtils;
 
 import java.util.List;
 
@@ -40,7 +44,7 @@ public class ReviewFragment extends Fragment {
         return rootView;
     }
 
-    private void setViewReview(Attraction attraction) {
+    private void setViewReview(final Attraction attraction) {
 
         ((RatingBar) rootView.findViewById(R.id.rating)).setRating((float) attraction.getRating());
 
@@ -55,6 +59,26 @@ public class ReviewFragment extends Fragment {
         //Relacionando la lista con el adaptador
         reviewsList.setAdapter(reviewsAdapter);
 
+        if(!hasMyReview(attraction.getReviews())) {
+            FloatingActionButton fabAddReview = (FloatingActionButton) rootView.findViewById(R.id.fab_review);
+            fabAddReview.setVisibility(View.VISIBLE);
+            fabAddReview.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), MyReviewActivity.class);
+                    intent.putExtra("Attraction", attraction);
+                    startActivity(intent);
+                }
+            });
+        }
+
+    }
+
+    private boolean hasMyReview(List<Review> reviews) {
+        for(Review review : reviews){
+            if(review.getUserId().equals(SharedPreferencesUtils.getFacebookUserId()))
+                return true;
+        }
+        return false;
     }
 
 }

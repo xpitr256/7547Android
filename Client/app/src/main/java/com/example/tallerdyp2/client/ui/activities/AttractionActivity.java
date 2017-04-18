@@ -103,11 +103,6 @@ public class AttractionActivity extends AppCompatActivity{
             case android.R.id.home:
                 this.finish();
                 return true;
-            case R.id.review:
-                Intent intent = new Intent(this, MyReviewActivity.class);
-                intent.putExtra("Attraction", attraction);
-                startActivity(intent);
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -117,13 +112,6 @@ public class AttractionActivity extends AppCompatActivity{
     protected void onResume()
     {
         super.onResume();
-    }
-
-        @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_attraction, menu);
-        return true;
     }
 
 }
