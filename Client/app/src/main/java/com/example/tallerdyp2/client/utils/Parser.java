@@ -2,6 +2,7 @@ package com.example.tallerdyp2.client.utils;
 
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.Entities.City;
+import com.example.tallerdyp2.client.Entities.PointOfInterest;
 import com.example.tallerdyp2.client.Entities.Review;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -47,7 +48,9 @@ public class Parser {
 //                                    attractionsJSON.getJSONObject(j).getString("openTime"),
 //                                    attractionsJSON.getJSONObject(j).getString("closeTime"),
                                     attractionsJSON.getJSONObject(j).getInt("price"),
-                                    Parser.parseReviews(attractionsJSON.getJSONObject(j).getJSONArray("reviews"))
+                                    Parser.parseReviews(attractionsJSON.getJSONObject(j).getJSONArray("reviews")),
+//                                    Parser.parsePOIs(attractionsJSON.getJSONObject(j).getJSONArray("pois"))
+                                    Mocker.parsePOIs()
                             ));
                 }
                 cities.add(new City(city.getString("_id"),
@@ -62,6 +65,20 @@ public class Parser {
             return cities;
         }
         return cities;
+    }
+
+    private static List<PointOfInterest> parsePOIs(JSONArray poisJson) throws JSONException {
+        List<PointOfInterest> pois = new ArrayList<>();
+        for(int i = 0; i < poisJson.length(); i++){
+            pois.add(new PointOfInterest(
+                    poisJson.getJSONObject(i).getString("_id"),
+                    poisJson.getJSONObject(i).getString("name"),
+                    poisJson.getJSONObject(i).getString("description"),
+                    Parser.parseImagesURL(poisJson.getJSONObject(i).getJSONArray("imagesURL")),
+                    poisJson.getJSONObject(i).getString("audioURL")
+            ));
+        }
+        return pois;
     }
 
     public static List<String> parseImagesURL(JSONArray imagesURL) throws JSONException {

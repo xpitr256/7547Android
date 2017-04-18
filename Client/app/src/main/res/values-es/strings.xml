@@ -31,6 +31,7 @@
     <string name="wrong_url">El audio no se encuentra disponible en este momento </string>
     <string name="description_at">Descripción</string>
     <string name="review_at">Reseña</string>
+    <string name="poi_at">Puntos</string>
 
     <!--Activity MyReview-->
     <string name="leave_comment">Deje su comentario aqui (0-255)</string>

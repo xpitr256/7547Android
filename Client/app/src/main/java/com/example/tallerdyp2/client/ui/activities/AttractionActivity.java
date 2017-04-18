@@ -15,6 +15,7 @@ import com.example.tallerdyp2.client.ui.adapters.TabsAdapter;
 import com.example.tallerdyp2.client.builders.TabFragmentBuilder;
 import com.example.tallerdyp2.client.customViews.SlidingTabLayout;
 import com.example.tallerdyp2.client.ui.fragments.attraction.DescriptionFragment;
+import com.example.tallerdyp2.client.ui.fragments.attraction.PointOfInterestFragment;
 import com.example.tallerdyp2.client.ui.fragments.attraction.ReviewFragment;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 
@@ -94,6 +95,8 @@ public class AttractionActivity extends AppCompatActivity{
                     getString(R.string.description_at), attraction));
             put(getString(R.string.review_at), new TabFragmentBuilder<>(new ReviewFragment(),
                     getString(R.string.review_at), attraction));
+            put(getString(R.string.poi_at), new TabFragmentBuilder<>(new PointOfInterestFragment(),
+                    getString(R.string.poi_at), attraction));
         }};
     }
 

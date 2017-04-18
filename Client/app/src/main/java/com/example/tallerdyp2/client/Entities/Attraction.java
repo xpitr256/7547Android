@@ -29,8 +29,9 @@ public class Attraction implements Serializable{
     private Date closeTime;
     private int price;
     private double distance;
+    private List<PointOfInterest> pois;
 
-    public Attraction(String id, String name, String description, double rating, List<String> imagesURL, String audioURL, double latitude, double longitude, String type, String openTime, String closeTime, int price, List<Review> reviews) {
+    public Attraction(String id, String name, String description, double rating, List<String> imagesURL, String audioURL, double latitude, double longitude, String type, String openTime, String closeTime, int price, List<Review> reviews, List<PointOfInterest> pois) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -55,6 +56,7 @@ public class Attraction implements Serializable{
 
         this.price = price;
         this.reviews = reviews;
+        this.pois = pois;
     }
 
 
@@ -172,6 +174,14 @@ public class Attraction implements Serializable{
 
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    public void setPointOfInterests(List<PointOfInterest> pois){
+        this.pois = pois;
+    }
+
+    public List<PointOfInterest> getPointOfInterests() {
+        return pois;
     }
 
 
