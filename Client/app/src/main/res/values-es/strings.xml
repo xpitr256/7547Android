@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">AtracciónGO</string>
+    <string name="app_name">AttractionGO</string>
     <string name="http_ip">https://taller-proyectos-2.herokuapp.com</string>
     <string name="facebook_app_id">1374256585947172</string>
     <string name="fb_login_protocol_scheme">fb1374256585947172</string>
@@ -56,5 +56,6 @@
     <!--Idioms-->
     <string name="english">Ingles</string>
     <string name="spanish">Español</string>
+    <string name="portugues">Portugues</string>
 
 </resources>

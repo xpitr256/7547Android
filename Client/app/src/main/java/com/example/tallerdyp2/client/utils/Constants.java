@@ -25,5 +25,5 @@ public class Constants {
 
     public static final String EN = "en";
     public static final String ES = "es";
-
+    public static final String PT = "pt";
 }

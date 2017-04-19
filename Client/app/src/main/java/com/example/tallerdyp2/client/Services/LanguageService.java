@@ -17,13 +17,15 @@ public class LanguageService {
 
     private static String[] idiomsCode = {
             Constants.EN,
-            Constants.ES
+            Constants.ES,
+            Constants.PT
     };
 
     public String[] getIdiomsName() {
         return new String[]{
                 AttractionGOApplication.getAppContext().getString(R.string.english),
-                AttractionGOApplication.getAppContext().getString(R.string.spanish)
+                AttractionGOApplication.getAppContext().getString(R.string.spanish),
+                AttractionGOApplication.getAppContext().getString(R.string.portugues)
         };
     }
 
