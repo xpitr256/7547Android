@@ -4,14 +4,17 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.icu.text.SimpleDateFormat;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
 import com.example.tallerdyp2.client.Entities.Attraction;
 
 import java.text.Normalizer;
+import java.text.ParseException;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -91,4 +94,14 @@ public class Helper {
         return s;
     }
 
+    public static String getDate(String date) {
+        try {
+            return new SimpleDateFormat("dd/MM/yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(date));
+        } catch (ParseException e) {
+        }
+
+        return new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+
+
+    }
 }

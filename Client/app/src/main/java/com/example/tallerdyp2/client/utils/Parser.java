@@ -1,5 +1,7 @@
 package com.example.tallerdyp2.client.utils;
 
+import android.icu.text.SimpleDateFormat;
+
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.Entities.City;
 import com.example.tallerdyp2.client.Entities.PointOfInterest;
@@ -11,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,27 +34,7 @@ public class Parser {
                 attractions = new ArrayList<>();
                 attractionsJSON = city.getJSONArray("attractions");
                 for(int j = 0; j < attractionsJSON.length(); j++){
-                    attractions.add(
-                            new Attraction(
-                                    attractionsJSON.getJSONObject(j).getString("_id"),
-                                    attractionsJSON.getJSONObject(j).getString("name"),
-                                    attractionsJSON.getJSONObject(j).getString("description"),
-                                    attractionsJSON.getJSONObject(j).getDouble("rating"),
-                                    Parser.parseImagesURL(attractionsJSON.getJSONObject(j).getJSONArray("imagesURL")),
-                                    attractionsJSON.getJSONObject(j).getString("audioURL"),
-                                    attractionsJSON.getJSONObject(j).getJSONObject("location").getDouble("lat"),
-                                    attractionsJSON.getJSONObject(j).getJSONObject("location").getDouble("lng"),
-                                    "FAMILY",
-                                    "00:00",
-                                    "00:00",
-//                                    attractionsJSON.getJSONObject(j).getString("type"),
-//                                    attractionsJSON.getJSONObject(j).getString("openTime"),
-//                                    attractionsJSON.getJSONObject(j).getString("closeTime"),
-                                    attractionsJSON.getJSONObject(j).getInt("price"),
-                                    Parser.parseReviews(attractionsJSON.getJSONObject(j).getJSONArray("reviews")),
-//                                    Parser.parsePOIs(attractionsJSON.getJSONObject(j).getJSONArray("pois"))
-                                    Mocker.parsePOIs()
-                            ));
+                    attractions.add(Parser.parseAttraction(attractionsJSON.getJSONObject(j)));
                 }
                 cities.add(new City(city.getString("_id"),
                         city.getString("name"),
@@ -97,7 +80,8 @@ public class Parser {
                     reviewsJson.getJSONObject(i).getString("userId"),
                     reviewsJson.getJSONObject(i).getString("userAvatarUrl"),
                     reviewsJson.getJSONObject(i).getString("comments"),
-                    reviewsJson.getJSONObject(i).getDouble("rating")
+                    reviewsJson.getJSONObject(i).getDouble("rating"),
+                    Helper.getDate(reviewsJson.getJSONObject(i).getString("date"))
             ));
         }
         return reviews;
@@ -185,5 +169,33 @@ public class Parser {
         }
 
         return poly;
+    }
+
+    public static Attraction parseAttraction(JSONObject attractionJson){
+        try{
+            return new Attraction(
+                    attractionJson.getString("_id"),
+                    attractionJson.getString("name"),
+                    attractionJson.getString("description"),
+                    attractionJson.getDouble("rating"),
+                    Parser.parseImagesURL(attractionJson.getJSONArray("imagesURL")),
+                    attractionJson.getString("audioURL"),
+                    attractionJson.getJSONObject("location").getDouble("lat"),
+                    attractionJson.getJSONObject("location").getDouble("lng"),
+                    "FAMILY",
+                    "00:00",
+                    "00:00",
+//                                    attractionJson.getString("type"),
+//                                    attractionJson.getString("openTime"),
+//                                    attractionJson.getString("closeTime"),
+                    attractionJson.getInt("price"),
+                    Parser.parseReviews(attractionJson.getJSONArray("reviews")),
+//                                    Parser.parsePOIs(attractionJson.getJSONArray("pois"))
+                    Mocker.parsePOIs()
+            );
+        } catch (JSONException e) {
+            return null;
+        }
+
     }
 }

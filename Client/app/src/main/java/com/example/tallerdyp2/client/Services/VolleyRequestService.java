@@ -72,6 +72,40 @@ public class VolleyRequestService {
         Volley.newRequestQueue(AttractionGOApplication.getAppContext()).add(jsObjRequest);
     }
 
+    public void getAttraction(final Callable call, String attractionId){
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, Constants.IP + "/attraction?id="+attractionId,
+                null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                call.execute(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                call.error(error);
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Accept-Language",SharedPreferencesUtils.getLanguage());
+
+                return headers;
+            }
+        };
+
+        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                Constants.MY_SOCKET_TIMEOUT_MS,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        // Add the request to the RequestQueue.
+        Volley.newRequestQueue(AttractionGOApplication.getAppContext()).add(jsObjRequest);
+    }
+
 
     public void createSplexUser(final SplexCallable call, final JSONObject data, String provider) {
         final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, "https://api.splex.rocks/signup/"+provider,
@@ -99,6 +133,8 @@ public class VolleyRequestService {
         // Add the request to the RequestQueue.
         Volley.newRequestQueue(AttractionGOApplication.getAppContext()).add(jsObjRequest);
     }
+
+
 
     public void logSplexUser(final SplexCallable call, final JSONObject data, String provider) {
         final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, "https://api.splex.rocks/login/"+provider,
@@ -159,12 +195,12 @@ public class VolleyRequestService {
         Volley.newRequestQueue(AttractionGOApplication.getAppContext()).add(jsObjRequest);
     }
 
-    public void sendReview(final Callable call, JSONObject data) {
+    public void sendReview(final Callable call, JSONObject data, final String attractionId) {
         final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, Constants.IP + "/review",
                 data, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                call.execute(response);
+                AttractionGOApplication.getVolleyRequestService().getAttraction(call, attractionId);
             }
         }, new Response.ErrorListener() {
             @Override

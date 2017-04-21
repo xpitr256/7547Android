@@ -31,6 +31,7 @@ public class ReviewsAdapter extends ArrayAdapter<Review> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View item = inflater.inflate(R.layout.reviews_item_list, null);
         ElementViewUtils.setText(item, R.id.name, reviews.get(position).getUserName());
+        ElementViewUtils.setText(item, R.id.date, reviews.get(position).getDate());
         RatingBar mRatingBar = (RatingBar) item.findViewById(R.id.rating);
         mRatingBar.setRating((float)reviews.get(position).getRating());
         ElementViewUtils.setText(item, R.id.comment, reviews.get(position).getComment());

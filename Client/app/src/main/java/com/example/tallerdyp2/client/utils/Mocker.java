@@ -24,7 +24,7 @@ public class Mocker {
         urls.add("http://i.imgur.com/sRvjuhY.jpg");
         urls.add("http://i.imgur.com/sRvjuhY.jpg");
 
-        Review review = new Review("Sebastian Vicario", SharedPreferencesUtils.getFacebookUserId(), "", "I love it!!!", 3.5);
+        Review review = new Review("Sebastian Vicario", SharedPreferencesUtils.getFacebookUserId(), "", "I love it!!!", 3.5, "19/12/2016");
 
         reviews.add(review);
 

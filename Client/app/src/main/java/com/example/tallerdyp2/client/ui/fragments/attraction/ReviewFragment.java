@@ -59,7 +59,7 @@ public class ReviewFragment extends Fragment {
         //Relacionando la lista con el adaptador
         reviewsList.setAdapter(reviewsAdapter);
 
-        if(!hasMyReview(attraction.getReviews())) {
+//        if(!hasMyReview(attraction.getReviews())) {
             FloatingActionButton fabAddReview = (FloatingActionButton) rootView.findViewById(R.id.fab_review);
             fabAddReview.setVisibility(View.VISIBLE);
             fabAddReview.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +69,7 @@ public class ReviewFragment extends Fragment {
                     startActivity(intent);
                 }
             });
-        }
+//        }
 
     }
 
