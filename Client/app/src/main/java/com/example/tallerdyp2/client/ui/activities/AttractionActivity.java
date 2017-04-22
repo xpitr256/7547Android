@@ -117,4 +117,10 @@ public class AttractionActivity extends AppCompatActivity{
         super.onResume();
     }
 
+    @Override
+    protected void onNewIntent (Intent intent){
+        finish();
+        startActivity(intent);
+    }
+
 }

@@ -74,7 +74,7 @@ public class VolleyRequestService {
 
     public void getAttraction(final Callable call, String attractionId){
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, Constants.IP + "/attraction?id="+attractionId,
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET, Constants.IP + "/attraction/"+attractionId,
                 null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

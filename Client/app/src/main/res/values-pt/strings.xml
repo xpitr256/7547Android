@@ -32,6 +32,8 @@
     <string name="description_at">Descrição</string>
     <string name="review_at">Reveja</string>
     <string name="poi_at">Pontos</string>
+    <string name="no_reviews">Não há críticas para esta atração</string>
+    <string name="no_pois">Não há pontos de interesse para ser mostrado para esta atração</string>
 
     <!--Activity MyReview-->
     <string name="leave_comment">Deixe sua mensagem aqui (0-255)</string>

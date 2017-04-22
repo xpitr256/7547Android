@@ -8,25 +8,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <RatingBar
-        android:id="@+id/rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:numStars="5"
-        android:stepSize=".5"
-        android:isIndicator="true"/>
+        <TextView
+            android:id="@+id/rating_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="26dp"
+            tools:text="3.5"/>
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/reviews_list"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_below="@+id/rating"
-        />
+        <RatingBar
+            android:id="@+id/rating"
+            android:layout_below="@+id/rating_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:numStars="5"
+            android:stepSize=".5"
+            android:isIndicator="true"
+            style="?android:attr/ratingBarStyleSmall"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/reviews_list"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_below="@+id/rating"
+            />
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_review"
             android:layout_alignParentBottom="true"
@@ -38,6 +49,16 @@
             android:layout_gravity="end"
             android:visibility="invisible"
             android:src="@drawable/ic_plus"/>
+
+        <TextView
+            android:text="@string/no_reviews"
+            android:id="@+id/no_reviews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            style="@style/ErrorDescription" />
 
     </RelativeLayout>
 

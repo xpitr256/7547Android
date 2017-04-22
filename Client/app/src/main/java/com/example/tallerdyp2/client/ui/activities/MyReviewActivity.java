@@ -59,7 +59,6 @@ public class MyReviewActivity extends AppCompatActivity implements Callable{
                     review.put("userAvatarUrl", "");
                     review.put("comments", ((EditText)findViewById(R.id.comment)).getText());
                     review.put("rating", ratingRatingBar.getRating());
-                    review.put("date", new Date());
                     body.put("attractionId",attraction.getId());
                     body.put("review",review);
 
@@ -91,6 +90,7 @@ public class MyReviewActivity extends AppCompatActivity implements Callable{
     public void execute(JSONObject response) {
         Intent intent = new Intent(getApplicationContext(), AttractionActivity.class);
         intent.putExtra("Attraction", Parser.parseAttraction(response));
+        finish();
         startActivity(intent);
     }
 

@@ -32,6 +32,8 @@
     <string name="description_at">Description</string>
     <string name="review_at">Review</string>
     <string name="poi_at">Points</string>
+    <string name="no_reviews">No reviews to be showed for this attraction</string>
+    <string name="no_pois">No points of interest to be showed for this attraction</string>
 
     <!--Activity MyReview-->
     <string name="leave_comment">Leave your message here (0-255)</string>

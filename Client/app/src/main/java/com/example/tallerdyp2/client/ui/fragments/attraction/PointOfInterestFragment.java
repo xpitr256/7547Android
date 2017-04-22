@@ -35,9 +35,17 @@ public class PointOfInterestFragment extends Fragment {
         Attraction attraction = (Attraction) getArguments().
                 getSerializable(getString(R.string.poi_at));
 
-        setViewPointOfInterest(attraction);
+        if(!attraction.getPointOfInterests().isEmpty())
+            setViewPointOfInterest(attraction);
+        else
+            setEmptyView();
 
         return rootView;
+    }
+
+    private void setEmptyView() {
+        rootView.findViewById(R.id.pois_list).setVisibility(View.GONE);
+        rootView.findViewById(R.id.no_pois).setVisibility(View.VISIBLE);
     }
 
     private void setViewPointOfInterest(final Attraction attraction) {
