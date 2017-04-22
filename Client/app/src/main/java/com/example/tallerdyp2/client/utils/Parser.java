@@ -172,31 +172,27 @@ public class Parser {
         return poly;
     }
 
-    public static Attraction parseAttraction(JSONObject attractionJson){
-        try{
-            return new Attraction(
-                    attractionJson.getString("_id"),
-                    attractionJson.getString("name"),
-                    attractionJson.getString("description"),
-                    attractionJson.getDouble("rating"),
-                    Parser.parseImagesURL(attractionJson.getJSONArray("imagesURL")),
-                    attractionJson.getString("audioURL"),
-                    attractionJson.getJSONObject("location").getDouble("lat"),
-                    attractionJson.getJSONObject("location").getDouble("lng"),
-                    "FAMILY",
-                    "00:00",
-                    "00:00",
+    public static Attraction parseAttraction(JSONObject attractionJson) throws JSONException {
+        return new Attraction(
+                attractionJson.getString("_id"),
+                attractionJson.getString("name"),
+                attractionJson.getString("description"),
+                attractionJson.getDouble("rating"),
+                Parser.parseImagesURL(attractionJson.getJSONArray("imagesURL")),
+                attractionJson.getString("audioURL"),
+                attractionJson.getJSONObject("location").getDouble("lat"),
+                attractionJson.getJSONObject("location").getDouble("lng"),
+                "FAMILY",
+                "00:00",
+                "00:00",
 //                                    attractionJson.getString("type"),
 //                                    attractionJson.getString("openTime"),
 //                                    attractionJson.getString("closeTime"),
-                    attractionJson.getInt("price"),
-                    Parser.parseReviews(attractionJson.getJSONArray("reviews")),
+                attractionJson.getInt("price"),
+                Parser.parseReviews(attractionJson.getJSONArray("reviews")),
 //                                    Parser.parsePOIs(attractionJson.getJSONArray("pois"))
-                    Mocker.parsePOIs()
-            );
-        } catch (JSONException e) {
-            return null;
-        }
+                Mocker.parsePOIs()
+        );
 
     }
 }

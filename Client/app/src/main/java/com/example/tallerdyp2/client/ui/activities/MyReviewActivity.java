@@ -16,6 +16,7 @@ import com.example.tallerdyp2.client.AttractionGOApplication;
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.utils.Callable;
+import com.example.tallerdyp2.client.utils.ElementViewUtils;
 import com.example.tallerdyp2.client.utils.Parser;
 import com.example.tallerdyp2.client.utils.SharedPreferencesUtils;
 
@@ -88,14 +89,32 @@ public class MyReviewActivity extends AppCompatActivity implements Callable{
 
     @Override
     public void execute(JSONObject response) {
+        try {
         Intent intent = new Intent(getApplicationContext(), AttractionActivity.class);
-        intent.putExtra("Attraction", Parser.parseAttraction(response));
-        finish();
-        startActivity(intent);
+            intent.putExtra("Attraction", Parser.parseAttraction(response));
+            finish();
+            startActivity(intent);
+        } catch (JSONException e) {
+            this.error(null);
+        }
     }
 
     @Override
     public void error(VolleyError error) {
+        this.showError(getResources().getString(R.string.error_request));
+    }
 
+    private void showError(String error) {
+        this.hideInformation();
+        findViewById(R.id.image_error).setVisibility(View.VISIBLE);
+        ElementViewUtils.setText(findViewById(R.id.textErrorRequest), R.id.textErrorRequest, error);
+        findViewById(R.id.textErrorRequest).setVisibility(View.VISIBLE);
+    }
+
+    private void hideInformation() {
+        //hide views
+        findViewById(R.id.rating_rating_bar).setVisibility(View.GONE);
+        findViewById(R.id.comment).setVisibility(View.GONE);
+        findViewById(R.id.submit_button).setVisibility(View.GONE);
     }
 }

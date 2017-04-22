@@ -10,6 +10,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.tallerdyp2.client.ui.activities.MyReviewActivity">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/image_error"
+        android:background="@drawable/image_error"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        android:layout_marginTop="30dp" />
+
+    <TextView android:id="@+id/textErrorRequest"
+        android:visibility="gone"
+        style="@style/ErrorDescription"/>
+
     <RatingBar
         android:id="@+id/rating_rating_bar"
         android:layout_width="wrap_content"
