@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.devbrackets.android.exomedia.listener.OnErrorListener;
@@ -56,11 +55,6 @@ public class DescriptionFragment extends Fragment implements OnErrorListener {
             textSliderView.image(R.drawable.no_photo);
             mDemoSlider.addSlider(textSliderView);
         }
-
-        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
-        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-        mDemoSlider.setDuration(4000);
 
         this.setupVideoView(rootView, attraction);
 

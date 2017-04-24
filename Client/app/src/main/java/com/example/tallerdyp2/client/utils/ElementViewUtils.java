@@ -57,7 +57,7 @@ public class ElementViewUtils {
     }
 
     private static void setDefaultImage(ImageView imageContent , final Context context) {
-        Picasso.with(context).load(R.drawable.image_error).into(imageContent);
+        Picasso.with(context).load(R.drawable.no_photo).into(imageContent);
     }
 
 }
