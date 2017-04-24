@@ -41,7 +41,7 @@ public class ReviewFragment extends Fragment {
         Attraction attraction = (Attraction) getArguments().
                 getSerializable(getString(R.string.review_at));
 
-        if(!attraction.getReviews().isEmpty())
+        if(!getReviewsApproved(attraction.getReviews()).isEmpty())
             setViewReview(attraction);
         else
             setEmptyView();
