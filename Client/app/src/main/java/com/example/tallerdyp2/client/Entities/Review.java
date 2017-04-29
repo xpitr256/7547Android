@@ -8,19 +8,22 @@ import java.io.Serializable;
 
 public class Review implements Serializable {
 
-
+    private String date;
     private String userAvatarUrl;
     private String userName;
     private String userId;
     private String comment;
     private double rating;
+    private boolean approved;
 
-    public Review(String userName, String userId, String userAvatarUrl, String comments, double rating) {
+    public Review(String userName, String userId, String userAvatarUrl, String comments, double rating, String date, boolean approved) {
         this.userName = userName;
         this.userId = userId;
         this.userAvatarUrl = userAvatarUrl;
         this.comment = comments;
         this.rating = rating;
+        this.date = date;
+        this.approved = approved;
     }
 
     public String getUserName() {
@@ -38,8 +41,6 @@ public class Review implements Serializable {
     public void setComment(String comment) {
         this.comment = comment;
     }
-
-
 
     public String getUserAvatarUrl() {
         return userAvatarUrl;
@@ -63,5 +64,21 @@ public class Review implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 }

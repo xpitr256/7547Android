@@ -1,4 +1,4 @@
-package com.example.tallerdyp2.client;
+package com.example.tallerdyp2.client.ui.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.example.tallerdyp2.client.Entities.Attraction;
+import com.example.tallerdyp2.client.R;
+import com.example.tallerdyp2.client.ui.activities.AttractionActivity;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 import com.example.tallerdyp2.client.utils.Helper;
 

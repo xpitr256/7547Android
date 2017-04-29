@@ -1,20 +1,14 @@
 package com.example.tallerdyp2.client.Services;
 
 import android.content.Intent;
-import android.telecom.Call;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.example.tallerdyp2.client.AttractionGOApplication;
-import com.example.tallerdyp2.client.CityActivity;
-import com.example.tallerdyp2.client.R;
-import com.example.tallerdyp2.client.utils.Callable;
+import com.example.tallerdyp2.client.ui.activities.CityActivity;
 import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.SharedPreferencesUtils;
 import com.example.tallerdyp2.client.utils.SplexCallable;
-import com.facebook.AccessToken;
-import com.facebook.login.LoginResult;
 
 import org.json.JSONArray;
 import org.json.JSONException;

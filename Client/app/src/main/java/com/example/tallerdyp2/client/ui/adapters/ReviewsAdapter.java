@@ -1,4 +1,4 @@
-package com.example.tallerdyp2.client;
+package com.example.tallerdyp2.client.ui.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,8 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.RatingBar;
 
 import com.example.tallerdyp2.client.Entities.Review;
+import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
-import com.example.tallerdyp2.client.utils.SharedPreferencesUtils;
 
 import java.util.List;
 
@@ -31,6 +31,7 @@ public class ReviewsAdapter extends ArrayAdapter<Review> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View item = inflater.inflate(R.layout.reviews_item_list, null);
         ElementViewUtils.setText(item, R.id.name, reviews.get(position).getUserName());
+        ElementViewUtils.setText(item, R.id.date, reviews.get(position).getDate());
         RatingBar mRatingBar = (RatingBar) item.findViewById(R.id.rating);
         mRatingBar.setRating((float)reviews.get(position).getRating());
         ElementViewUtils.setText(item, R.id.comment, reviews.get(position).getComment());

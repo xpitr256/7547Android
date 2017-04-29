@@ -1,4 +1,4 @@
-package com.example.tallerdyp2.client.fragments.attraction;
+package com.example.tallerdyp2.client.ui.fragments.attraction;
 
 import android.net.Uri;
 import android.support.v4.app.Fragment;
@@ -7,17 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.devbrackets.android.exomedia.listener.OnErrorListener;
 import com.devbrackets.android.exomedia.ui.widget.EMVideoView;
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.R;
-import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
-
-import java.io.FileNotFoundException;
 
 /**
  * Created by Sebastian on 6/4/2017.
@@ -36,7 +32,7 @@ public class DescriptionFragment extends Fragment implements OnErrorListener {
         rootView = inflater.inflate(R.layout.fragment_description_at, container, false);
 
         Attraction attraction = (Attraction) getArguments().
-                getSerializable(Constants.DESCRIPTION_AT);
+                getSerializable(getString(R.string.description_at));
 
         setViewDescription(attraction);
 
@@ -59,11 +55,6 @@ public class DescriptionFragment extends Fragment implements OnErrorListener {
             textSliderView.image(R.drawable.no_photo);
             mDemoSlider.addSlider(textSliderView);
         }
-
-        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
-        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-        mDemoSlider.setDuration(4000);
 
         this.setupVideoView(rootView, attraction);
 

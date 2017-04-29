@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">AttractionGO</string>
+    <string name="http_ip">https://taller-proyectos-2.herokuapp.com</string>
+    <string name="facebook_app_id">1374256585947172</string>
+    <string name="fb_login_protocol_scheme">fb1374256585947172</string>
+
+    <!--Activities Title-->
+    <string name="title_activity_initial">AttractionGO</string>
+    <string name="title_activity_city">Selecione Cidade</string>
+    <string name="title_activity_attraction">Selecione Atração</string>
+    <string name="title_activity_maps">Mapa</string>
+
+    <!--Activity Initial-->
+    <string name="slogan">A melhor maneira de guiá-lo em viagem</string>
+
+    <!--Activity City-->
+    <string name="btn_get_cities">Obter Cidades</string>
+    <string name="btn_my_location">Minha Localização</string>
+    <string name="welcome">Bem-vindo ao</string>
+    <string name="attractions_title">Atrações</string>
+    <string name="no_attractions">Nenhuma atração a ser mostrada para esta cidade</string>
+    <string name="distance_attraction">Distância:</string>
+    <string name="choose_language">Escolha o seu idioma:</string>
+
+    <!--Activity list City-->
+    <string name="search_hint_city">Procurar cidade</string>
+    <string name="attractions_list">Atrações: </string>
+    <string name="no_cities">Nenhuma cidade a ser mostrada</string>
+
+    <!--Activity Attraction-->
+    <string name="wrong_url">O áudio não está disponível neste momento</string>
+    <string name="description_at">Descrição</string>
+    <string name="review_at">Reveja</string>
+    <string name="poi_at">Pontos</string>
+    <string name="no_reviews">Não há críticas para esta atração</string>
+    <string name="no_pois">Não há pontos de interesse para ser mostrado para esta atração</string>
+
+    <!--Activity MyReview-->
+    <string name="leave_comment">Deixe sua mensagem aqui (0-255)</string>
+    <string name="send_comment">Enviar comentário</string>
+
+    <!--Navigation Drawer-->
+    <string name="close_session">Fechar Sessão</string>
+    <string name="language">Língua</string>
+    <string name="cities">Cidades</string>
+    <string name="drawer_open">drawer open</string>
+    <string name="drawer_close">drawer close</string>
+
+    <!--Alert Close Session-->
+    <string name="msg_close_session">¿Deseja fechar sessão?</string>
+    <string name="accept">Ok</string>
+    <string name="cancel">Cancel</string>
+
+    <!--Error request volley-->
+    <string name="error_request">Servidor offline, tente novamente mais tarde</string>
+    <string name="location_denied">Para usar o aplicativo, você precisa ativar o Local</string>
+
+    <!--Idioms-->
+    <string name="english">Inglês</string>
+    <string name="spanish">Espanhol</string>
+    <string name="portugues">Portugues</string>
+
+
+</resources>

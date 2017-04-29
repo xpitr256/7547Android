@@ -55,4 +55,17 @@ public class SharedPreferencesUtils {
 
         editor.commit();
     }
+
+    public static String getLanguage() {
+        String token = prefs.getString(Constants.LANGUAGE, Constants.EN);
+
+        return token;
+    }
+
+    public static void setLanguage(String language) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(Constants.LANGUAGE, language);
+
+        editor.commit();
+    }
 }

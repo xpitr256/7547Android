@@ -2,6 +2,7 @@ package com.example.tallerdyp2.client.utils;
 
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.Entities.City;
+import com.example.tallerdyp2.client.Entities.PointOfInterest;
 import com.example.tallerdyp2.client.Entities.Review;
 
 import org.json.JSONArray;
@@ -23,7 +24,7 @@ public class Mocker {
         urls.add("http://i.imgur.com/sRvjuhY.jpg");
         urls.add("http://i.imgur.com/sRvjuhY.jpg");
 
-        Review review = new Review("Sebastian Vicario", SharedPreferencesUtils.getFacebookUserId(), "", "I love it!!!", 3.5);
+        Review review = new Review("Sebastian Vicario", SharedPreferencesUtils.getFacebookUserId(), "", "I love it!!!", 3.5, "19/12/2016", true);
 
         reviews.add(review);
 
@@ -40,7 +41,8 @@ public class Mocker {
                 "00:00",
                 "00:00",
                 20,
-                reviews);
+                reviews,
+                Mocker.parsePOIs());
         attractions.add(parqueDeLaCosta);
         attractions.add(parqueDeLaCosta);
         attractions.add(parqueDeLaCosta);
@@ -67,5 +69,21 @@ public class Mocker {
 
         return cities;
 
+    }
+
+    public static List<PointOfInterest> parsePOIs() {
+        List<PointOfInterest> pois = new ArrayList<>();
+        List<String> urls = new ArrayList<>();
+
+        urls.add("http://i.imgur.com/sRvjuhY.jpg");
+            pois.add(new PointOfInterest(
+                    "0",
+                    "Mona Lisa",
+                    "La Mona Lisa es una de las pinturas más famosas a nivel mundial.",
+                    urls,
+                    "https://archive.org/download/Popeye_forPresident/Popeye_forPresident_512kb.mp4"
+            ));
+
+        return pois;
     }
 }

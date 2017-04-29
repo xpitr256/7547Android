@@ -8,6 +8,12 @@
             android:title="@string/cities"
             />
     </group>
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_language"
+            android:icon="@drawable/nav_language"
+            android:title="@string/language"/>
+    </group>
     <group android:id="@+id/menu_bottom" android:checkableBehavior="none">
         <item
             android:id="@+id/nav_close_session"

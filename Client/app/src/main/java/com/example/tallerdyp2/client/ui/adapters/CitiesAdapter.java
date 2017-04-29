@@ -1,4 +1,4 @@
-package com.example.tallerdyp2.client;
+package com.example.tallerdyp2.client.ui.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,9 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.example.tallerdyp2.client.Entities.City;
+import com.example.tallerdyp2.client.R;
+import com.example.tallerdyp2.client.ui.activities.CityActivity;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="10dp"
-    tools:context="com.example.tallerdyp2.client.CityActivity">
+    tools:context="com.example.tallerdyp2.client.ui.activities.CityActivity">
 
     <ProgressBar
         android:id="@+id/loadingPanel"

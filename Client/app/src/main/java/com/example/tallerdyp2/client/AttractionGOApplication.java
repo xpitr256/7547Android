@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
 import com.example.tallerdyp2.client.Services.FacebookService;
+import com.example.tallerdyp2.client.Services.LanguageService;
+import com.example.tallerdyp2.client.Services.LocationService;
 import com.example.tallerdyp2.client.Services.SplexService;
 import com.example.tallerdyp2.client.Services.VolleyRequestService;
 
@@ -17,6 +19,9 @@ public class AttractionGOApplication extends MultiDexApplication {
     private static VolleyRequestService volleyRequestService;
     private static FacebookService facebookService;
     private static SplexService splexService;
+    private static Context baseContext;
+    private static LanguageService laguageService;
+    private static LocationService locationService;
 
 
     @Override
@@ -24,6 +29,7 @@ public class AttractionGOApplication extends MultiDexApplication {
 
         super.onCreate();
         AttractionGOApplication.context = getApplicationContext();
+        AttractionGOApplication.baseContext = getBaseContext();
 
 //        //Override fonts
 //        CustomFonts.setDefaultFont(this, "DEFAULT", "fonts/Roboto-Regular.ttf");
@@ -36,6 +42,10 @@ public class AttractionGOApplication extends MultiDexApplication {
 
     public static Context getAppContext() {
         return AttractionGOApplication.context;
+    }
+
+    public static Context getAppBaseContext() {
+        return AttractionGOApplication.baseContext;
     }
 
     public static VolleyRequestService getVolleyRequestService(){
@@ -62,4 +72,21 @@ public class AttractionGOApplication extends MultiDexApplication {
 
         return splexService;
     }
+
+    public static LanguageService getLanguageService(){
+
+        if(laguageService == null)
+            laguageService = new LanguageService();
+
+        return laguageService;
+    }
+
+    public static LocationService getLocationService(){
+
+        if(locationService == null)
+            locationService = new LocationService();
+
+        return locationService;
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.example.tallerdyp2.client;
+package com.example.tallerdyp2.client.ui.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,11 +10,13 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.android.volley.VolleyError;
+import com.example.tallerdyp2.client.AttractionGOApplication;
+import com.example.tallerdyp2.client.ui.adapters.CitiesAdapter;
 import com.example.tallerdyp2.client.Entities.City;
+import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.utils.Callable;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 import com.example.tallerdyp2.client.utils.Helper;
-import com.example.tallerdyp2.client.utils.Mocker;
 import com.example.tallerdyp2.client.utils.Parser;
 
 import org.json.JSONArray;
@@ -37,7 +39,10 @@ public class CitiesActivity extends AppCompatActivity implements Callable{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
+
         setContentView(R.layout.activity_cities);
         getCitiesInfo();
 
