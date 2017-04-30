@@ -13,12 +13,12 @@ import java.util.List;
 public class TabsAdapter extends FragmentPagerAdapter {
 
     private List<Fragment> fragments;
-    private List<CharSequence> titles;
+    private List<Integer> drawablesId;
 
-    public TabsAdapter(FragmentManager fm, List<Fragment> fragments, List<CharSequence> titles) {
+    public TabsAdapter(FragmentManager fm, List<Fragment> fragments, List<Integer> drawablesId) {
         super(fm);
         this.fragments = fragments;
-        this.titles = titles;
+        this.drawablesId = drawablesId;
     }
 
     @Override
@@ -26,14 +26,13 @@ public class TabsAdapter extends FragmentPagerAdapter {
         return fragments.get(numeroFragment);
     }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return titles.get(position);
+    public int getDrawableId(int position) {
+        return drawablesId.get(position);
     }
 
     @Override
     public int getCount() {
-        return titles.size();
+        return fragments.size();
     }
 
 }

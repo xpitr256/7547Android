@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.tallerdyp2.client.Entities.Attraction;
@@ -34,7 +32,7 @@ public class AttractionActivity extends AppCompatActivity{
     protected TabsAdapter tabPagerAdapter;
     protected SlidingTabLayout tabs;
 
-    protected List<CharSequence> tabsTitles;
+    protected List<Integer> tabsDrawablesId;
     protected List<Fragment> fragments;
     private ViewPager viewPager;
 
@@ -42,7 +40,7 @@ public class AttractionActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        tabsTitles = new ArrayList<>();
+        tabsDrawablesId = new ArrayList<>();
         fragments = new ArrayList<>();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -60,13 +58,13 @@ public class AttractionActivity extends AppCompatActivity{
 
         setTabsAndFragments();
 
-        tabPagerAdapter =  new TabsAdapter(getSupportFragmentManager(), fragments, tabsTitles);
+        tabPagerAdapter =  new TabsAdapter(getSupportFragmentManager(), fragments, tabsDrawablesId);
 
         viewPager = (ViewPager) findViewById(R.id.view_pager_attraction);
         viewPager.setAdapter(tabPagerAdapter);
 
         tabs = (SlidingTabLayout) findViewById(R.id.tabs_attraction);
-        tabs.setDistributeEvenly(false);
+        tabs.setDistributeEvenly(true);
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
@@ -78,24 +76,24 @@ public class AttractionActivity extends AppCompatActivity{
 
     private void setTabsAndFragments() {
 
-        tabsTitles.clear();
+        tabsDrawablesId.clear();
         fragments.clear();
 
-        Map<String, TabFragmentBuilder> tabsFragments = initTabFragments();
+        Map<Integer, TabFragmentBuilder> tabsFragments = initTabFragments();
 
-        for(String tab: tabsFragments.keySet()){
-            tabsTitles.add(tab);
+        for(int tab: tabsFragments.keySet()){
+            tabsDrawablesId.add(tab);
             fragments.add(tabsFragments.get(tab).buildFragment());
         }
     }
 
-    private Map<String, TabFragmentBuilder> initTabFragments(){
-        return new LinkedHashMap<String, TabFragmentBuilder>(){{
-            put(getString(R.string.description_at), new TabFragmentBuilder<>(new DescriptionFragment(),
+    private Map<Integer, TabFragmentBuilder> initTabFragments(){
+        return new LinkedHashMap<Integer, TabFragmentBuilder>(){{
+            put(R.drawable.ic_map, new TabFragmentBuilder<>(new DescriptionFragment(),
                     getString(R.string.description_at), attraction));
-            put(getString(R.string.review_at), new TabFragmentBuilder<>(new ReviewFragment(),
+            put(R.drawable.ic_star, new TabFragmentBuilder<>(new ReviewFragment(),
                     getString(R.string.review_at), attraction));
-            put(getString(R.string.poi_at), new TabFragmentBuilder<>(new PointOfInterestFragment(),
+            put(R.drawable.ic_star, new TabFragmentBuilder<>(new PointOfInterestFragment(),
                     getString(R.string.poi_at), attraction));
         }};
     }
