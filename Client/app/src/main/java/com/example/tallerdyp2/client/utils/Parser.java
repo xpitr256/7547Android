@@ -6,6 +6,7 @@ import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.Entities.City;
 import com.example.tallerdyp2.client.Entities.PointOfInterest;
 import com.example.tallerdyp2.client.Entities.Review;
+import com.example.tallerdyp2.client.Entities.Travel;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
@@ -24,30 +25,39 @@ import java.util.List;
 public class Parser {
     public static List<City> parseCities(JSONArray response) {
         List<City> cities = new ArrayList<>();
-        List<Attraction> attractions;
-        JSONArray attractionsJSON;
         JSONObject city;
         try {
             for(int i  = 0; i < response.length(); i++) {
-
                 city = response.getJSONObject(i);
-                attractions = new ArrayList<>();
-                attractionsJSON = city.getJSONArray("attractions");
-                for(int j = 0; j < attractionsJSON.length(); j++){
-                    attractions.add(Parser.parseAttraction(attractionsJSON.getJSONObject(j)));
-                }
                 cities.add(new City(city.getString("_id"),
                         city.getString("name"),
                         city.getString("description"),
                         Parser.parseImagesURL(city.getJSONArray("imagesURL")),
                         city.getJSONObject("location").getDouble("lat"),
-                        city.getJSONObject("location").getDouble("lng"), attractions));
+                        city.getJSONObject("location").getDouble("lng"),
+                        Parser.parseAttractions(city.getJSONArray("attractions")),
+//                        Parser.parseTravels(city.getJSONArray("travels"))
+                        Mocker.parseTravels()
+                ));
 
             }
         } catch (JSONException e) {
             return cities;
         }
         return cities;
+    }
+
+    private static List<Travel> parseTravels(JSONArray travelsJson) throws JSONException {
+        List<Travel> travels = new ArrayList<>();
+        for(int i = 0; i < travelsJson.length(); i++){
+            travels.add(new Travel(
+                    travelsJson.getJSONObject(i).getString("_id"),
+                    travelsJson.getJSONObject(i).getString("name"),
+                    travelsJson.getJSONObject(i).getString("description"),
+                    Parser.parseAttractions(travelsJson.getJSONObject(i).getJSONArray("imagesURL"))
+            ));
+        }
+        return travels;
     }
 
     private static List<PointOfInterest> parsePOIs(JSONArray poisJson) throws JSONException {
@@ -171,6 +181,14 @@ public class Parser {
         }
 
         return poly;
+    }
+
+    public static List<Attraction> parseAttractions(JSONArray attractionsJson) throws JSONException {
+        List<Attraction> attractions = new ArrayList<>();
+        for(int i = 0; i < attractionsJson.length(); i++){
+            attractions.add(Parser.parseAttraction(attractionsJson.getJSONObject(i)));
+        }
+        return attractions;
     }
 
     public static Attraction parseAttraction(JSONObject attractionJson) throws JSONException {

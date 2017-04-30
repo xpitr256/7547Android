@@ -89,9 +89,9 @@ public class AttractionActivity extends AppCompatActivity{
 
     private Map<Integer, TabFragmentBuilder> initTabFragments(){
         return new LinkedHashMap<Integer, TabFragmentBuilder>(){{
-            put(R.drawable.ic_map, new TabFragmentBuilder<>(new DescriptionFragment(),
+            put(R.drawable.ic_home, new TabFragmentBuilder<>(new DescriptionFragment(),
                     getString(R.string.description_at), attraction));
-            put(R.drawable.ic_star, new TabFragmentBuilder<>(new ReviewFragment(),
+            put(R.drawable.ic_comment, new TabFragmentBuilder<>(new ReviewFragment(),
                     getString(R.string.review_at), attraction));
             put(R.drawable.ic_star, new TabFragmentBuilder<>(new PointOfInterestFragment(),
                     getString(R.string.poi_at), attraction));

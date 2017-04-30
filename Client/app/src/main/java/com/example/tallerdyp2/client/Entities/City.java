@@ -17,8 +17,9 @@ public class City implements Serializable {
     private double latitude;
     private double longitude;
     private List<Attraction> attractions;
+    private List<Travel> travels;
 
-    public City(String id, String name, String description, List<String> imagesURL, double latitude, double longitude, List<Attraction> attractions) {
+    public City(String id, String name, String description, List<String> imagesURL, double latitude, double longitude, List<Attraction> attractions, List<Travel> travels) {
 
         this.id = id;
         this.name = name;
@@ -27,6 +28,7 @@ public class City implements Serializable {
         this.latitude = latitude;
         this.longitude = longitude;
         this.attractions = attractions != null ? attractions : new ArrayList<Attraction>();
+        this.travels = travels != null ? travels : new ArrayList<Travel>();
     }
 
     public String getId() {
@@ -84,6 +86,15 @@ public class City implements Serializable {
     public void setAttractions(List<Attraction> attractions) {
         this.attractions = attractions;
     }
+
+    public List<Travel> getTravels() {
+        return travels;
+    }
+
+    public void setTravels(List<Travel> travels) {
+        this.travels = travels;
+    }
+
 
 }
 

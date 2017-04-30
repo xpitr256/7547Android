@@ -4,6 +4,7 @@ import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.Entities.City;
 import com.example.tallerdyp2.client.Entities.PointOfInterest;
 import com.example.tallerdyp2.client.Entities.Review;
+import com.example.tallerdyp2.client.Entities.Travel;
 
 import org.json.JSONArray;
 
@@ -17,58 +18,86 @@ import java.util.List;
 public class Mocker {
     public static List<City> parseCities(JSONArray response) {
         List<City> cities = new ArrayList<>();
-        List<Attraction> attractions = new ArrayList<>();
-        List<Review> reviews = new ArrayList<>();
-        List<String> urls = new ArrayList<>();
-
-        urls.add("http://i.imgur.com/sRvjuhY.jpg");
-        urls.add("http://i.imgur.com/sRvjuhY.jpg");
-
-        Review review = new Review("Sebastian Vicario", SharedPreferencesUtils.getFacebookUserId(), "", "I love it!!!", 3.5, "19/12/2016", true);
-
-        reviews.add(review);
-
-        Attraction parqueDeLaCosta = new Attraction(
-                "1",
-                "Parque de la costa",
-                "Descripcion",
-                3.5,
-                urls,
-                "https://archive.org/download/Popeye_forPresident/Popeye_forPresident_512kb.mp4",
-                22.2,
-                21.1,
-                "FAMILY",
-                "00:00",
-                "00:00",
-                20,
-                reviews,
-                Mocker.parsePOIs());
-        attractions.add(parqueDeLaCosta);
-        attractions.add(parqueDeLaCosta);
-        attractions.add(parqueDeLaCosta);
         City buenosAires = new City(
                 "1",
                 "Buenos Aires",
                 "Buenos Aires, denominada oficialmente Ciudad Autónoma de Buenos Aires, es la capital de la República Argentina y el principal núcleo urbano del país. Está situada en la región centroeste del país, sobre la orilla occidental del Río de la Plata, en la llanura pampeana.",
-                urls,
+                Mocker.parseImagesURL(),
                 23.1,
                 24.1,
-                attractions
+                Mocker.parseAttractions(),
+                Mocker.parseTravels()
         );
         City mendoza = new City(
                 "2",
                 "Mendoza",
                 "Ciudad del buen vino",
-                urls,
+                Mocker.parseImagesURL(),
                 23.1,
                 24.1,
-                attractions
+                Mocker.parseAttractions(),
+                Mocker.parseTravels()
         );
         cities.add(buenosAires);
         cities.add(mendoza);
 
         return cities;
 
+    }
+
+    private static List<String> parseImagesURL() {
+        List<String> urls = new ArrayList<>();
+
+        urls.add("http://i.imgur.com/sRvjuhY.jpg");
+        urls.add("http://i.imgur.com/sRvjuhY.jpg");
+
+        return urls;
+    }
+
+    private static List<Attraction> parseAttractions() {
+        List<Attraction> attractions = new ArrayList<>();
+
+        attractions.add(new Attraction(
+                        "1",
+                        "Parque de la costa",
+                        "Descripcion",
+                        3.5,
+                        Mocker.parseImagesURL(),
+                        "https://archive.org/download/Popeye_forPresident/Popeye_forPresident_512kb.mp4",
+                        22.2,
+                        21.1,
+                        "FAMILY",
+                        "00:00",
+                        "00:00",
+                        20,
+                        Mocker.parseReviews(),
+                        Mocker.parsePOIs()
+                ));
+
+        attractions.add(new Attraction(
+                "2",
+                "Obelisco",
+                "Descripcion",
+                3.5,
+                Mocker.parseImagesURL(),
+                "https://archive.org/download/Popeye_forPresident/Popeye_forPresident_512kb.mp4",
+                0.2,
+                0.1,
+                "FAMILY",
+                "00:00",
+                "00:00",
+                20,
+                Mocker.parseReviews(),
+                Mocker.parsePOIs()
+        ));
+        return attractions;
+    }
+
+    private static List<Review> parseReviews() {
+        List<Review> reviews = new ArrayList<>();
+
+        reviews.add(new Review("Sebastian Vicario", SharedPreferencesUtils.getFacebookUserId(), "", "I love it!!!", 3.5, "19/12/2016", true));
+        return reviews;
     }
 
     public static List<PointOfInterest> parsePOIs() {
@@ -86,5 +115,24 @@ public class Mocker {
             ));
 
         return pois;
+    }
+
+    public static List<Travel> parseTravels() {
+        List<Travel> travels = new ArrayList<>();
+        travels.add(new Travel(
+                "0",
+                "Recorrido Turistico",
+                "Puntos mas importante.",
+                Mocker.parseAttractions()
+        ));
+
+        travels.add(new Travel(
+                "1",
+                "Recorrido Caminito",
+                "Puntos mas importante.",
+                Mocker.parseAttractions()
+        ));
+
+        return travels;
     }
 }
