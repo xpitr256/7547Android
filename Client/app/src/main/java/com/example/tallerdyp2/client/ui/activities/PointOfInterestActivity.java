@@ -49,11 +49,14 @@ public class PointOfInterestActivity extends AppCompatActivity implements OnErro
                 DefaultSliderView textSliderView = new DefaultSliderView(getApplicationContext());
                 textSliderView.image(url);
                 mDemoSlider.addSlider(textSliderView);
+                if(poi.getImagesURL().size() == 1)
+                    mDemoSlider.stopAutoCycle();
             }
         }else{
             DefaultSliderView textSliderView = new DefaultSliderView(getApplicationContext());
             textSliderView.image(R.drawable.no_photo);
             mDemoSlider.addSlider(textSliderView);
+            mDemoSlider.stopAutoCycle();
         }
 
 //        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);

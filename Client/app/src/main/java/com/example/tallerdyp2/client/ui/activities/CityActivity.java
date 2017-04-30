@@ -251,10 +251,13 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
                 textSliderView.image(url);
                 mDemoSlider.addSlider(textSliderView);
             }
+            if(city.getImagesURL().size() == 1)
+                mDemoSlider.stopAutoCycle();
         }else{
             DefaultSliderView textSliderView = new DefaultSliderView(this);
             textSliderView.image(R.drawable.no_photo);
             mDemoSlider.addSlider(textSliderView);
+            mDemoSlider.stopAutoCycle();
         }
 //        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
 //        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);

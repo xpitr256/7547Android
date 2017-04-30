@@ -49,11 +49,14 @@ public class DescriptionFragment extends Fragment implements OnErrorListener {
                 DefaultSliderView textSliderView = new DefaultSliderView(getContext());
                 textSliderView.image(url);
                 mDemoSlider.addSlider(textSliderView);
+                if(attraction.getImagesURL().size() == 1)
+                    mDemoSlider.stopAutoCycle();
             }
         }else{
             DefaultSliderView textSliderView = new DefaultSliderView(getContext());
             textSliderView.image(R.drawable.no_photo);
             mDemoSlider.addSlider(textSliderView);
+            mDemoSlider.stopAutoCycle();
         }
 
         this.setupVideoView(rootView, attraction);
