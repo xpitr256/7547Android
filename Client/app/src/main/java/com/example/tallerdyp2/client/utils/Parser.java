@@ -58,7 +58,8 @@ public class Parser {
                     poisJson.getJSONObject(i).getString("name"),
                     poisJson.getJSONObject(i).getString("description"),
                     Parser.parseImagesURL(poisJson.getJSONObject(i).getJSONArray("imagesURL")),
-                    poisJson.getJSONObject(i).getString("audioURL")
+                    poisJson.getJSONObject(i).getString("audioURL"),
+                    poisJson.getJSONObject(i).getString("location")
             ));
         }
         return pois;
@@ -190,8 +191,8 @@ public class Parser {
 //                                    attractionJson.getString("closeTime"),
                 attractionJson.getInt("price"),
                 Parser.parseReviews(attractionJson.getJSONArray("reviews")),
-//                                    Parser.parsePOIs(attractionJson.getJSONArray("pois"))
-                Mocker.parsePOIs()
+                Parser.parsePOIs(attractionJson.getJSONArray("pointOfInterests"))
+//                Mocker.parsePOIs()
         );
 
     }

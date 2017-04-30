@@ -14,13 +14,15 @@ public class PointOfInterest implements Serializable{
     private String name;
     private String description;
     private List<String> imagesURL;
+    private String location;
 
-    public PointOfInterest(String id, String name, String description, List<String> imagesURL, String audioURL) {
+    public PointOfInterest(String id, String name, String description, List<String> imagesURL, String audioURL, String location) {
         this.audioURL = audioURL;
         this.id = id;
         this.name = name;
         this.description = description;
         this.imagesURL = imagesURL;
+        this.location = location;
     }
 
     public String getAudioURL() {
@@ -61,5 +63,13 @@ public class PointOfInterest implements Serializable{
 
     public void setImagesURL(List<String> imagesURL) {
         this.imagesURL = imagesURL;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

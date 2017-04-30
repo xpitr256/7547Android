@@ -81,7 +81,8 @@ public class Mocker {
                     "Mona Lisa",
                     "La Mona Lisa es una de las pinturas más famosas a nivel mundial.",
                     urls,
-                    "https://archive.org/download/Popeye_forPresident/Popeye_forPresident_512kb.mp4"
+                    "https://archive.org/download/Popeye_forPresident/Popeye_forPresident_512kb.mp4",
+                    "1st floor"
             ));
 
         return pois;
