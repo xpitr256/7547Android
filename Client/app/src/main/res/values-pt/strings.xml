@@ -34,6 +34,7 @@
     <string name="poi_at">Pontos</string>
     <string name="no_reviews">Não há críticas para esta atração</string>
     <string name="no_pois">Não há pontos de interesse para ser mostrado para esta atração</string>
+    <string name="review_not_approved">Comentário não mostrado, contém linguagem inadequada</string>
 
     <!--Activity MyReview-->
     <string name="leave_comment">Deixe sua mensagem aqui (0-255)</string>

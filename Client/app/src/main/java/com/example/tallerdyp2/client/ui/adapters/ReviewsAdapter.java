@@ -34,7 +34,7 @@ public class ReviewsAdapter extends ArrayAdapter<Review> {
         ElementViewUtils.setText(item, R.id.date, reviews.get(position).getDate());
         RatingBar mRatingBar = (RatingBar) item.findViewById(R.id.rating);
         mRatingBar.setRating((float)reviews.get(position).getRating());
-        ElementViewUtils.setText(item, R.id.comment, reviews.get(position).getComment());
+        ElementViewUtils.setText(item, R.id.comment, reviews.get(position).isApproved() ? reviews.get(position).getComment() : getContext().getString(R.string.review_not_approved));
 
         return (item);
     }

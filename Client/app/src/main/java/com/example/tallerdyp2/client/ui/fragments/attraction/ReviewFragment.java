@@ -41,7 +41,7 @@ public class ReviewFragment extends Fragment {
         Attraction attraction = (Attraction) getArguments().
                 getSerializable(getString(R.string.review_at));
 
-        if(!getReviewsApproved(attraction.getReviews()).isEmpty())
+        if(!attraction.getReviews().isEmpty())
             setViewReview(attraction);
         else
             setEmptyView();
@@ -85,19 +85,10 @@ public class ReviewFragment extends Fragment {
         reviews = attraction.getReviews();
 
         // Inicializar el adaptador con la fuente de datos.
-        reviewsAdapter = new ReviewsAdapter(getContext(), getReviewsApproved(reviews));
+        reviewsAdapter = new ReviewsAdapter(getContext(), reviews);
 
         //Relacionando la lista con el adaptador
         reviewsList.setAdapter(reviewsAdapter);
-    }
-
-    private List<Review> getReviewsApproved(List<Review> reviews) {
-        List<Review> reviewsAux = new ArrayList<>();
-        for(Review review : reviews){
-            if(review.isApproved())
-                reviewsAux.add(review);
-        }
-        return reviewsAux;
     }
 
     private boolean hasMyReview(List<Review> reviews) {

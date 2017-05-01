@@ -10,6 +10,7 @@
     <TextView
         tools:text="TextView"
         android:id="@+id/header_attraction"
+        android:elevation="2dp"
         style="@style/Title"/>
 
     <com.example.tallerdyp2.client.customViews.SlidingTabLayout
@@ -17,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="2dp"
-        android:background="@color/tabs_background"
+        android:background="@color/colorPrimaryDark"
         android:layout_below="@+id/header_attraction"
         />
 
