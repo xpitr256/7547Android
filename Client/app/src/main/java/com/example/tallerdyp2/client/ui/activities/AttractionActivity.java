@@ -13,6 +13,7 @@ import com.example.tallerdyp2.client.ui.adapters.TabsAdapter;
 import com.example.tallerdyp2.client.builders.TabFragmentBuilder;
 import com.example.tallerdyp2.client.customViews.SlidingTabLayout;
 import com.example.tallerdyp2.client.ui.fragments.attraction.DescriptionFragment;
+import com.example.tallerdyp2.client.ui.fragments.attraction.LocationATFragment;
 import com.example.tallerdyp2.client.ui.fragments.attraction.PointOfInterestFragment;
 import com.example.tallerdyp2.client.ui.fragments.attraction.ReviewFragment;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
@@ -91,6 +92,8 @@ public class AttractionActivity extends AppCompatActivity{
         return new LinkedHashMap<Integer, TabFragmentBuilder>(){{
             put(R.drawable.ic_home, new TabFragmentBuilder<>(new DescriptionFragment(),
                     getString(R.string.description_at), attraction));
+            put(R.drawable.ic_place, new TabFragmentBuilder<>(new LocationATFragment(),
+                    getString(R.string.location_at), attraction));
             put(R.drawable.ic_comment, new TabFragmentBuilder<>(new ReviewFragment(),
                     getString(R.string.review_at), attraction));
             put(R.drawable.ic_star, new TabFragmentBuilder<>(new PointOfInterestFragment(),

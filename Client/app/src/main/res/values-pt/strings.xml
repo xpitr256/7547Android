@@ -30,6 +30,7 @@
     <!--Activity Attraction-->
     <string name="wrong_url">O áudio não está disponível neste momento</string>
     <string name="description_at">Descrição</string>
+    <string name="location_at">Localização</string>
     <string name="review_at">Reveja</string>
     <string name="poi_at">Pontos</string>
     <string name="no_reviews">Não há críticas para esta atração</string>

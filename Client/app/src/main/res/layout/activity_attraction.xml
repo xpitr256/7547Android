@@ -4,7 +4,6 @@
     android:id="@+id/activity_attraction"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="10dp"
     tools:context="com.example.tallerdyp2.client.ui.activities.AttractionActivity">
 
     <TextView
