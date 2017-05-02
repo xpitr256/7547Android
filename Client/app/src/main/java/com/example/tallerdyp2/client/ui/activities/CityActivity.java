@@ -8,7 +8,9 @@ import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,10 +23,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.android.volley.VolleyError;
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.example.tallerdyp2.client.AttractionGOApplication;
+import com.example.tallerdyp2.client.builders.TabFragmentBuilder;
+import com.example.tallerdyp2.client.customViews.SlidingTabLayout;
 import com.example.tallerdyp2.client.ui.adapters.AttractionsAdapter;
 import com.example.tallerdyp2.client.Entities.City;
 import com.example.tallerdyp2.client.Proxys.Proxy;
@@ -34,25 +37,27 @@ import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.navigationDrawer.DrawerAction;
 import com.example.tallerdyp2.client.navigationDrawer.DrawerTransactionManager;
 import com.example.tallerdyp2.client.navigationDrawer.Transactional;
+import com.example.tallerdyp2.client.ui.adapters.TabsAdapter;
+import com.example.tallerdyp2.client.ui.fragments.attraction.DescriptionATFragment;
+import com.example.tallerdyp2.client.ui.fragments.city.DescriptionCIFragment;
 import com.example.tallerdyp2.client.utils.Callable;
 import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 import com.example.tallerdyp2.client.utils.Helper;
 import com.example.tallerdyp2.client.utils.LocationCallable;
 import com.example.tallerdyp2.client.utils.Parser;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 
 public class CityActivity extends AppCompatActivity implements Callable, Transactional, LocationCallable{
 
-    private GoogleApiClient googleApiClient;
     private List<City> cities;
     private String cityName;
     public City city;
@@ -61,6 +66,14 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
     private ActionBarDrawerToggle mDrawerToggle;
     private NavigationView nvDrawer;
     private SliderLayout mDemoSlider;
+    private Fragment descriptionFragment;
+
+    protected TabsAdapter tabPagerAdapter;
+    protected SlidingTabLayout tabs;
+
+    protected List<Integer> tabsDrawablesId;
+    protected List<Fragment> fragments;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,16 +92,19 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
         findViewById(R.id.slider).setVisibility(View.GONE);
         findViewById(R.id.header_city).setVisibility(View.GONE);
         findViewById(R.id.header_welcome).setVisibility(View.GONE);
-        findViewById(R.id.description_city).setVisibility(View.GONE);
-        findViewById(R.id.attractions_list).setVisibility(View.GONE);
 
         this.cities = new ArrayList<>();
         this.proxyLocation = new ProxyNoLocation();
 
         //OBTAIN CITY SELECTED, IF COME FROM LIST CITIES
         Bundle bundle = getIntent().getExtras();
-        if(bundle != null) cityName = getIntent().getExtras().getString("cityName");
+        if (bundle != null) cityName = getIntent().getExtras().getString("cityName");
 
+
+        //TABS
+        tabsDrawablesId = new ArrayList<>();
+        fragments = new ArrayList<>();
+        setViewPager();
 
         //POP UP ALLOW LOCATION FOR THE APP
         if(!Helper.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)){
@@ -100,12 +116,49 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
 
     }
 
+
+    private void setViewPager() {
+
+        setTabsAndFragments();
+
+        tabPagerAdapter =  new TabsAdapter(getSupportFragmentManager(), fragments, tabsDrawablesId);
+
+        viewPager = (ViewPager) findViewById(R.id.view_pager_attraction);
+        viewPager.setAdapter(tabPagerAdapter);
+
+        tabs = (SlidingTabLayout) findViewById(R.id.tabs_attraction);
+        tabs.setDistributeEvenly(true);
+        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.grey);
+            }
+        });
+        tabs.setViewPager(viewPager);
+    }
+
+    private void setTabsAndFragments() {
+
+        tabsDrawablesId.clear();
+        fragments.clear();
+
+        Map<Integer, TabFragmentBuilder> tabsFragments = initTabFragments();
+
+        for(int tab: tabsFragments.keySet()){
+            tabsDrawablesId.add(tab);
+            fragments.add(tabsFragments.get(tab).buildFragment());
+        }
+    }
+
+    private Map<Integer, TabFragmentBuilder> initTabFragments(){
+        descriptionFragment = new DescriptionCIFragment();
+        return new LinkedHashMap<Integer, TabFragmentBuilder>(){{
+            put(R.drawable.ic_home, new TabFragmentBuilder<>(descriptionFragment,
+                    getString(R.string.description_at), city));
+        }};
+    }
+
     protected void initNavigationDrawer(){
-
-//        toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         nvDrawer = (NavigationView) findViewById(R.id.left_drawer);
         setupDrawerContent(nvDrawer);
@@ -132,10 +185,6 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
 
         // Set the drawer toggle as the DrawerListener
         mDrawer.addDrawerListener(mDrawerToggle);
-
-//        View header = nvDrawer.inflateHeaderView(R.layout.drawer_header);
-//        TextView tvHeader = (TextView) header.findViewById(R.id.header_title);
-//        tvHeader.setText(SharedPreferencesUtils.getNombreUsuario());
     }
 
     @Override
@@ -198,10 +247,6 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
 
         menuItem.setChecked(true);
 
-//        if(action.allowsTitle) {
-//            tvSubtitle.setText(menuItem.getTitle());
-//        }
-
         mDrawer.closeDrawers();
     }
 
@@ -242,7 +287,6 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
 
         ElementViewUtils.setText(findViewById(R.id.header_city),R.id.header_city,city.getName());
-//        ElementViewUtils.setImageFromURL(findViewById(R.id.image_view),R.id.image_view,city.getImageURL(),getApplicationContext());
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
         mDemoSlider.removeAllSliders();
         if(!city.getImagesURL().isEmpty()) {
@@ -259,10 +303,6 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
             mDemoSlider.addSlider(textSliderView);
             mDemoSlider.stopAutoCycle();
         }
-//        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
-//        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-//        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-//        mDemoSlider.setDuration(4000);
 
         ElementViewUtils.setText(findViewById(R.id.description_city),R.id.description_city,city.getDescription());
 

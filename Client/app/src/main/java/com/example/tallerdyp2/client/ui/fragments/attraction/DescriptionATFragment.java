@@ -19,7 +19,7 @@ import com.example.tallerdyp2.client.utils.ElementViewUtils;
  * Created by Sebastian on 6/4/2017.
  */
 
-public class DescriptionFragment extends Fragment implements OnErrorListener {
+public class DescriptionATFragment extends Fragment implements OnErrorListener {
 
     private View rootView;
     private EMVideoView emVideoView;

@@ -1,9 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:EMVAudioView="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.tallerdyp2.client.ui.activities.AttractionActivity">
+    tools:context="com.example.tallerdyp2.client.ui.activities.CityActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -22,25 +22,27 @@
 
             <TextView
                 tools:text="TextView"
-                android:id="@+id/description_attraction"
+                android:id="@+id/description_city"
                 android:layout_below="@+id/slider"
-                style="@style/Description"/>
-
-            <com.devbrackets.android.exomedia.ui.widget.EMVideoView
-                android:id="@+id/audio_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/description_attraction"
-                android:visibility="visible"
-                EMVAudioView:useDefaultControls="true"/>
+                android:layout_marginTop="10dp"
+                style="@style/Description" />
 
             <TextView
-                android:text="@string/wrong_url"
-                android:id="@+id/wrong_url"
-                android:layout_below="@+id/description_attraction"
+                android:text="@string/no_attractions"
+                android:id="@+id/no_attractions"
+                android:layout_below="@+id/description_city"
                 android:layout_marginTop="10dp"
                 android:visibility="gone"
                 style="@style/ErrorDescription" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/attractions_list"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/description_city"
+                />
 
         </RelativeLayout>
     </ScrollView>
