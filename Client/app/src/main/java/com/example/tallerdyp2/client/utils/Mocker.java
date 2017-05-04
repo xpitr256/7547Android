@@ -96,7 +96,7 @@ public class Mocker {
     private static List<Review> parseReviews() {
         List<Review> reviews = new ArrayList<>();
 
-        reviews.add(new Review("Sebastian Vicario", SharedPreferencesUtils.getFacebookUserId(), "", "I love it!!!", 3.5, "19/12/2016", true));
+        reviews.add(new Review("Sebastian Vicario", SharedPreferencesUtils.getFacebookUserId(), "", "I love it!!!", 3.5, "19/12/2016", 1));
         return reviews;
     }
 

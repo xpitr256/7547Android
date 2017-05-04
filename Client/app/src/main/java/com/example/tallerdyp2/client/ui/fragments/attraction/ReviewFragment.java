@@ -43,7 +43,7 @@ public class ReviewFragment extends Fragment {
             attraction = (Attraction) getArguments().
                     getSerializable(getString(R.string.review_at));
 
-            if(!attraction.getReviews().isEmpty())
+            if(!this.getReviewsToShow(attraction.getReviews()).isEmpty())
                 setViewReview(attraction);
             else
                 setEmptyView();
@@ -86,7 +86,7 @@ public class ReviewFragment extends Fragment {
         // Instancia del ListView.
         reviewsList = (ListView) rootView.findViewById(R.id.reviews_list);
 
-        reviews = attraction.getReviews();
+        reviews = this.getReviewsToShow(attraction.getReviews());
 
         // Inicializar el adaptador con la fuente de datos.
         reviewsAdapter = new ReviewsAdapter(getContext(), reviews);
@@ -101,6 +101,15 @@ public class ReviewFragment extends Fragment {
                 return true;
         }
         return false;
+    }
+
+    private List<Review> getReviewsToShow(List<Review> reviews){
+        List<Review> reviewsToShow = new ArrayList<>();
+        for(Review review : reviews){
+            if(review.canBeShowed())
+                reviewsToShow.add(review);
+        }
+        return reviewsToShow;
     }
 
 }

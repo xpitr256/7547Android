@@ -9,6 +9,7 @@ import android.widget.RatingBar;
 
 import com.example.tallerdyp2.client.Entities.Review;
 import com.example.tallerdyp2.client.R;
+import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 
 import java.util.List;

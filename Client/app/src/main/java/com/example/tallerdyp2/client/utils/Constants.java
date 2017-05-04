@@ -26,4 +26,9 @@ public class Constants {
     public static final String EN = "en";
     public static final String ES = "es";
     public static final String PT = "pt";
+
+    //STATE REVIEWS
+    public static final int PENDIENT = 0;
+    public static final int APPROVED = 1;
+    public static final int DISAPPROVED = 2;
 }

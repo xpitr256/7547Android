@@ -90,7 +90,7 @@ public class Parser {
                     reviewsJson.getJSONObject(i).getString("comments"),
                     reviewsJson.getJSONObject(i).getDouble("rating"),
                     Helper.getDate(reviewsJson.getJSONObject(i).getString("date")),
-                    reviewsJson.getJSONObject(i).getBoolean("approved")
+                    reviewsJson.getJSONObject(i).getInt("state")
             ));
         }
         return reviews;

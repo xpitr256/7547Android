@@ -1,5 +1,7 @@
 package com.example.tallerdyp2.client.Entities;
 
+import com.example.tallerdyp2.client.utils.Constants;
+
 import java.io.Serializable;
 
 /**
@@ -14,16 +16,16 @@ public class Review implements Serializable {
     private String userId;
     private String comment;
     private double rating;
-    private boolean approved;
+    private int state;
 
-    public Review(String userName, String userId, String userAvatarUrl, String comments, double rating, String date, boolean approved) {
+    public Review(String userName, String userId, String userAvatarUrl, String comments, double rating, String date, int state) {
         this.userName = userName;
         this.userId = userId;
         this.userAvatarUrl = userAvatarUrl;
         this.comment = comments;
         this.rating = rating;
         this.date = date;
-        this.approved = approved;
+        this.state = state;
     }
 
     public String getUserName() {
@@ -74,11 +76,19 @@ public class Review implements Serializable {
         this.date = date;
     }
 
-    public boolean isApproved() {
-        return approved;
+    public int getState() {
+        return state;
     }
 
-    public void setApproved(boolean approved) {
-        this.approved = approved;
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public boolean canBeShowed() {
+        return this.state != Constants.PENDIENT;
+    }
+
+    public boolean isApproved() {
+        return this.state == Constants.APPROVED;
     }
 }
