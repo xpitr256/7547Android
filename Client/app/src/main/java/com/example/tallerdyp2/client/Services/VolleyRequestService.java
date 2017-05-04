@@ -1,10 +1,5 @@
 package com.example.tallerdyp2.client.Services;
 
-import android.graphics.Color;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -14,20 +9,14 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tallerdyp2.client.AttractionGOApplication;
-import com.example.tallerdyp2.client.ui.activities.MapsActivity;
 import com.example.tallerdyp2.client.utils.Callable;
 import com.example.tallerdyp2.client.utils.Constants;
-import com.example.tallerdyp2.client.utils.Parser;
 import com.example.tallerdyp2.client.utils.SharedPreferencesUtils;
 import com.example.tallerdyp2.client.utils.SplexCallable;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

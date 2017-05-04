@@ -7,14 +7,12 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.telecom.Call;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.example.tallerdyp2.client.AttractionGOApplication;
 import com.example.tallerdyp2.client.Entities.Attraction;
-import com.example.tallerdyp2.client.Entities.City;
+import com.example.tallerdyp2.client.Entities.Tour;
 import com.example.tallerdyp2.client.Proxys.ProxyMap;
 import com.example.tallerdyp2.client.Proxys.ProxyMapNoLocation;
 import com.example.tallerdyp2.client.Proxys.ProxyMapNormal;
@@ -44,10 +42,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MapsActivity extends AppCompatActivity implements LocationCallable, Callable, OnMapReadyCallback{
+public class TourActivity extends AppCompatActivity implements LocationCallable, Callable, OnMapReadyCallback{
 
     private GoogleMap mMap;
-    private City city;
+    private Tour tour;
     private ProxyMap proxyLocation;
     private ArrayList<LatLng> points;
 
@@ -60,7 +58,7 @@ public class MapsActivity extends AppCompatActivity implements LocationCallable,
         getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
 
         points = new ArrayList<>();
-        city = (City) getIntent().getSerializableExtra("City");
+        tour = (Tour) getIntent().getSerializableExtra("Tour");
 
         //POP UP ALLOW LOCATION FOR THE APP
         if(!Helper.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)){
@@ -84,25 +82,32 @@ public class MapsActivity extends AppCompatActivity implements LocationCallable,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        if(Helper.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+        if(Helper.checkSelfPermission(TourActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             mMap.setMyLocationEnabled(true);
         }
 
-        LatLng currentLoc = new LatLng(this.proxyLocation.getLatitude(this), this.proxyLocation.getLongitude(this));
-        mMap.addMarker(new MarkerOptions().position(currentLoc).title("You are here"));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLoc));
+//        LatLng currentLoc = new LatLng(this.proxyLocation.getLatitude(this), this.proxyLocation.getLongitude(this));
+//        mMap.addMarker(new MarkerOptions().position(currentLoc).title("You are here"));
+//        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLoc));
+//
+//        CameraPosition cameraPosition = new CameraPosition.Builder()
+//                .target(currentLoc)
+//                .zoom(17)
+//                .build();
+//        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+//
+//        points.add(currentLoc);
 
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(currentLoc)
-                .zoom(17)
-                .build();
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        PolylineOptions options = new PolylineOptions();
 
-        points.add(currentLoc);
+        options.color( Color.parseColor( "#CC0000FF" ) );
+        options.width( 5 );
+        options.visible( true );
 
+        LatLng currentLoc;
         Marker marker;
-        for(final Attraction attraction : city.getAttractions()){
+        for(final Attraction attraction : tour.getAttractions()){
             currentLoc = new LatLng(attraction.getLatitude(), attraction.getLongitude());
 
             points.add(currentLoc);
@@ -113,7 +118,7 @@ public class MapsActivity extends AppCompatActivity implements LocationCallable,
                 @Override
                 public boolean onMarkerClick(Marker marker) {
                     String id = (String)(marker.getTag());
-                    for(Attraction attraction : city.getAttractions()){
+                    for(Attraction attraction : tour.getAttractions()){
                         if(attraction.getId().equals(id)){
                             Intent intent = new Intent(AttractionGOApplication.getAppContext(), AttractionActivity.class);
                             intent.putExtra("Attraction", attraction);
@@ -123,14 +128,23 @@ public class MapsActivity extends AppCompatActivity implements LocationCallable,
                     return true;
                 }
             });
-            PicassoMarker pmarker = new PicassoMarker(marker);
-            if(!attraction.getImagesURL().isEmpty())
-                Picasso.with(MapsActivity.this).load(attraction.getImagesURL().get(0)).resize(200,200).into(pmarker);
-            else
-                Picasso.with(MapsActivity.this).load(R.drawable.no_photo).resize(200,200).into(pmarker);
+            options.add(currentLoc);
 
-            this.getPaths();
+//            PicassoMarker pmarker = new PicassoMarker(marker);
+//            if(!attraction.getImagesURL().isEmpty())
+//                Picasso.with(TourActivity.this).load(attraction.getImagesURL().get(0)).resize(200,200).into(pmarker);
+//            else
+//                Picasso.with(TourActivity.this).load(R.drawable.no_photo).resize(200,200).into(pmarker);
+//
+//            this.getPaths();
         }
+
+        mMap.addPolyline( options );
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(tour.getAttractions().get(0).getLatitude(),tour.getAttractions().get(0).getLongitude()))
+                .zoom(17)
+                .build();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
     private void getPaths() {
@@ -235,20 +249,24 @@ public class MapsActivity extends AppCompatActivity implements LocationCallable,
         this.initMap();
     }
 
-    private String getCityFromLocation(){
-        return AttractionGOApplication.getLocationService().getCityFromLocation();
+    private String getTourFromLocation(){
+//        return AttractionGOApplication.getLocationService().getTourFromLocation();
+        return null;
     }
-
-    public boolean outsideMyCityLocation(){
-        return !this.city.getName().equals(this.getCityFromLocation());
+//
+    public boolean outsideMyTourLocation(){
+//        return !this.tour.getName().equals(this.getTourFromLocation());
+        return false;
     }
 
     public double getLatitude() {
-        return this.city.getLatitude();
+//        return this.tour.getLatitude();
+        return 0;
     }
 
     public double getLongitude() {
-        return this.city.getLongitude();
+//        return this.tour.getLongitude();
+        return 0;
     }
 
     @Override

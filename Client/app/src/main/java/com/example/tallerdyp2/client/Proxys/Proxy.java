@@ -10,8 +10,4 @@ public interface Proxy {
     void execute(CityActivity activity);
 
     void getCity(CityActivity activity);
-
-    double getLatitude(CityActivity activity);
-
-    double getLongitude(CityActivity activity);
 }

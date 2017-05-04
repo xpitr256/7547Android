@@ -29,12 +29,14 @@ public class DescriptionATFragment extends Fragment implements OnErrorListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.fragment_description_at, container, false);
+        if(rootView == null){
+            rootView = inflater.inflate(R.layout.fragment_description_at, container, false);
 
-        Attraction attraction = (Attraction) getArguments().
-                getSerializable(getString(R.string.description_at));
+            Attraction attraction = (Attraction) getArguments().
+                    getSerializable(getString(R.string.description_at));
 
-        setViewDescription(attraction);
+            setViewDescription(attraction);
+        }
 
         return rootView;
     }

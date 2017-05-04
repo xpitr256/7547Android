@@ -17,7 +17,6 @@ public class ElementViewUtils {
 
     public static void setText(View rootView, int textContentId, String content)
     {
-
         TextView textContent = (TextView) rootView.findViewById(textContentId);
         textContent.setText(content);
     }

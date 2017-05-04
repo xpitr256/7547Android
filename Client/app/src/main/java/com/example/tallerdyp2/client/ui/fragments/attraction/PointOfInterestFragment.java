@@ -25,20 +25,23 @@ public class PointOfInterestFragment extends Fragment {
     private ListView pointOfInterestsList;
     private List<PointOfInterest> pointOfInterests;
     private PointOfInterestsAdapter pointOfInterestsAdapter;
+    private Attraction attraction;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.fragment_poi_at, container, false);
+        if(rootView == null){
+            rootView = inflater.inflate(R.layout.fragment_poi_at, container, false);
 
-        Attraction attraction = (Attraction) getArguments().
-                getSerializable(getString(R.string.poi_at));
+            attraction = (Attraction) getArguments().
+                    getSerializable(getString(R.string.poi_at));
 
-        if(!attraction.getPointOfInterests().isEmpty())
-            setViewPointOfInterest(attraction);
-        else
-            setEmptyView();
+            if(!attraction.getPointOfInterests().isEmpty())
+                setViewPointOfInterest(attraction);
+            else
+                setEmptyView();
+        }
 
         return rootView;
     }

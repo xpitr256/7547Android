@@ -16,30 +16,24 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.android.volley.VolleyError;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.example.tallerdyp2.client.AttractionGOApplication;
+import com.example.tallerdyp2.client.Proxys.ProxyNormal;
 import com.example.tallerdyp2.client.builders.TabFragmentBuilder;
 import com.example.tallerdyp2.client.customViews.SlidingTabLayout;
-import com.example.tallerdyp2.client.ui.adapters.AttractionsAdapter;
 import com.example.tallerdyp2.client.Entities.City;
 import com.example.tallerdyp2.client.Proxys.Proxy;
 import com.example.tallerdyp2.client.Proxys.ProxyNoLocation;
-import com.example.tallerdyp2.client.Proxys.ProxyNormal;
 import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.navigationDrawer.DrawerAction;
 import com.example.tallerdyp2.client.navigationDrawer.DrawerTransactionManager;
 import com.example.tallerdyp2.client.navigationDrawer.Transactional;
 import com.example.tallerdyp2.client.ui.adapters.TabsAdapter;
-import com.example.tallerdyp2.client.ui.fragments.attraction.DescriptionATFragment;
 import com.example.tallerdyp2.client.ui.fragments.city.DescriptionCIFragment;
+import com.example.tallerdyp2.client.ui.fragments.city.TourCIFragment;
 import com.example.tallerdyp2.client.utils.Callable;
 import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
@@ -65,8 +59,7 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private NavigationView nvDrawer;
-    private SliderLayout mDemoSlider;
-    private Fragment descriptionFragment;
+    private DescriptionCIFragment descriptionFragment;
 
     protected TabsAdapter tabPagerAdapter;
     protected SlidingTabLayout tabs;
@@ -88,11 +81,6 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
 
         initNavigationDrawer();
 
-        //hide views
-        findViewById(R.id.slider).setVisibility(View.GONE);
-        findViewById(R.id.header_city).setVisibility(View.GONE);
-        findViewById(R.id.header_welcome).setVisibility(View.GONE);
-
         this.cities = new ArrayList<>();
         this.proxyLocation = new ProxyNoLocation();
 
@@ -104,7 +92,8 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
         //TABS
         tabsDrawablesId = new ArrayList<>();
         fragments = new ArrayList<>();
-        setViewPager();
+
+        descriptionFragment = new DescriptionCIFragment();
 
         //POP UP ALLOW LOCATION FOR THE APP
         if(!Helper.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)){
@@ -118,6 +107,8 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
 
 
     private void setViewPager() {
+
+        this.descriptionFragment.setCitySelected(cityName);
 
         setTabsAndFragments();
 
@@ -134,6 +125,7 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
                 return getResources().getColor(R.color.grey);
             }
         });
+
         tabs.setViewPager(viewPager);
     }
 
@@ -151,10 +143,11 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
     }
 
     private Map<Integer, TabFragmentBuilder> initTabFragments(){
-        descriptionFragment = new DescriptionCIFragment();
         return new LinkedHashMap<Integer, TabFragmentBuilder>(){{
             put(R.drawable.ic_home, new TabFragmentBuilder<>(descriptionFragment,
                     getString(R.string.description_at), city));
+            put(R.drawable.ic_directions, new TabFragmentBuilder<>(new TourCIFragment(),
+                    getString(R.string.tour_ci), city));
         }};
     }
 
@@ -220,24 +213,17 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
                     mDrawer.closeDrawer(Gravity.LEFT);  // CLOSE DRAWER
                 }
                 return true;
-            case R.id.map:
-                Intent intent = new Intent(this, MapsActivity.class);
-                intent.putExtra("City", city);
-                startActivity(intent);
-                break;
+//            case R.id.map:
+//                Intent intent = new Intent(this, TourActivity.class);
+//                intent.putExtra("City", city);
+//                startActivity(intent);
+//                break;
 
         }
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_city, menu);
-        return true;
     }
 
     private void selectItem(MenuItem menuItem) {
@@ -250,16 +236,14 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
         mDrawer.closeDrawers();
     }
 
-    private String getCityFromLocation(){
-        return AttractionGOApplication.getLocationService().getCityFromLocation();
-    }
 
-    public boolean outsideMyCityLocation(){
-        return !this.cityName.equals(this.getCityFromLocation());
-    }
 
     public boolean citySelected(){
         return cityName != null;
+    }
+
+    private String getCityFromLocation(){
+        return AttractionGOApplication.getLocationService().getCityFromLocation();
     }
 
     public void getMyCityLocation(){
@@ -278,58 +262,17 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
         for(City city : cities){
             if(city.getName().equals(this.cityName)){
                 this.city = city;
-                this.updateViewCity();
+                this.showContent();
+                this.setViewPager();
             }
         }
     }
 
-    private void updateViewCity() {
+    private void showContent() {
         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+        findViewById(R.id.content).setVisibility(View.VISIBLE);
 
         ElementViewUtils.setText(findViewById(R.id.header_city),R.id.header_city,city.getName());
-        mDemoSlider = (SliderLayout) findViewById(R.id.slider);
-        mDemoSlider.removeAllSliders();
-        if(!city.getImagesURL().isEmpty()) {
-            for (String url : city.getImagesURL()) {
-                DefaultSliderView textSliderView = new DefaultSliderView(this);
-                textSliderView.image(url);
-                mDemoSlider.addSlider(textSliderView);
-            }
-            if(city.getImagesURL().size() == 1)
-                mDemoSlider.stopAutoCycle();
-        }else{
-            DefaultSliderView textSliderView = new DefaultSliderView(this);
-            textSliderView.image(R.drawable.no_photo);
-            mDemoSlider.addSlider(textSliderView);
-            mDemoSlider.stopAutoCycle();
-        }
-
-        ElementViewUtils.setText(findViewById(R.id.description_city),R.id.description_city,city.getDescription());
-
-        this.updateViewAttractions();
-
-        findViewById(R.id.slider).setVisibility(View.VISIBLE);
-        findViewById(R.id.header_city).setVisibility(View.VISIBLE);
-        findViewById(R.id.header_welcome).setVisibility(View.VISIBLE);
-        findViewById(R.id.description_city).setVisibility(View.VISIBLE);
-
-
-    }
-
-    private void updateViewAttractions(){
-        LinearLayout list = (LinearLayout) findViewById(R.id.attractions_list);
-        list.removeAllViews();
-        if(!city.getAttractions().isEmpty()){
-            Helper.updateAtractionsDistanceFromMyLocation(city.getAttractions(), this.proxyLocation.getLatitude(this), this.proxyLocation.getLongitude(this));
-            Helper.sortAttractions(city.getAttractions());
-            AttractionsAdapter adapter = new AttractionsAdapter(this, city.getAttractions());
-            for (int i = 0; i < adapter.getCount(); i++) {
-                View view = adapter.getView(i, null, list);
-                list.addView(view);
-            }
-            findViewById(R.id.attractions_list).setVisibility(View.VISIBLE);
-        }else
-            findViewById(R.id.no_attractions).setVisibility(View.VISIBLE);
     }
 
     private void useLocationService() {
@@ -362,19 +305,14 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
 
     private void showError(String error) {
         this.hideInformation();
-        findViewById(R.id.image_error).setVisibility(View.VISIBLE);
+        findViewById(R.id.error).setVisibility(View.VISIBLE);
         ElementViewUtils.setText(findViewById(R.id.textErrorRequest), R.id.textErrorRequest, error);
-        findViewById(R.id.textErrorRequest).setVisibility(View.VISIBLE);
     }
 
     private void hideInformation() {
         //hide views
-        findViewById(R.id.slider).setVisibility(View.GONE);
-        findViewById(R.id.header_city).setVisibility(View.GONE);
-        findViewById(R.id.header_welcome).setVisibility(View.GONE);
-        findViewById(R.id.description_city).setVisibility(View.GONE);
-        findViewById(R.id.attractions_list).setVisibility(View.GONE);
         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+        findViewById(R.id.content).setVisibility(View.GONE);
     }
 
     @Override
@@ -385,13 +323,16 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
             if (resultCode == RESULT_OK) {
                 // The user picked a contact.
                 // The Intent's data Uri identifies which contact was selected.
+
+                this.descriptionFragment.setProxyLocation();
                 this.proxyLocation = new ProxyNormal();
-                this.proxyLocation.execute(this);
+
                 // Do something with the contact here (bigger example below)
             }else{
+                this.descriptionFragment.setProxyNoLocation();
                 this.proxyLocation = new ProxyNoLocation();
-                this.proxyLocation.execute(this);
             }
+            this.proxyLocation.execute(this);
         }
     }
 
@@ -403,6 +344,7 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     this.useLocationService();
                 }else {
+                    this.descriptionFragment.setProxyNoLocation();
                     this.proxyLocation = new ProxyNoLocation();
                     this.proxyLocation.execute(this);
                 }
@@ -458,8 +400,9 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
 
     @Override
     public void onLocationSuccess() {
+        this.descriptionFragment.setProxyLocation();
         this.proxyLocation = new ProxyNormal();
-        this.proxyLocation.execute(CityActivity.this);
+        this.proxyLocation.execute(this);
     }
 
     @Override
@@ -480,7 +423,7 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
     @Override
     public void onLocationChange() {
         if(this.city != null){
-            this.updateViewAttractions();
+            this.descriptionFragment.updateViewAttractions();
         }
     }
 
@@ -489,26 +432,6 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
         // Location settings are not satisfied. However, we have no way to fix the
         // settings so we won't show the dialog.
         this.showError(getResources().getString(R.string.location_denied));
-    }
-
-    @Override
-    protected void onStop() {
-        if(mDemoSlider != null) mDemoSlider.stopAutoCycle();
-        super.onStop();
-    }
-
-    @Override
-    protected void onRestart()
-    {
-        super.onRestart();
-
-        //POP UP ALLOW LOCATION FOR THE APP
-        if(!Helper.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)){
-            Helper.requestPermission(this,Constants.PERMISSION_LOCATION);
-        }else{
-            //POP UP ALLOW LOCATION SERVICE
-            this.useLocationService();
-        }
     }
 
 }

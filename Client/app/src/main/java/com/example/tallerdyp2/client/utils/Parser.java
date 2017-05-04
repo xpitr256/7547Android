@@ -1,12 +1,10 @@
 package com.example.tallerdyp2.client.utils;
 
-import android.icu.text.SimpleDateFormat;
-
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.Entities.City;
 import com.example.tallerdyp2.client.Entities.PointOfInterest;
 import com.example.tallerdyp2.client.Entities.Review;
-import com.example.tallerdyp2.client.Entities.Travel;
+import com.example.tallerdyp2.client.Entities.Tour;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
@@ -14,7 +12,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,8 +33,8 @@ public class Parser {
                         city.getJSONObject("location").getDouble("lat"),
                         city.getJSONObject("location").getDouble("lng"),
                         Parser.parseAttractions(city.getJSONArray("attractions")),
-//                        Parser.parseTravels(city.getJSONArray("travels"))
-                        Mocker.parseTravels()
+//                        Parser.parseTours(city.getJSONArray("tours"))
+                        Mocker.parseTours()
                 ));
 
             }
@@ -47,17 +44,17 @@ public class Parser {
         return cities;
     }
 
-    private static List<Travel> parseTravels(JSONArray travelsJson) throws JSONException {
-        List<Travel> travels = new ArrayList<>();
+    private static List<Tour> parseTours(JSONArray travelsJson) throws JSONException {
+        List<Tour> tours = new ArrayList<>();
         for(int i = 0; i < travelsJson.length(); i++){
-            travels.add(new Travel(
+            tours.add(new Tour(
                     travelsJson.getJSONObject(i).getString("_id"),
                     travelsJson.getJSONObject(i).getString("name"),
                     travelsJson.getJSONObject(i).getString("description"),
                     Parser.parseAttractions(travelsJson.getJSONObject(i).getJSONArray("imagesURL"))
             ));
         }
-        return travels;
+        return tours;
     }
 
     private static List<PointOfInterest> parsePOIs(JSONArray poisJson) throws JSONException {

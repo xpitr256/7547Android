@@ -8,12 +8,27 @@
     android:fitsSystemWindows="true"
     tools:context="com.example.tallerdyp2.client.ui.activities.CityActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/loadingPanel"
+        >
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:indeterminate="true" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/content"
+        android:visibility="gone">
 
         <TextView
             android:text="@string/welcome"
@@ -44,6 +59,14 @@
             android:layout_below="@+id/tabs_attraction"
             />
 
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/error"
+        android:visibility="gone">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,21 +74,11 @@
             android:background="@drawable/image_error"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:visibility="gone"
             android:layout_marginTop="30dp" />
 
         <TextView android:id="@+id/textErrorRequest"
-            android:visibility="gone"
             style="@style/ErrorDescription"/>
-
-        <ProgressBar
-            android:id="@+id/loadingPanel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:indeterminate="true" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/left_drawer"

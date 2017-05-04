@@ -1,19 +1,20 @@
 package com.example.tallerdyp2.client.Entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Sebastian on 29/4/2017.
  */
 
-public class Travel {
+public class Tour implements Serializable{
 
     private String id;
     private String name;
     private String description;
     private List<Attraction> attractions;
 
-    public Travel(String id, String name, String description, List<Attraction> attractions) {
+    public Tour(String id, String name, String description, List<Attraction> attractions) {
         this.id = id;
         this.name = name;
         this.description = description;

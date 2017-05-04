@@ -25,14 +25,4 @@ public class ProxyNoLocation implements Proxy{
     public void getCity(CityActivity activity) {
         activity.getMyCity();
     }
-
-    @Override
-    public double getLatitude(CityActivity activity) {
-        return activity.city.getLatitude();
-    }
-
-    @Override
-    public double getLongitude(CityActivity activity) {
-        return activity.city.getLongitude();
-    }
 }

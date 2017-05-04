@@ -31,22 +31,26 @@ public class ReviewFragment extends Fragment {
     private ListView reviewsList;
     private List<Review> reviews;
     private ReviewsAdapter reviewsAdapter;
+    private Attraction attraction;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.fragment_review_at, container, false);
+        if(rootView == null){
+            rootView = inflater.inflate(R.layout.fragment_review_at, container, false);
 
-        Attraction attraction = (Attraction) getArguments().
-                getSerializable(getString(R.string.review_at));
+            attraction = (Attraction) getArguments().
+                    getSerializable(getString(R.string.review_at));
 
-        if(!attraction.getReviews().isEmpty())
-            setViewReview(attraction);
-        else
-            setEmptyView();
+            if(!attraction.getReviews().isEmpty())
+                setViewReview(attraction);
+            else
+                setEmptyView();
 
-        setViewAddReview(attraction);
+            setViewAddReview(attraction);
+        }
+
 
         return rootView;
     }

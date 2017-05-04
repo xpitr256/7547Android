@@ -4,7 +4,7 @@ import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.Entities.City;
 import com.example.tallerdyp2.client.Entities.PointOfInterest;
 import com.example.tallerdyp2.client.Entities.Review;
-import com.example.tallerdyp2.client.Entities.Travel;
+import com.example.tallerdyp2.client.Entities.Tour;
 
 import org.json.JSONArray;
 
@@ -26,7 +26,7 @@ public class Mocker {
                 23.1,
                 24.1,
                 Mocker.parseAttractions(),
-                Mocker.parseTravels()
+                Mocker.parseTours()
         );
         City mendoza = new City(
                 "2",
@@ -36,7 +36,7 @@ public class Mocker {
                 23.1,
                 24.1,
                 Mocker.parseAttractions(),
-                Mocker.parseTravels()
+                Mocker.parseTours()
         );
         cities.add(buenosAires);
         cities.add(mendoza);
@@ -117,22 +117,22 @@ public class Mocker {
         return pois;
     }
 
-    public static List<Travel> parseTravels() {
-        List<Travel> travels = new ArrayList<>();
-        travels.add(new Travel(
+    public static List<Tour> parseTours() {
+        List<Tour> tours = new ArrayList<>();
+        tours.add(new Tour(
                 "0",
                 "Recorrido Turistico",
                 "Puntos mas importante.",
                 Mocker.parseAttractions()
         ));
 
-        travels.add(new Travel(
+        tours.add(new Tour(
                 "1",
                 "Recorrido Caminito",
                 "Puntos mas importante.",
                 Mocker.parseAttractions()
         ));
 
-        return travels;
+        return tours;
     }
 }

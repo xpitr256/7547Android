@@ -21,6 +21,9 @@
     <string name="no_attractions">No attractions to be showed for this city</string>
     <string name="distance_attraction">Distance:</string>
     <string name="choose_language">Choose language:</string>
+    <string name="tour_ci">Tour</string>
+    <string name="no_tours">No tours to be showed for this city</string>
+
 
     <!--Activity list City-->
     <string name="search_hint_city">Search City</string>

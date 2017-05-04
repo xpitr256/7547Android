@@ -18,18 +18,4 @@ public class ProxyNormal implements Proxy{
     public void getCity(CityActivity activity) {
         activity.getMyCityLocation();
     }
-
-    @Override
-    public double getLatitude(CityActivity activity) {
-        if(activity.outsideMyCityLocation())
-            return activity.city.getLatitude();
-        return AttractionGOApplication.getLocationService().getLocation().getLatitude();
-    }
-
-    @Override
-    public double getLongitude(CityActivity activity) {
-        if(activity.outsideMyCityLocation())
-            return activity.city.getLongitude();
-        return AttractionGOApplication.getLocationService().getLocation().getLongitude();
-    }
 }

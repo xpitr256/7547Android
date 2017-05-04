@@ -1,13 +1,13 @@
 package com.example.tallerdyp2.client.Proxys;
 
-import com.example.tallerdyp2.client.ui.activities.MapsActivity;
+import com.example.tallerdyp2.client.ui.activities.TourActivity;
 
 /**
  * Created by Sebastian on 16/4/2017.
  */
 
 public interface ProxyMap {
-    double getLatitude(MapsActivity activity);
+    double getLatitude(TourActivity activity);
 
-    double getLongitude(MapsActivity activity);
+    double getLongitude(TourActivity activity);
 }
