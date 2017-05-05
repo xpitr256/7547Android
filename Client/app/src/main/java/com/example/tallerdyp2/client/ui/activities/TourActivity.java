@@ -17,6 +17,7 @@ import com.example.tallerdyp2.client.Proxys.ProxyMap;
 import com.example.tallerdyp2.client.Proxys.ProxyMapNoLocation;
 import com.example.tallerdyp2.client.Proxys.ProxyMapNormal;
 import com.example.tallerdyp2.client.R;
+import com.example.tallerdyp2.client.ui.adapters.MarkerPopupAdapter;
 import com.example.tallerdyp2.client.utils.Callable;
 import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.Helper;
@@ -41,13 +42,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class TourActivity extends AppCompatActivity implements LocationCallable, Callable, OnMapReadyCallback{
+public class TourActivity extends AppCompatActivity implements LocationCallable, Callable, OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener{
 
     private GoogleMap mMap;
     private Tour tour;
     private ProxyMap proxyLocation;
     private ArrayList<LatLng> points;
+    private Map<Object, Attraction> markersAttractionMap = new HashMap<Object, Attraction>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +108,14 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
         options.width( 5 );
         options.visible( true );
 
+
+        //Set my custom info window MarkerPopupAdapter
+        GoogleMap.InfoWindowAdapter customInfoWindow = new MarkerPopupAdapter(getLayoutInflater(), markersAttractionMap);
+        mMap.setInfoWindowAdapter(customInfoWindow);
+
+        // Set a listener for info window events.
+        mMap.setOnInfoWindowClickListener(this);
+
         LatLng currentLoc;
         Marker marker;
         for(final Attraction attraction : tour.getAttractions()){
@@ -112,22 +123,23 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
 
             points.add(currentLoc);
 
-            marker = mMap.addMarker(new MarkerOptions().position(currentLoc).title(attraction.getName()));
+            marker = mMap.addMarker(new MarkerOptions().position(currentLoc).title(attraction.getName()).snippet(attraction.getImagesURL().get(0)));
             marker.setTag(attraction.getId());
-            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                @Override
-                public boolean onMarkerClick(Marker marker) {
-                    String id = (String)(marker.getTag());
-                    for(Attraction attraction : tour.getAttractions()){
-                        if(attraction.getId().equals(id)){
-                            Intent intent = new Intent(AttractionGOApplication.getAppContext(), AttractionActivity.class);
-                            intent.putExtra("Attraction", attraction);
-                            AttractionGOApplication.getAppContext().startActivity(intent);
-                        }
-                    }
-                    return true;
-                }
-            });
+
+//            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//                @Override
+//                public boolean onMarkerClick(Marker marker) {
+//                    String id = (String)(marker.getTag());
+//                    for(Attraction attraction : tour.getAttractions()){
+//                        if(attraction.getId().equals(id)){
+//                            Intent intent = new Intent(AttractionGOApplication.getAppContext(), AttractionActivity.class);
+//                            intent.putExtra("Attraction", attraction);
+//                            AttractionGOApplication.getAppContext().startActivity(intent);
+//                        }
+//                    }
+//                    return true;
+//                }
+//            });
             options.add(currentLoc);
 
 //            PicassoMarker pmarker = new PicassoMarker(marker);
@@ -137,6 +149,7 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
 //                Picasso.with(TourActivity.this).load(R.drawable.no_photo).resize(200,200).into(pmarker);
 //
 //            this.getPaths();
+            markersAttractionMap.put(marker.getTag(),attraction);
         }
 
         mMap.addPolyline( options );
@@ -324,5 +337,12 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Intent intent = new Intent(getApplicationContext(), AttractionActivity.class);
+        intent.putExtra("Attraction", this.markersAttractionMap.get(marker.getTag()));
+        getApplicationContext().startActivity(intent);
     }
 }
