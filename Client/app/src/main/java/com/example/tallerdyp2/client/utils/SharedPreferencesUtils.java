@@ -57,7 +57,7 @@ public class SharedPreferencesUtils {
     }
 
     public static String getLanguage() {
-        String token = prefs.getString(Constants.LANGUAGE, Constants.EN);
+        String token = prefs.getString(Constants.LANGUAGE, Constants.EMPTY_STRING);
 
         return token;
     }

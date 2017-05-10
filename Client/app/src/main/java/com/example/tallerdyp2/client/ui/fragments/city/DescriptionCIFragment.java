@@ -58,12 +58,12 @@ public class DescriptionCIFragment extends Fragment{
                 mDemoSlider.addSlider(textSliderView);
             }
             if(city.getImagesURL().size() == 1)
-                mDemoSlider.stopAutoCycle();
+                Helper.blockSlide(mDemoSlider);
         }else{
             DefaultSliderView textSliderView = new DefaultSliderView(getContext());
             textSliderView.image(R.drawable.no_photo);
             mDemoSlider.addSlider(textSliderView);
-            mDemoSlider.stopAutoCycle();
+            Helper.blockSlide(mDemoSlider);
         }
 
         ElementViewUtils.setText(rootView.findViewById(R.id.description_city),R.id.description_city,city.getDescription());

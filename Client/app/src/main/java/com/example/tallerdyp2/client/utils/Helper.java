@@ -7,7 +7,10 @@ import android.content.pm.PackageManager;
 import android.icu.text.SimpleDateFormat;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
 
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.Transformers.BaseTransformer;
 import com.example.tallerdyp2.client.Entities.Attraction;
 
 import java.text.Normalizer;
@@ -103,5 +106,14 @@ public class Helper {
         return new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 
 
+    }
+
+    public static void blockSlide(SliderLayout mDemoSlider) {
+        mDemoSlider.stopAutoCycle();
+        mDemoSlider.setPagerTransformer(false, new BaseTransformer() {
+            @Override
+            protected void onTransform(View view, float v) {
+            }
+        });
     }
 }

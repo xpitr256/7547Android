@@ -14,6 +14,7 @@ import com.devbrackets.android.exomedia.ui.widget.EMVideoView;
 import com.example.tallerdyp2.client.Entities.PointOfInterest;
 import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
+import com.example.tallerdyp2.client.utils.Helper;
 
 /**
  * Created by Sebastian on 18/4/2017.
@@ -50,13 +51,13 @@ public class PointOfInterestActivity extends AppCompatActivity implements OnErro
                 textSliderView.image(url);
                 mDemoSlider.addSlider(textSliderView);
                 if(poi.getImagesURL().size() == 1)
-                    mDemoSlider.stopAutoCycle();
+                    Helper.blockSlide(mDemoSlider);
             }
         }else{
             DefaultSliderView textSliderView = new DefaultSliderView(getApplicationContext());
             textSliderView.image(R.drawable.no_photo);
             mDemoSlider.addSlider(textSliderView);
-            mDemoSlider.stopAutoCycle();
+            Helper.blockSlide(mDemoSlider);
         }
 
 //        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);

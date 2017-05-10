@@ -14,6 +14,7 @@ import com.devbrackets.android.exomedia.ui.widget.EMVideoView;
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
+import com.example.tallerdyp2.client.utils.Helper;
 
 /**
  * Created by Sebastian on 6/4/2017.
@@ -52,13 +53,14 @@ public class DescriptionATFragment extends Fragment implements OnErrorListener {
                 textSliderView.image(url);
                 mDemoSlider.addSlider(textSliderView);
                 if(attraction.getImagesURL().size() == 1)
-                    mDemoSlider.stopAutoCycle();
+                    Helper.blockSlide(mDemoSlider);
+
             }
         }else{
             DefaultSliderView textSliderView = new DefaultSliderView(getContext());
             textSliderView.image(R.drawable.no_photo);
             mDemoSlider.addSlider(textSliderView);
-            mDemoSlider.stopAutoCycle();
+            Helper.blockSlide(mDemoSlider);
         }
 
         this.setupVideoView(rootView, attraction);
