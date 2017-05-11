@@ -108,6 +108,7 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
 
     private void setViewPager() {
 
+        getSupportActionBar().setTitle(cityName);
         this.descriptionFragment.setCitySelected(cityName);
 
         setTabsAndFragments();
@@ -271,8 +272,6 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
     private void showContent() {
         findViewById(R.id.loadingPanel).setVisibility(View.GONE);
         findViewById(R.id.content).setVisibility(View.VISIBLE);
-
-        ElementViewUtils.setText(findViewById(R.id.header_city),R.id.header_city,city.getName());
     }
 
     private void useLocationService() {

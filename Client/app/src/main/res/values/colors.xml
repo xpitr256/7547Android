@@ -9,4 +9,6 @@
     <color name="text">#111</color>
     <color name="tabs_selector">#616161</color>
     <color name="tabs_background">#e0e0e0</color>
+    <color name="background">#F5F5F6</color>
+
 </resources>

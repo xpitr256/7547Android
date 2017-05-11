@@ -30,26 +30,12 @@
         android:id="@+id/content"
         android:visibility="gone">
 
-        <TextView
-            android:text="@string/welcome"
-            android:id="@+id/header_welcome"
-            android:elevation="2dp"
-            style="@style/Subtitle"/>
-
-        <TextView
-            tools:text="TextView"
-            android:id="@+id/header_city"
-            android:elevation="2dp"
-            android:layout_below="@+id/header_welcome"
-            style="@style/Title"/>
-
         <com.example.tallerdyp2.client.customViews.SlidingTabLayout
             android:id="@+id/tabs_attraction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="2dp"
             android:background="@color/colorPrimaryDark"
-            android:layout_below="@+id/header_attraction"
             />
 
         <android.support.v4.view.ViewPager

@@ -24,14 +24,14 @@ public class AttractionsAdapter extends ArrayAdapter<Attraction> {
     private List<Attraction> attractions;
 
     public AttractionsAdapter(Context context, List<Attraction> attractions) {
-        super(context, R.layout.attractions_item_list, attractions);
+        super(context, R.layout.attractions_item_grid, attractions);
         this.attractions = attractions;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View item = inflater.inflate(R.layout.attractions_item_list, null);
+        View item = inflater.inflate(R.layout.attractions_item_grid, null);
         ElementViewUtils.setText(item, R.id.name, attractions.get(position).getName());
         ElementViewUtils.setText(item, R.id.distance, getContext().getString(R.string.distance_attraction)+" "+Helper.formatDistance(attractions.get(position).getDistance()));
         ElementViewUtils.setImageFromURL(item, R.id.image_view,attractions.get(position).getImagesURL().isEmpty() ? null : attractions.get(position).getImagesURL().get(0),getContext());

@@ -15,23 +15,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/cv_slider"
+                style="@style/MyCardView"
+                >
             <com.daimajia.slider.library.SliderLayout
                 android:id="@+id/slider"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 />
+            </android.support.v7.widget.CardView>
 
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/cv_description_city"
+                android:layout_below="@+id/cv_slider"
+                style="@style/MyCardView"
+                >
             <TextView
                 tools:text="TextView"
                 android:id="@+id/description_city"
-                android:layout_below="@+id/slider"
                 android:layout_marginTop="10dp"
                 style="@style/Description" />
+            </android.support.v7.widget.CardView>
 
             <TextView
                 android:text="@string/no_attractions"
                 android:id="@+id/no_attractions"
-                android:layout_below="@+id/description_city"
+                android:layout_below="@+id/cv_description_city"
                 android:layout_marginTop="10dp"
                 android:visibility="gone"
                 style="@style/ErrorDescription" />
@@ -42,7 +56,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/attractions_list"
                 android:layout_marginTop="10dp"
-                android:layout_below="@+id/description_city"
+                android:layout_below="@+id/cv_description_city"
                 />
 
         </RelativeLayout>

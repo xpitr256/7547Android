@@ -24,6 +24,7 @@ public class ElementViewUtils {
     public static void setImageFromURL(View rootView, int textContentId, final String content, final Context context)
     {
         final ImageView imageContent = (ImageView) rootView.findViewById(textContentId);
+        imageContent.setScaleType(ImageView.ScaleType.CENTER_CROP);
         if(content != null && !content.isEmpty()){
             Picasso.Builder builder = new Picasso.Builder(context);
             builder.listener(new Picasso.Listener()

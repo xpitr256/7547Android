@@ -30,12 +30,11 @@ public class PointOfInterestActivity extends AppCompatActivity implements OnErro
         super.onCreate(savedInstanceState);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
 
         setContentView(R.layout.activity_poi);
         poi = (PointOfInterest) getIntent().getSerializableExtra("POI");
 
-        ElementViewUtils.setText(findViewById(R.id.header_poi),R.id.header_poi,poi.getName());
+        getSupportActionBar().setTitle(poi.getName());
 
         setViewPager();
     }

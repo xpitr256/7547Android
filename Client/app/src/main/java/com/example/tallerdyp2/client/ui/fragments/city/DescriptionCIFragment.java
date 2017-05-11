@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import com.daimajia.slider.library.SliderLayout;
@@ -74,6 +75,7 @@ public class DescriptionCIFragment extends Fragment{
 
     public void updateViewAttractions(){
         LinearLayout list = (LinearLayout) rootView.findViewById(R.id.attractions_list);
+
         list.removeAllViews();
         if(!city.getAttractions().isEmpty()){
             Helper.updateAtractionsDistanceFromMyLocation(city.getAttractions(), this.proxyLocation.getLatitude(this), this.proxyLocation.getLongitude(this));

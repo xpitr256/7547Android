@@ -45,12 +45,11 @@ public class AttractionActivity extends AppCompatActivity{
         fragments = new ArrayList<>();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
 
         setContentView(R.layout.activity_attraction);
         attraction = (Attraction) getIntent().getSerializableExtra("Attraction");
 
-        ElementViewUtils.setText(findViewById(R.id.header_attraction),R.id.header_attraction,attraction.getName());
+        getSupportActionBar().setTitle(attraction.getName());
 
         setViewPager();
     }
