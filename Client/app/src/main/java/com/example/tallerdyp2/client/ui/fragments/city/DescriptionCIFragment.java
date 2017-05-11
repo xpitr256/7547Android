@@ -19,6 +19,7 @@ import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.ui.adapters.AttractionsAdapter;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 import com.example.tallerdyp2.client.utils.Helper;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 /**
  * Created by Sebastian on 2/5/2017.
@@ -67,7 +68,13 @@ public class DescriptionCIFragment extends Fragment{
             Helper.blockSlide(mDemoSlider);
         }
 
-        ElementViewUtils.setText(rootView.findViewById(R.id.description_city),R.id.description_city,city.getDescription());
+//        ElementViewUtils.setText(rootView.findViewById(R.id.expandable_text),R.id.expandable_text,city.getDescription());
+        // sample code snippet to set the text content on the ExpandableTextView
+        ExpandableTextView expTv1 = (ExpandableTextView) rootView.findViewById(R.id.expand_text_view)
+                .findViewById(R.id.expand_text_view);
+
+// IMPORTANT - call setText on the ExpandableTextView to set the text content to display
+        expTv1.setText(city.getDescription());
 
         this.updateViewAttractions();
 

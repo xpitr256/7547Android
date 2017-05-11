@@ -1,5 +1,6 @@
 package com.example.tallerdyp2.client.ui.activities;
 
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +36,7 @@ public class PointOfInterestActivity extends AppCompatActivity implements OnErro
         poi = (PointOfInterest) getIntent().getSerializableExtra("POI");
 
         getSupportActionBar().setTitle(poi.getName());
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.colorPrimaryPOI)));
 
         setViewPager();
     }

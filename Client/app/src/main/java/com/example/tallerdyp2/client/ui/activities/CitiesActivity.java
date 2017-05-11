@@ -43,6 +43,8 @@ public class CitiesActivity extends AppCompatActivity implements Callable{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
 
+        getSupportActionBar().setTitle("Next Trip to...");
+
         setContentView(R.layout.activity_cities);
         getCitiesInfo();
 

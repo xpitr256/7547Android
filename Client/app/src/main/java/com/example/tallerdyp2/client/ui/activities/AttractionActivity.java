@@ -1,6 +1,7 @@
 package com.example.tallerdyp2.client.ui.activities;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -50,6 +51,7 @@ public class AttractionActivity extends AppCompatActivity{
         attraction = (Attraction) getIntent().getSerializableExtra("Attraction");
 
         getSupportActionBar().setTitle(attraction.getName());
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.colorPrimaryAT)));
 
         setViewPager();
     }
