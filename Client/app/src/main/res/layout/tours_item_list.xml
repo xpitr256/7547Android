@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -13,23 +12,69 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <com.daimajia.slider.library.SliderLayout
-                android:id="@+id/slider"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp"
+                android:id="@+id/header">
 
-                />
-            <ExpandableListView
-                android:id="@+id/expandableListView"
-                android:layout_height="match_parent"
+                <ImageView
+                    android:id="@+id/location"
+                    android:src="@drawable/ic_place"
+                    android:tint="@color/colorAccent"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"/>
+
+
+
+            </LinearLayout>
+            <HorizontalScrollView
                 android:layout_width="match_parent"
-                android:layout_below="@+id/slider"
-                android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
-                android:divider="@android:color/darker_gray"
-                android:dividerHeight="0.5dp" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:scrollbars="none"
+                android:layout_below="@+id/header"
+                android:id="@+id/images">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"
+                    android:id="@+id/list_images"
+                    />
+            </HorizontalScrollView>
+            <com.andexert.expandablelayout.library.ExpandableLayout
+                android:id="@+id/expandableLayout"
+                xmlns:expandable="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/images"
+                expandable:headerLayout="@layout/guide_tour_title_list"
+                expandable:contentLayout="@layout/guide_tour_list"/>
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/cv"
+        style="@style/MyCardView"
+        >
+    </TextView>
 
-</LinearLayout>
+</RelativeLayout>

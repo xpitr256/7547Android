@@ -33,8 +33,8 @@ public class Parser {
                         city.getJSONObject("location").getDouble("lat"),
                         city.getJSONObject("location").getDouble("lng"),
                         Parser.parseAttractions(city.getJSONArray("attractions")),
-//                        Parser.parseTours(city.getJSONArray("tours"))
-                        Mocker.parseTours()
+                        Parser.parseTours(city.getJSONArray("tours"))
+//                        Mocker.parseTours()
                 ));
 
             }
@@ -51,7 +51,7 @@ public class Parser {
                     travelsJson.getJSONObject(i).getString("_id"),
                     travelsJson.getJSONObject(i).getString("name"),
                     travelsJson.getJSONObject(i).getString("description"),
-                    Parser.parseAttractions(travelsJson.getJSONObject(i).getJSONArray("imagesURL"))
+                    Parser.parseAttractions(travelsJson.getJSONObject(i).getJSONArray("attractions"))
             ));
         }
         return tours;

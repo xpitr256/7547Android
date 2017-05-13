@@ -2,12 +2,12 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.tallerdyp2.client.ui.activities.AttractionActivity">
+    android:layout_height="fill_parent"
+    tools:context="com.example.tallerdyp2.client.ui.activities.CityActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="fill_parent">
 
         <ListView
             android:layout_width="match_parent"
@@ -16,7 +16,14 @@
             android:footerDividersEnabled="false"
             android:headerDividersEnabled="false"
             android:divider="@color/background"
+            android:scrollbars="none"
             />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tours_list"
+            >
+        </TextView>
 
         <TextView
             android:text="@string/no_tours"

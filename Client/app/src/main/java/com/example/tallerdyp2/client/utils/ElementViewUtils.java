@@ -1,12 +1,14 @@
 package com.example.tallerdyp2.client.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tallerdyp2.client.R;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -25,18 +27,13 @@ public class ElementViewUtils {
     {
         final ImageView imageContent = (ImageView) rootView.findViewById(textContentId);
         imageContent.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        if(content != null && !content.isEmpty()){
-            Picasso.Builder builder = new Picasso.Builder(context);
-            builder.listener(new Picasso.Listener()
-            {
-                @Override
-                public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
-                {
-                    Picasso.with(context).load(R.drawable.no_photo).into(imageContent);
-                }
-            });
-            builder.build().load(content).into(imageContent);
-        }
+        if(content != null && !content.isEmpty())
+            Picasso.with(context)
+                    .load(content)
+                    .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+//                    .placeholder(R.drawable.ic_image_load_place_holder)
+                    .config(Bitmap.Config.RGB_565)
+                    .into(imageContent);
         else ElementViewUtils.setDefaultImage(imageContent, context);
     }
 

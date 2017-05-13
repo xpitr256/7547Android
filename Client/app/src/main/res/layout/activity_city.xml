@@ -25,7 +25,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/content"
         android:visibility="gone">
@@ -40,7 +40,7 @@
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager_attraction"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_below="@+id/tabs_attraction"
             android:background="@color/background"

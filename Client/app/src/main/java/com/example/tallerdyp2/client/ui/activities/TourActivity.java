@@ -89,19 +89,6 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
             mMap.setMyLocationEnabled(true);
         }
 
-//        LatLng currentLoc = new LatLng(this.proxyLocation.getLatitude(this), this.proxyLocation.getLongitude(this));
-//        mMap.addMarker(new MarkerOptions().position(currentLoc).title("You are here"));
-//        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLoc));
-//
-//        CameraPosition cameraPosition = new CameraPosition.Builder()
-//                .target(currentLoc)
-//                .zoom(17)
-//                .build();
-//        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-//
-//        points.add(currentLoc);
-
         PolylineOptions options = new PolylineOptions();
 
         options.color( Color.parseColor( "#CC0000FF" ) );
