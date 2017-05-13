@@ -71,8 +71,8 @@ public class Mocker {
                         "00:00",
                         20,
                         Mocker.parseReviews(),
-                        Mocker.parsePOIs()
-                ));
+                        Mocker.parsePOIs(),
+                        Mocker.parseTours()));
 
         attractions.add(new Attraction(
                 "2",
@@ -88,8 +88,8 @@ public class Mocker {
                 "00:00",
                 20,
                 Mocker.parseReviews(),
-                Mocker.parsePOIs()
-        ));
+                Mocker.parsePOIs(),
+                Mocker.parseTours()));
         return attractions;
     }
 

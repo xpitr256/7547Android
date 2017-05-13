@@ -16,6 +16,8 @@ import com.example.tallerdyp2.client.ui.fragments.attraction.DescriptionATFragme
 import com.example.tallerdyp2.client.ui.fragments.attraction.LocationATFragment;
 import com.example.tallerdyp2.client.ui.fragments.attraction.PointOfInterestFragment;
 import com.example.tallerdyp2.client.ui.fragments.attraction.ReviewFragment;
+import com.example.tallerdyp2.client.ui.fragments.attraction.TourATFragment;
+import com.example.tallerdyp2.client.ui.fragments.city.TourCIFragment;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 
 import java.util.ArrayList;
@@ -94,6 +96,8 @@ public class AttractionActivity extends AppCompatActivity{
                     getString(R.string.description_at), attraction));
             put(R.drawable.ic_place, new TabFragmentBuilder<>(new LocationATFragment(),
                     getString(R.string.location_at), attraction));
+            put(R.drawable.ic_directions, new TabFragmentBuilder<>(new TourATFragment(),
+                    getString(R.string.tour_ci), attraction));
             put(R.drawable.ic_comment, new TabFragmentBuilder<>(new ReviewFragment(),
                     getString(R.string.review_at), attraction));
             put(R.drawable.ic_star, new TabFragmentBuilder<>(new PointOfInterestFragment(),

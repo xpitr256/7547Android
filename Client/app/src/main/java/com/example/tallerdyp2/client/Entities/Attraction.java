@@ -15,6 +15,7 @@ import java.util.List;
 
 public class Attraction implements Serializable{
 
+    private List<Tour> toursIBelongTo;
     private double rating;
     private List<Review> reviews;
     private String audioURL;
@@ -31,7 +32,7 @@ public class Attraction implements Serializable{
     private double distance;
     private List<PointOfInterest> pois;
 
-    public Attraction(String id, String name, String description, double rating, List<String> imagesURL, String audioURL, double latitude, double longitude, String type, String openTime, String closeTime, int price, List<Review> reviews, List<PointOfInterest> pois) {
+    public Attraction(String id, String name, String description, double rating, List<String> imagesURL, String audioURL, double latitude, double longitude, String type, String openTime, String closeTime, int price, List<Review> reviews, List<PointOfInterest> pois, List<Tour> toursIBelongTo) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -41,6 +42,7 @@ public class Attraction implements Serializable{
         this.latitude = latitude;
         this.longitude = longitude;
         this.type = TypeAttraction.fromString(type);
+        this.toursIBelongTo = toursIBelongTo;
 
         try {
             this.openTime = new SimpleDateFormat("HH:mm").parse(openTime);
@@ -176,14 +178,21 @@ public class Attraction implements Serializable{
         this.rating = rating;
     }
 
-    public void setPointOfInterests(List<PointOfInterest> pois){
-        this.pois = pois;
+    public List<Tour> getToursIBelongTo() {
+        return toursIBelongTo;
     }
 
-    public List<PointOfInterest> getPointOfInterests() {
+    public List<PointOfInterest> getPois() {
         return pois;
     }
 
+    public void setPois(List<PointOfInterest> pois) {
+        this.pois = pois;
+    }
+
+    public void setToursIBelongTo(List<Tour> toursIBelongTo) {
+        this.toursIBelongTo = toursIBelongTo;
+    }
 
     public enum TypeAttraction {
         FAMILY("FAMILY"),

@@ -39,9 +39,7 @@
                     android:layout_gravity="center"
                     android:textColor="@color/text"
                     android:id="@+id/name"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:layout_weight="0.5" />
 
                 <TextView
@@ -52,7 +50,7 @@
                     android:id="@+id/count_attraction"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:textSize="16sp"
+                    android:textSize="12sp"
                     android:layout_weight="0.5"
                     android:visibility="invisible"/>
             </LinearLayout>

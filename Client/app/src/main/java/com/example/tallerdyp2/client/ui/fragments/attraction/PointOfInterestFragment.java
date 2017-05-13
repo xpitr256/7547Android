@@ -37,7 +37,7 @@ public class PointOfInterestFragment extends Fragment {
             attraction = (Attraction) getArguments().
                     getSerializable(getString(R.string.poi_at));
 
-            if(!attraction.getPointOfInterests().isEmpty())
+            if(!attraction.getPois().isEmpty())
                 setViewPointOfInterest(attraction);
             else
                 setEmptyView();
@@ -56,7 +56,7 @@ public class PointOfInterestFragment extends Fragment {
         // Instancia del ListView.
         pointOfInterestsList = (ListView) rootView.findViewById(R.id.pois_list);
 
-        pointOfInterests = attraction.getPointOfInterests();
+        pointOfInterests = attraction.getPois();
 
         // Inicializar el adaptador con la fuente de datos.
         pointOfInterestsAdapter = new PointOfInterestsAdapter(getContext(), pointOfInterests);
