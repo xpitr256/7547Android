@@ -5,6 +5,8 @@ import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -41,34 +43,11 @@ public class MyReviewActivity extends AppCompatActivity implements Callable{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
 
+
+
         attraction = (Attraction) getIntent().getSerializableExtra("Attraction");
 
         setContentView(R.layout.activity_myreview);
-
-        final RatingBar ratingRatingBar = (RatingBar) findViewById(R.id.rating_rating_bar);
-        Button submitButton = (Button) findViewById(R.id.submit_button);
-
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                JSONObject body = new JSONObject();
-                JSONObject review = new JSONObject();
-                try {
-
-                    review.put("userName", SharedPreferencesUtils.getSplexUserName());
-                    review.put("userId", SharedPreferencesUtils.getFacebookUserId());
-                    review.put("userAvatarUrl", "");
-                    review.put("comments", ((EditText)findViewById(R.id.comment)).getText());
-                    review.put("rating", ratingRatingBar.getRating());
-                    body.put("attractionId",attraction.getId());
-                    body.put("review",review);
-
-                    AttractionGOApplication.getVolleyRequestService().sendReview(MyReviewActivity.this, body, attraction.getId());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     @Override
@@ -77,9 +56,39 @@ public class MyReviewActivity extends AppCompatActivity implements Callable{
             case android.R.id.home:
                 this.finish();
                 return true;
+            case R.id.send:
+                sendReview();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void sendReview(){
+        RatingBar ratingRatingBar = (RatingBar) findViewById(R.id.rating_rating_bar);
+        JSONObject body = new JSONObject();
+        JSONObject review = new JSONObject();
+        try {
+
+            review.put("userName", SharedPreferencesUtils.getSplexUserName());
+            review.put("userId", SharedPreferencesUtils.getFacebookUserId());
+            review.put("userAvatarUrl", "");
+            review.put("comments", ((EditText)findViewById(R.id.comment)).getText());
+            review.put("rating", ratingRatingBar.getRating());
+            body.put("attractionId",attraction.getId());
+            body.put("review",review);
+
+            AttractionGOApplication.getVolleyRequestService().sendReview(MyReviewActivity.this, body, attraction.getId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_myreview, menu);
+        return true;
     }
 
     @Override
@@ -115,6 +124,5 @@ public class MyReviewActivity extends AppCompatActivity implements Callable{
         //hide views
         findViewById(R.id.rating_rating_bar).setVisibility(View.GONE);
         findViewById(R.id.comment).setVisibility(View.GONE);
-        findViewById(R.id.submit_button).setVisibility(View.GONE);
     }
 }

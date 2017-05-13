@@ -45,14 +45,5 @@
         android:id="@+id/comment"
         style="@style/comment"/>
 
-    <Button
-        android:text="@string/send_comment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
-        android:id="@+id/submit_button" />
-
 
 </RelativeLayout>
