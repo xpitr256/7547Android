@@ -27,12 +27,13 @@ public class MarkerPopupAdapter implements GoogleMap.InfoWindowAdapter {
     LayoutInflater inflater=null;
     private View popup;
     private Marker lastMarker;
-    private Map<Object, Attraction> markersAttractionMap;
+    private Map<Integer, Attraction> markersAttractionMap;
     private Attraction attraction;
 
-    public MarkerPopupAdapter(LayoutInflater inflater, Map<Object, Attraction> markersAttractionMap) {
+    public MarkerPopupAdapter(LayoutInflater inflater, Map<Integer, Attraction> markersAttractionMap, Marker lastMarker) {
         this.inflater=inflater;
         this.markersAttractionMap = markersAttractionMap;
+        this.lastMarker = lastMarker;
     }
 
     @Override
@@ -57,17 +58,11 @@ public class MarkerPopupAdapter implements GoogleMap.InfoWindowAdapter {
 
             ImageView icon = (ImageView) popup.findViewById(R.id.icon);
 
-//        if (image == null) {
-//            icon.setVisibility(View.GONE);
-//        }
-//        else {
             Picasso.with(AttractionGOApplication.getAppContext()).load(attraction.getImagesURL().get(0)).resize(160, 160)
                     .centerCrop().noFade()
                     .placeholder(R.drawable.progress_animation)
                     .into(icon, new MarkerCallback(marker));
 
-
-//        }
         }
         return popup;
     }

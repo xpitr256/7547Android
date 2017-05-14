@@ -4,10 +4,13 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.android.volley.VolleyError;
 import com.example.tallerdyp2.client.AttractionGOApplication;
@@ -23,18 +26,17 @@ import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.Helper;
 import com.example.tallerdyp2.client.utils.LocationCallable;
 import com.example.tallerdyp2.client.utils.Parser;
-import com.example.tallerdyp2.client.utils.PicassoMarker;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -49,13 +51,15 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
     private GoogleMap mMap;
     private Tour tour;
     private ProxyMap proxyLocation;
+    private Marker markerSelected;
     private ArrayList<LatLng> points;
-    private Map<Object, Attraction> markersAttractionMap = new HashMap<Object, Attraction>();
+    private Map<Integer, Attraction> markersAttractionMap = new HashMap<Integer, Attraction>();
+    private Map<Integer, Marker> markers = new HashMap<Integer, Marker>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.activity_tour);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
@@ -89,28 +93,14 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
             mMap.setMyLocationEnabled(true);
         }
 
-//        LatLng currentLoc = new LatLng(this.proxyLocation.getLatitude(this), this.proxyLocation.getLongitude(this));
-//        mMap.addMarker(new MarkerOptions().position(currentLoc).title("You are here"));
-//        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLoc));
-//
-//        CameraPosition cameraPosition = new CameraPosition.Builder()
-//                .target(currentLoc)
-//                .zoom(17)
-//                .build();
-//        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-//
-//        points.add(currentLoc);
-
         PolylineOptions options = new PolylineOptions();
 
         options.color( Color.parseColor( "#CC0000FF" ) );
         options.width( 5 );
         options.visible( true );
 
-
         //Set my custom info window MarkerPopupAdapter
-        GoogleMap.InfoWindowAdapter customInfoWindow = new MarkerPopupAdapter(getLayoutInflater(), markersAttractionMap);
+        GoogleMap.InfoWindowAdapter customInfoWindow = new MarkerPopupAdapter(getLayoutInflater(), markersAttractionMap, markerSelected);
         mMap.setInfoWindowAdapter(customInfoWindow);
 
         // Set a listener for info window events.
@@ -118,43 +108,65 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
 
         LatLng currentLoc;
         Marker marker;
+        int count = 0;
         for(final Attraction attraction : tour.getAttractions()){
             currentLoc = new LatLng(attraction.getLatitude(), attraction.getLongitude());
 
             points.add(currentLoc);
 
-            marker = mMap.addMarker(new MarkerOptions().position(currentLoc).title(attraction.getName()).snippet(attraction.getImagesURL().get(0)));
-            marker.setTag(attraction.getId());
+            Bitmap bitmap = Helper.GetBitmapMarker(getBaseContext(), R.drawable.marker, Integer.toString(count+1));
 
-//            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-//                @Override
-//                public boolean onMarkerClick(Marker marker) {
-//                    String id = (String)(marker.getTag());
-//                    for(Attraction attraction : tour.getAttractions()){
-//                        if(attraction.getId().equals(id)){
-//                            Intent intent = new Intent(AttractionGOApplication.getAppContext(), AttractionActivity.class);
-//                            intent.putExtra("Attraction", attraction);
-//                            AttractionGOApplication.getAppContext().startActivity(intent);
-//                        }
-//                    }
-//                    return true;
-//                }
-//            });
+            marker = mMap.addMarker(new MarkerOptions().position(currentLoc).title(attraction.getName()).icon(BitmapDescriptorFactory.fromBitmap(bitmap)).snippet(attraction.getImagesURL().get(0)));
+
+            marker.setTag(count);
+
             options.add(currentLoc);
+            markersAttractionMap.put(count,attraction);
+            markers.put(count,marker);
 
-//            PicassoMarker pmarker = new PicassoMarker(marker);
-//            if(!attraction.getImagesURL().isEmpty())
-//                Picasso.with(TourActivity.this).load(attraction.getImagesURL().get(0)).resize(200,200).into(pmarker);
-//            else
-//                Picasso.with(TourActivity.this).load(R.drawable.no_photo).resize(200,200).into(pmarker);
-//
-//            this.getPaths();
-            markersAttractionMap.put(marker.getTag(),attraction);
+            ++count;
         }
 
         mMap.addPolyline( options );
+        this.focusPosition(tour.getAttractions().get(0).getLatitude(),tour.getAttractions().get(0).getLongitude());
+
+        this.markerSelected = this.markers.get(0);
+
+        final FloatingActionButton previous = (FloatingActionButton) findViewById(R.id.fab_previous);
+        final FloatingActionButton next = (FloatingActionButton) findViewById(R.id.fab_next);
+
+        previous.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selected = (int)markerSelected.getTag();
+                if(selected > 0){
+                    next.setVisibility(View.VISIBLE);
+                    --selected;
+                    markerSelected = markers.get(selected);
+                    focusPosition(markersAttractionMap.get(selected).getLatitude(),markersAttractionMap.get(selected).getLongitude());
+                    if( selected == 0) previous.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selected = (int)markerSelected.getTag();
+                if(selected < tour.getAttractions().size()-1){
+                    previous.setVisibility(View.VISIBLE);
+                    ++selected;
+                    markerSelected = markers.get(selected);
+                    focusPosition(markersAttractionMap.get(selected).getLatitude(),markersAttractionMap.get(selected).getLongitude());
+                    if( selected == tour.getAttractions().size()-1) next.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    private void focusPosition(double lat, double lon){
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(tour.getAttractions().get(0).getLatitude(),tour.getAttractions().get(0).getLongitude()))
+                .target(new LatLng(lat, lon))
                 .zoom(17)
                 .build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
