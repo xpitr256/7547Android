@@ -8,10 +8,8 @@
         android:id="@+id/listTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
         android:paddingTop="10dp"
-        android:paddingLeft="5dp"
-        android:paddingBottom="10dp" />
+        android:paddingLeft="10dp"/>
 
     <ImageView
         android:id="@+id/side_arrow"

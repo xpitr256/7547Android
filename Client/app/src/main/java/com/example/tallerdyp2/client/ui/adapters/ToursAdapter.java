@@ -53,23 +53,6 @@ public class ToursAdapter extends ArrayAdapter<Tour> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View item = inflater.inflate(R.layout.tours_item_list, null);
 
-//        SliderLayout mDemoSlider = (SliderLayout) item.findViewById(R.id.slider);
-//        if(!this.tours.get(position).getAttractions().isEmpty()) {
-//            for (Attraction attraction : this.tours.get(position).getAttractions()) {
-//                DefaultSliderView textSliderView = new DefaultSliderView(getContext());
-//                textSliderView.image(attraction.getImagesURL().get(0));
-//                mDemoSlider.addSlider(textSliderView);
-//                if(this.tours.get(position).getAttractions().size() == 1)
-//                    Helper.blockSlide(mDemoSlider);
-//            }
-//        }else{
-//            DefaultSliderView textSliderView = new DefaultSliderView(getContext());
-//            textSliderView.image(R.drawable.no_photo);
-//            mDemoSlider.addSlider(textSliderView);
-//            Helper.blockSlide(mDemoSlider);
-//        }
-
-
         imagesList = (LinearLayout) item.findViewById(R.id.list_images);
         if(imagesList.getChildCount() == 0){
             adapterImages = new GuideTourImageAdapter(getContext(), this.tours.get(position).getAttractions());
@@ -80,7 +63,7 @@ public class ToursAdapter extends ArrayAdapter<Tour> {
         }
 
         final ExpandableLayout mExpandableLayout = (ExpandableLayout) item.findViewById(R.id.expandableLayout);
-        ElementViewUtils.setText(mExpandableLayout.getHeaderRelativeLayout(), R.id.listTitle, tours.get(position).getName());
+        ElementViewUtils.setText(mExpandableLayout.getHeaderRelativeLayout(), R.id.listTitle, getContext().getResources().getString(R.string.stops));
         final ImageView rightIcon = (ImageView) mExpandableLayout.getHeaderRelativeLayout().findViewById(R.id.side_arrow);
         rightIcon.setImageResource(R.drawable.ic_expand_more_white_24dp);
         mExpandableLayout.getHeaderRelativeLayout().setOnClickListener(new View.OnClickListener() {
@@ -108,16 +91,6 @@ public class ToursAdapter extends ArrayAdapter<Tour> {
             }
         }
 
-
-//        // Instancia del ListView.
-//        ListView guideTourList = (ListView) mExpandableLayout.getContentRelativeLayout().findViewById(R.id.guide_tours_list);
-//
-//        // Inicializar el adaptador con la fuente de datos.
-//        GuideTourAdapter guideToursAdapter = new GuideTourAdapter(getContext(), this.tours.get(position).getAttractions());
-//
-//        //Relacionando la lista con el adaptador
-//        guideTourList.setAdapter(guideToursAdapter);
-//        ElementViewUtils.setText(item, R.id.name, tours.get(position).getName());
         ElementViewUtils.setText(item, R.id.title, tours.get(position).getName());
 
         scroll = (LinearLayout) item.findViewById(R.id.list_images);

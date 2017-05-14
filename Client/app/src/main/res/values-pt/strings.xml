@@ -23,6 +23,7 @@
     <string name="choose_language">Escolha o seu idioma:</string>
     <string name="tour_ci">Tour</string>
     <string name="no_tours">Nenhuma tours a ser mostrada para esta cidade</string>
+    <string name="stops">Pára:</string>
 
     <!--Activity list City-->
     <string name="search_hint_city">Procurar cidade</string>
