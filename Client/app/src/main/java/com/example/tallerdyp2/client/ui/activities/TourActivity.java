@@ -39,6 +39,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -162,6 +163,8 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
                 }
             }
         });
+
+        previous.setVisibility(View.GONE);
     }
 
     private void focusPosition(double lat, double lon){
@@ -301,39 +304,51 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
 
     @Override
     public void execute(JSONObject response) {
-        List<List<HashMap<String,String>>> routes = Parser.parsePath(response);
-        ArrayList<LatLng> points = null;
-        PolylineOptions lineOptions = null;
-        MarkerOptions markerOptions = new MarkerOptions();
-
-        // Traversing through all the routes
-        for(int i=0;i<routes.size();i++){
-            points = new ArrayList<LatLng>();
-            lineOptions = new PolylineOptions();
-
-            // Fetching i-th route
-            List<HashMap<String, String>> path = routes.get(i);
-
-            // Fetching all the points in i-th route
-            for(int j=0;j<path.size();j++){
-                HashMap<String,String> point = path.get(j);
-
-                double lat = Double.parseDouble(point.get("lat"));
-                double lng = Double.parseDouble(point.get("lng"));
-                LatLng position = new LatLng(lat, lng);
-
-                points.add(position);
-            }
-
-            // Adding all the points in the route to LineOptions
-            lineOptions.addAll(points);
-            lineOptions.width(2);
-            lineOptions.color(Color.RED);
+        try {
+            Intent intent = new Intent(getApplicationContext(), AttractionActivity.class);
+            intent.putExtra("Attraction", Parser.parseAttraction(response));
+            finish();
+            startActivity(intent);
+        } catch (JSONException e) {
+            this.error(null);
         }
-
-        // Drawing polyline in the Google Map for the i-th route
-        mMap.addPolyline(lineOptions);
     }
+
+//    @Override
+//    public void execute(JSONObject response) {
+//        List<List<HashMap<String,String>>> routes = Parser.parsePath(response);
+//        ArrayList<LatLng> points = null;
+//        PolylineOptions lineOptions = null;
+//        MarkerOptions markerOptions = new MarkerOptions();
+//
+//        // Traversing through all the routes
+//        for(int i=0;i<routes.size();i++){
+//            points = new ArrayList<LatLng>();
+//            lineOptions = new PolylineOptions();
+//
+//            // Fetching i-th route
+//            List<HashMap<String, String>> path = routes.get(i);
+//
+//            // Fetching all the points in i-th route
+//            for(int j=0;j<path.size();j++){
+//                HashMap<String,String> point = path.get(j);
+//
+//                double lat = Double.parseDouble(point.get("lat"));
+//                double lng = Double.parseDouble(point.get("lng"));
+//                LatLng position = new LatLng(lat, lng);
+//
+//                points.add(position);
+//            }
+//
+//            // Adding all the points in the route to LineOptions
+//            lineOptions.addAll(points);
+//            lineOptions.width(2);
+//            lineOptions.color(Color.RED);
+//        }
+//
+//        // Drawing polyline in the Google Map for the i-th route
+//        mMap.addPolyline(lineOptions);
+//    }
 
     @Override
     public void error(VolleyError error) {
@@ -353,8 +368,6 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        Intent intent = new Intent(getApplicationContext(), AttractionActivity.class);
-        intent.putExtra("Attraction", this.markersAttractionMap.get(marker.getTag()));
-        getApplicationContext().startActivity(intent);
+        AttractionGOApplication.getVolleyRequestService().getAttraction(this, this.markersAttractionMap.get(marker.getTag()).getId());
     }
 }
