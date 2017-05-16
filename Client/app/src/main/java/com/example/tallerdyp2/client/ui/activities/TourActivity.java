@@ -51,7 +51,6 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
 
     private GoogleMap mMap;
     private Tour tour;
-    private ProxyMap proxyLocation;
     private Marker markerSelected;
     private ArrayList<LatLng> points;
     private Map<Integer, Attraction> markersAttractionMap = new HashMap<Integer, Attraction>();
@@ -175,36 +174,6 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
-    private void getPaths() {
-
-        List<String> paths = new ArrayList<>();
-        for(int i=0; i<points.size()-1; ++i){
-            // Origin of route
-            String str_origin = "origin=" + points.get(i).latitude + "," + points.get(i).longitude;
-
-            // Destination of route
-            String str_dest = "destination=" + points.get(i+1).latitude + "," + points.get(i+1).longitude;
-
-            // Sensor enabled
-            String key = "key=" + getString(R.string.google_maps_key);
-
-            // Building the parameters to the web service
-            String parameters = str_origin + "&" + str_dest + "&" + key;
-
-            // Output format
-            String output = "json";
-
-            // Building the url to the web service
-            String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
-
-
-            AttractionGOApplication.getVolleyRequestService().getPath(url,this);
-//            paths.add(url);
-        }
-
-//        AttractionGOApplication.getVolleyRequestService().getPaths(paths,this);
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -216,7 +185,6 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
                         this.useLocationService();
                     }
                 }else{
-                    this.proxyLocation = new ProxyMapNoLocation();
                     this.initMap();
                 }
                 return;
@@ -232,7 +200,6 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
             if (resultCode == RESULT_OK) {
                 this.useLocationService();
             }else{
-                this.proxyLocation = new ProxyMapNoLocation();
                 this.initMap();
             }
         }
@@ -244,7 +211,6 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
 
     @Override
     public void onLocationSuccess() {
-        this.proxyLocation = new ProxyMapNormal();
         this.initMap();
     }
 
@@ -259,42 +225,17 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
 
             status.startResolutionForResult(this, Constants.LOCATION_SERVICE);
         } catch (IntentSender.SendIntentException e) {
-            this.proxyLocation = new ProxyMapNoLocation();
             this.initMap();
         }
     }
 
     @Override
     public void onLocationChange() {
-        //Toast.makeText(this, AttractionGOApplication.getLocationService().getLocation().getLatitude() + " WORKS " + AttractionGOApplication.getLocationService().getLocation().getLongitude() + "", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onLocationFail() {
-        // Location settings are not satisfied. However, we have no way to fix the
-        // settings so we won't show the dialog.
-        this.proxyLocation = new ProxyMapNoLocation();
         this.initMap();
-    }
-
-    private String getTourFromLocation(){
-//        return AttractionGOApplication.getLocationService().getTourFromLocation();
-        return null;
-    }
-//
-    public boolean outsideMyTourLocation(){
-//        return !this.tour.getName().equals(this.getTourFromLocation());
-        return false;
-    }
-
-    public double getLatitude() {
-//        return this.tour.getLatitude();
-        return 0;
-    }
-
-    public double getLongitude() {
-//        return this.tour.getLongitude();
-        return 0;
     }
 
     @Override
@@ -314,7 +255,60 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
         }
     }
 
-//    @Override
+    @Override
+    public void error(VolleyError error) {
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        AttractionGOApplication.getVolleyRequestService().getAttraction(this, this.markersAttractionMap.get(marker.getTag()).getId());
+    }
+
+
+    //CODIGO QUE PERMITE DIBUJAR EL RECORRIDO POR UNA RUTA VALIDA DE UN PUNTO A OTRO
+//    private void getPaths() {
+//
+//        List<String> paths = new ArrayList<>();
+//        for(int i=0; i<points.size()-1; ++i){
+//            // Origin of route
+//            String str_origin = "origin=" + points.get(i).latitude + "," + points.get(i).longitude;
+//
+//            // Destination of route
+//            String str_dest = "destination=" + points.get(i+1).latitude + "," + points.get(i+1).longitude;
+//
+//            // Sensor enabled
+//            String key = "key=" + getString(R.string.google_maps_key);
+//
+//            // Building the parameters to the web service
+//            String parameters = str_origin + "&" + str_dest + "&" + key;
+//
+//            // Output format
+//            String output = "json";
+//
+//            // Building the url to the web service
+//            String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
+//
+//
+//            AttractionGOApplication.getVolleyRequestService().getPath(url,this);
+////            paths.add(url);
+//        }
+//
+////        AttractionGOApplication.getVolleyRequestService().getPaths(paths,this);
+//    }
+
+    //    @Override
 //    public void execute(JSONObject response) {
 //        List<List<HashMap<String,String>>> routes = Parser.parsePath(response);
 //        ArrayList<LatLng> points = null;
@@ -349,25 +343,4 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
 //        // Drawing polyline in the Google Map for the i-th route
 //        mMap.addPolyline(lineOptions);
 //    }
-
-    @Override
-    public void error(VolleyError error) {
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onInfoWindowClick(Marker marker) {
-        AttractionGOApplication.getVolleyRequestService().getAttraction(this, this.markersAttractionMap.get(marker.getTag()).getId());
-    }
 }
