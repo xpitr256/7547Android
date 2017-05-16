@@ -6,26 +6,20 @@
     android:layout_height="match_parent"
     tools:context="com.example.tallerdyp2.client.ui.activities.AttractionActivity">
 
-    <TextView
-        tools:text="TextView"
-        android:id="@+id/header_attraction"
-        android:elevation="2dp"
-        style="@style/Title"/>
-
     <com.example.tallerdyp2.client.customViews.SlidingTabLayout
         android:id="@+id/tabs_attraction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="2dp"
-        android:background="@color/colorPrimaryDark"
-        android:layout_below="@+id/header_attraction"
+        android:background="@color/colorPrimaryDarkAT"
         />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager_attraction"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_below="@+id/tabs_attraction"
+        android:background="@color/background"
         />
 
 

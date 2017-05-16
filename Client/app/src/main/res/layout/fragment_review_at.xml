@@ -8,6 +8,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/header_rating"
+            android:elevation="2dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="2dp"
+            android:background="@color/white"
+            >
+
+
         <TextView
             android:id="@+id/rating_number"
             android:layout_width="wrap_content"
@@ -16,6 +27,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:textSize="26dp"
+
             tools:text="3.5"/>
 
         <RatingBar
@@ -27,15 +39,17 @@
             android:numStars="5"
             android:stepSize=".5"
             android:isIndicator="true"
+            android:layout_marginBottom="10dp"
             style="?android:attr/ratingBarStyleSmall"/>
+        </RelativeLayout>
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/reviews_list"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:layout_below="@+id/rating"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:layout_below="@+id/header_rating"
             />
 
         <android.support.design.widget.FloatingActionButton

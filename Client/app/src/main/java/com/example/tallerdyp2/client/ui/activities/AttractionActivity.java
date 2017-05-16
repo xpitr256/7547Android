@@ -1,6 +1,7 @@
 package com.example.tallerdyp2.client.ui.activities;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -47,12 +48,12 @@ public class AttractionActivity extends AppCompatActivity{
         fragments = new ArrayList<>();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
 
         setContentView(R.layout.activity_attraction);
         attraction = (Attraction) getIntent().getSerializableExtra("Attraction");
 
-        ElementViewUtils.setText(findViewById(R.id.header_attraction),R.id.header_attraction,attraction.getName());
+        getSupportActionBar().setTitle(attraction.getName());
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.colorPrimaryAT)));
 
         setViewPager();
     }

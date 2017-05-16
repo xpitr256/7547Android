@@ -21,6 +21,7 @@
     <string name="no_attractions">No hay atracciones para mostrar para esta ciudad</string>
     <string name="tour_ci">Recorrido</string>
     <string name="no_tours">No hay recorridos para mostrar para esta ciudad</string>
+    <string name="stops">Paradas:</string>
 
     <!--Activity list City-->
     <string name="search_hint_city">Buscar Ciudad</string>

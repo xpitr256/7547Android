@@ -11,6 +11,7 @@ import com.example.tallerdyp2.client.Entities.Review;
 import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import java.util.List;
 
@@ -35,7 +36,13 @@ public class ReviewsAdapter extends ArrayAdapter<Review> {
         ElementViewUtils.setText(item, R.id.date, reviews.get(position).getDate());
         RatingBar mRatingBar = (RatingBar) item.findViewById(R.id.rating);
         mRatingBar.setRating((float)reviews.get(position).getRating());
-        ElementViewUtils.setText(item, R.id.comment, reviews.get(position).isApproved() ? reviews.get(position).getComment() : getContext().getString(R.string.review_not_approved));
+
+        // sample code snippet to set the text content on the ExpandableTextView
+        ExpandableTextView expTv1 = (ExpandableTextView) item.findViewById(R.id.expand_text_view)
+                .findViewById(R.id.expand_text_view);
+
+        // IMPORTANT - call setText on the ExpandableTextView to set the text content to display
+        expTv1.setText(reviews.get(position).isApproved() ? reviews.get(position).getComment() : getContext().getString(R.string.review_not_approved));
 
         return (item);
     }

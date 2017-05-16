@@ -8,15 +8,9 @@
     android:paddingBottom="10dp"
     tools:context="com.example.tallerdyp2.client.ui.activities.PointOfInterestActivity">
 
-    <TextView
-        tools:text="TextView"
-        android:id="@+id/header_poi"
-        style="@style/Title"/>
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/header_poi"
+        android:layout_height="match_parent"
         >
 
         <RelativeLayout

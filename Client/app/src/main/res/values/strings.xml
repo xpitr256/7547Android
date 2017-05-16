@@ -23,6 +23,7 @@
     <string name="choose_language">Choose language:</string>
     <string name="tour_ci">Tour</string>
     <string name="no_tours">No tours to be showed for this city</string>
+    <string name="stops">Stops:</string>
 
 
     <!--Activity list City-->

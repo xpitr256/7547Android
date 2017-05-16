@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 
 import com.daimajia.slider.library.SliderLayout;
@@ -18,6 +19,7 @@ import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.ui.adapters.AttractionsAdapter;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 import com.example.tallerdyp2.client.utils.Helper;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 /**
  * Created by Sebastian on 2/5/2017.
@@ -66,7 +68,13 @@ public class DescriptionCIFragment extends Fragment{
             Helper.blockSlide(mDemoSlider);
         }
 
-        ElementViewUtils.setText(rootView.findViewById(R.id.description_city),R.id.description_city,city.getDescription());
+//        ElementViewUtils.setText(rootView.findViewById(R.id.expandable_text),R.id.expandable_text,city.getDescription());
+        // sample code snippet to set the text content on the ExpandableTextView
+        ExpandableTextView expTv1 = (ExpandableTextView) rootView.findViewById(R.id.expand_text_view)
+                .findViewById(R.id.expand_text_view);
+
+// IMPORTANT - call setText on the ExpandableTextView to set the text content to display
+        expTv1.setText(city.getDescription());
 
         this.updateViewAttractions();
 
@@ -74,6 +82,7 @@ public class DescriptionCIFragment extends Fragment{
 
     public void updateViewAttractions(){
         LinearLayout list = (LinearLayout) rootView.findViewById(R.id.attractions_list);
+
         list.removeAllViews();
         if(!city.getAttractions().isEmpty()){
             Helper.updateAtractionsDistanceFromMyLocation(city.getAttractions(), this.proxyLocation.getLatitude(this), this.proxyLocation.getLongitude(this));
