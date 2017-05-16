@@ -16,9 +16,6 @@ import com.android.volley.VolleyError;
 import com.example.tallerdyp2.client.AttractionGOApplication;
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.Entities.Tour;
-import com.example.tallerdyp2.client.Proxys.ProxyMap;
-import com.example.tallerdyp2.client.Proxys.ProxyMapNoLocation;
-import com.example.tallerdyp2.client.Proxys.ProxyMapNormal;
 import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.ui.adapters.MarkerPopupAdapter;
 import com.example.tallerdyp2.client.utils.Callable;
@@ -44,7 +41,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class TourActivity extends AppCompatActivity implements LocationCallable, Callable, OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener{
