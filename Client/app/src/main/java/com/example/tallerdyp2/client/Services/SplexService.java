@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.example.tallerdyp2.client.AttractionGOApplication;
+import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.ui.activities.CityActivity;
 import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.SharedPreferencesUtils;
@@ -21,10 +22,12 @@ import org.json.JSONObject;
 public class SplexService implements SplexCallable {
 
     String token;
-    String provider = "facebook";
+    String secretToken;
+    String provider;
 
     public void creatUserSplexWithFacebook(String token) {
         this.token = token;
+        this.provider = "facebook";
         JSONObject body = new JSONObject();
         JSONObject data = new JSONObject();
         try {
@@ -36,11 +39,13 @@ public class SplexService implements SplexCallable {
         }
     }
 
-    private void logSplexWithFacebook() {
+    private void logSplexWithSocialNetwork() {
         JSONObject body = new JSONObject();
         JSONObject data = new JSONObject();
         try {
             body.put("accessToken", token);
+            if(!this.loggedInFacebook())
+                body.put("accessTokenSecret", secretToken);
             data.put("data", body);
             AttractionGOApplication.getVolleyRequestService().logSplexUser(this,data,provider);
         } catch (JSONException e) {
@@ -53,15 +58,15 @@ public class SplexService implements SplexCallable {
         try {
             JSONArray data = response.getJSONObject("data").getJSONArray("socialAccounts");
             for(int i  = 0; i < data.length(); i++) {
-                if(data.getJSONObject(i).getString("provider").equals("FACEBOOK")){
+                if(data.getJSONObject(i).getString("provider").equals("FACEBOOK") || data.getJSONObject(i).getString("provider").equals("TWITTER")){
                     SharedPreferencesUtils.setSplexUserName(data.getJSONObject(i).getJSONObject("data").getString("name"));
-                    SharedPreferencesUtils.setFacebookUserId(data.getJSONObject(i).getJSONObject("data").getString("user_id"));
+                    SharedPreferencesUtils.setSplexUserId(data.getJSONObject(i).getJSONObject("data").getString("user_id"));
                 }
             }
 
         } catch (JSONException e) {
             SharedPreferencesUtils.setSplexUserName(Constants.EMPTY_STRING);
-            SharedPreferencesUtils.setFacebookUserId(Constants.EMPTY_STRING);
+            SharedPreferencesUtils.setSplexUserId(Constants.EMPTY_STRING);
         }
         Intent intent = new Intent(AttractionGOApplication.getAppContext(), CityActivity.class);
         AttractionGOApplication.getAppContext().startActivity(intent);
@@ -88,7 +93,7 @@ public class SplexService implements SplexCallable {
                 Toast.makeText(AttractionGOApplication.getAppContext(), "bad token", Toast.LENGTH_SHORT);
                 break;
             case 422 :
-                this.logSplexWithFacebook();
+                this.logSplexWithSocialNetwork();
                 break;
             case 500 :
                 Toast.makeText(AttractionGOApplication.getAppContext(), "internal server error", Toast.LENGTH_SHORT);
@@ -96,5 +101,45 @@ public class SplexService implements SplexCallable {
             default :
                 break;
         }
+    }
+
+    public void cleanSession() {
+        SharedPreferencesUtils.setSplexUserName(Constants.EMPTY_STRING);
+        SharedPreferencesUtils.setSplexUserId(Constants.EMPTY_STRING);
+    }
+
+    public void creatUserSplexWithTwitter(String token, String secretToken) {
+        this.token = token;
+        this.secretToken = secretToken;
+        this.provider = "twitter";
+        JSONObject body = new JSONObject();
+        JSONObject data = new JSONObject();
+        try {
+            body.put("accessToken", token);
+            body.put("accessTokenSecret", secretToken);
+            data.put("data", body);
+            AttractionGOApplication.getVolleyRequestService().createSplexUser(this,data,provider);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean loggedInFacebook(){
+        return this.provider.equals("facebook");
+    }
+
+    public void logOut() {
+        if(this.loggedInFacebook())
+            AttractionGOApplication.getFacebookService().logOut();
+        else
+            AttractionGOApplication.getTwitterService().logOut();
+    }
+
+    public void logInFacebook() {
+        this.provider = "facebook";
+    }
+
+    public void logInTwitter() {
+        this.provider = "twitter";
     }
 }

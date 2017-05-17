@@ -365,7 +365,7 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
                 .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        AttractionGOApplication.getFacebookService().logOut();
+                        AttractionGOApplication.getSplexService().logOut();
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

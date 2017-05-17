@@ -97,7 +97,7 @@ public class ReviewFragment extends Fragment {
 
     private boolean hasMyReview(List<Review> reviews) {
         for(Review review : reviews){
-            if(review.getUserId().equals(SharedPreferencesUtils.getFacebookUserId()))
+            if(review.getUserId().equals(SharedPreferencesUtils.getSplexUserId()))
                 return true;
         }
         return false;

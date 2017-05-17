@@ -36,7 +36,6 @@ public class FacebookService {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                SharedPreferencesUtils.setFacebookUserId(loginResult.getAccessToken().getUserId());
                 AttractionGOApplication.getSplexService().creatUserSplexWithFacebook(loginResult.getAccessToken().getToken());
             }
 
@@ -55,16 +54,20 @@ public class FacebookService {
     public void checkFacebookLogged() {
         this.refreshAccessToken();
         if(accessToken != null && !accessToken.isExpired()){
+            AttractionGOApplication.getSplexService().logInFacebook();
             Intent intent = new Intent(AttractionGOApplication.getAppContext(), CityActivity.class);
             AttractionGOApplication.getAppContext().startActivity(intent);
         }
     }
+
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     public void logOut() {
+        AttractionGOApplication.getSplexService().cleanSession();
         LoginManager.getInstance().logOut();
         Intent intent = new Intent(AttractionGOApplication.getAppContext(), InitialActivity.class);
         AttractionGOApplication.getAppContext().startActivity(intent);

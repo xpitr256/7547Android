@@ -15,7 +15,7 @@ public class Constants {
 
     public static final String SPLEX_APP_TOKEN = "e1c4fafe958e89d6550d7e96b7e34d7fcfcc7cb3baebd509451a11e79db1d153";
 
-    public static final String FB_USER_ID = "FacebookUserId";
+    public static final String SPLEX_USER_ID = "FacebookUserId";
     public static final String SPLEX_USER_NAME = "SplexUserName";
 
     public static final String PREFERENCES = "MyPreferences";

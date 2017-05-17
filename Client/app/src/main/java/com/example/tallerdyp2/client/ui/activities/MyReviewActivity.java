@@ -1,15 +1,12 @@
 package com.example.tallerdyp2.client.ui.activities;
 
 import android.content.Intent;
-import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 
@@ -25,8 +22,6 @@ import com.example.tallerdyp2.client.utils.SharedPreferencesUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Date;
 
 /**
  * Created by Sebastian on 8/4/2017.
@@ -71,7 +66,7 @@ public class MyReviewActivity extends AppCompatActivity implements Callable{
         try {
 
             review.put("userName", SharedPreferencesUtils.getSplexUserName());
-            review.put("userId", SharedPreferencesUtils.getFacebookUserId());
+            review.put("userId", SharedPreferencesUtils.getSplexUserId());
             review.put("userAvatarUrl", "");
             review.put("comments", ((EditText)findViewById(R.id.comment)).getText());
             review.put("rating", ratingRatingBar.getRating());

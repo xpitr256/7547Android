@@ -7,6 +7,7 @@ import com.example.tallerdyp2.client.Services.FacebookService;
 import com.example.tallerdyp2.client.Services.LanguageService;
 import com.example.tallerdyp2.client.Services.LocationService;
 import com.example.tallerdyp2.client.Services.SplexService;
+import com.example.tallerdyp2.client.Services.TwitterService;
 import com.example.tallerdyp2.client.Services.VolleyRequestService;
 
 /**
@@ -18,6 +19,7 @@ public class AttractionGOApplication extends MultiDexApplication {
     private static Context context;
     private static VolleyRequestService volleyRequestService;
     private static FacebookService facebookService;
+    private static TwitterService twitterService;
     private static SplexService splexService;
     private static Context baseContext;
     private static LanguageService laguageService;
@@ -63,6 +65,14 @@ public class AttractionGOApplication extends MultiDexApplication {
             facebookService = new FacebookService();
 
         return facebookService;
+    }
+
+    public static TwitterService getTwitterService(){
+
+        if(twitterService == null)
+            twitterService = new TwitterService();
+
+        return twitterService;
     }
 
     public static SplexService getSplexService(){

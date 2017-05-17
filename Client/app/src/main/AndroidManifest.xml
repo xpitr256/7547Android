@@ -64,9 +64,18 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
+        <!--Facebook-->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
+
+        <!--Fabric ApiKey-->
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="25fa55f7b327cb834413d37a92a955baa9472501" />
+
+
 
         <activity
             android:name=".ui.activities.TourActivity"

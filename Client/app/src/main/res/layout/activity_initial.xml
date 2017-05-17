@@ -16,20 +16,12 @@
         android:visibility="gone"
         android:indeterminate="true" />
 
-    <TextView
-        tools:text="TextView"
-        android:text="@string/app_name"
-        android:id="@+id/header_welcome"
-        android:layout_marginTop="30dp"
-        style="@style/Title_welcome"/>
-
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:id="@+id/image_view"
-        android:layout_below="@id/header_welcome"
         android:layout_marginTop="30dp" />
 
     <TextView
@@ -41,7 +33,7 @@
         style="@style/Description" />
 
     <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
+        android:id="@+id/fb_login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -50,6 +42,17 @@
         android:layout_below="@id/description"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp" />
+
+    <com.twitter.sdk.android.core.identity.TwitterLoginButton
+        android:id="@+id/tw_login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@id/fb_login_button"
+        android:layout_marginBottom="30dp" />
+
 
 
 

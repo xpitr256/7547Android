@@ -28,16 +28,16 @@ public class SharedPreferencesUtils {
         editor.commit();
     }
 
-    public static String getFacebookUserId() {
-        String token = prefs.getString(Constants.FB_USER_ID, Constants.EMPTY_STRING);
+    public static String getSplexUserId() {
+        String token = prefs.getString(Constants.SPLEX_USER_ID, Constants.EMPTY_STRING);
 
         return token;
     }
 
-    public static void setFacebookUserId(String userId) {
+    public static void setSplexUserId(String userId) {
 
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(Constants.FB_USER_ID, userId);
+        editor.putString(Constants.SPLEX_USER_ID, userId);
 
         editor.commit();
     }
