@@ -16,6 +16,7 @@ import com.example.tallerdyp2.client.ui.activities.MyReviewActivity;
 import com.example.tallerdyp2.client.ui.adapters.ReviewsAdapter;
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.R;
+import com.example.tallerdyp2.client.utils.Helper;
 import com.example.tallerdyp2.client.utils.SharedPreferencesUtils;
 
 import java.util.ArrayList;
@@ -81,7 +82,7 @@ public class ReviewFragment extends Fragment {
 
         ((RatingBar) rootView.findViewById(R.id.rating)).setRating((float) attraction.getRating());
 
-        ((TextView) rootView.findViewById(R.id.rating_number)).setText(Double.toString(attraction.getRating()));
+        ((TextView) rootView.findViewById(R.id.rating_number)).setText(Helper.formatDoubleToString(attraction.getRating()));
 
         // Instancia del ListView.
         reviewsList = (ListView) rootView.findViewById(R.id.reviews_list);

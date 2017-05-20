@@ -15,6 +15,7 @@ import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 import com.example.tallerdyp2.client.utils.Helper;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 /**
  * Created by Sebastian on 6/4/2017.
@@ -44,8 +45,6 @@ public class DescriptionATFragment extends Fragment implements OnErrorListener {
 
     private void setViewDescription(Attraction attraction) {
 
-        ElementViewUtils.setText(rootView.findViewById(R.id.description_attraction),R.id.description_attraction,attraction.getDescription());
-
         mDemoSlider = (SliderLayout) rootView.findViewById(R.id.slider);
         if(!attraction.getImagesURL().isEmpty()) {
             for (String url : attraction.getImagesURL()) {
@@ -62,6 +61,9 @@ public class DescriptionATFragment extends Fragment implements OnErrorListener {
             mDemoSlider.addSlider(textSliderView);
             Helper.blockSlide(mDemoSlider);
         }
+
+        ExpandableTextView expTv1 = (ExpandableTextView) rootView.findViewById(R.id.expand_text_view).findViewById(R.id.expand_text_view);
+        expTv1.setText(attraction.getDescription());
 
         this.setupVideoView(rootView, attraction);
 

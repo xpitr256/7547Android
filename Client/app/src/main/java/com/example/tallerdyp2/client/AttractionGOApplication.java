@@ -3,12 +3,14 @@ package com.example.tallerdyp2.client;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
+import com.example.tallerdyp2.client.Services.AnalyticService;
 import com.example.tallerdyp2.client.Services.FacebookService;
 import com.example.tallerdyp2.client.Services.LanguageService;
 import com.example.tallerdyp2.client.Services.LocationService;
 import com.example.tallerdyp2.client.Services.SplexService;
 import com.example.tallerdyp2.client.Services.TwitterService;
 import com.example.tallerdyp2.client.Services.VolleyRequestService;
+import com.facebook.internal.AnalyticsEvents;
 
 /**
  * Created by Sebastian on 24/3/2017.
@@ -24,7 +26,7 @@ public class AttractionGOApplication extends MultiDexApplication {
     private static Context baseContext;
     private static LanguageService laguageService;
     private static LocationService locationService;
-
+    private static AnalyticService analyticService;
 
     @Override
     public void onCreate() {
@@ -97,6 +99,14 @@ public class AttractionGOApplication extends MultiDexApplication {
             locationService = new LocationService();
 
         return locationService;
+    }
+
+    public static AnalyticService getAnalyticService(){
+
+        if(analyticService == null)
+            analyticService = new AnalyticService();
+
+        return analyticService;
     }
 
 }

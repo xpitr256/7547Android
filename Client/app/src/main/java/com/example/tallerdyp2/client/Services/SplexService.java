@@ -142,4 +142,11 @@ public class SplexService implements SplexCallable {
     public void logInTwitter() {
         this.provider = "twitter";
     }
+
+    public String getSocialNetwork(){
+        if(this.loggedInFacebook())
+            return Constants.FACEBOOK;
+        else
+            return Constants.TWITTER;
+    }
 }

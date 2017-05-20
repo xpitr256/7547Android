@@ -2,6 +2,7 @@ package com.example.tallerdyp2.client.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -31,8 +32,8 @@ import java.util.Locale;
 public class InitialActivity extends AppCompatActivity {
 
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
-    private static final String TWITTER_KEY = "5SGZU4WKFCiX2OK9968wudEnB";
-    private static final String TWITTER_SECRET = "MOegFdZqkDVNPTXQtot52uUvfjv7YK1TfOHmjNQ5L9J4PO2qHh";
+    private static final String TWITTER_KEY = "90xCZ8lOFTcguG2NvJ2sxkhAn";
+    private static final String TWITTER_SECRET = "jrpVcNV44m4c3VEOZv2DybAAVgA3yjR8ttF6GqVRKWzY1RrCTG";
     private TwitterLoginButton twLoginButton;
 
     private static final int FB_LOGIN_SUCCESS = -1;
@@ -54,6 +55,9 @@ public class InitialActivity extends AppCompatActivity {
         if(SharedPreferencesUtils.getLanguage().equals(Constants.EMPTY_STRING)){
             SharedPreferencesUtils.setLanguage(Locale.getDefault().getLanguage());
         }
+
+        SharedPreferencesUtils.setAndroidId(Settings.Secure.getString(AttractionGOApplication.getAppContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID));
 
         AttractionGOApplication.getLanguageService().setLanguage(SharedPreferencesUtils.getLanguage());
 
@@ -98,7 +102,7 @@ public class InitialActivity extends AppCompatActivity {
                     AttractionGOApplication.getFacebookService().onActivityResult(requestCode, resultCode, data);
                 break;
             case TWITTER:
-                if(resultCode < 0)
+//                if(resultCode < 0)
                     twLoginButton.onActivityResult(requestCode, resultCode, data);
                 break;
         }

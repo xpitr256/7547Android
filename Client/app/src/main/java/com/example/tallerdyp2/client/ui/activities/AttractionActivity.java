@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.example.tallerdyp2.client.AttractionGOApplication;
 import com.example.tallerdyp2.client.Entities.Attraction;
 import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.ui.adapters.TabsAdapter;
@@ -54,6 +55,8 @@ public class AttractionActivity extends AppCompatActivity{
 
         getSupportActionBar().setTitle(attraction.getName());
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getColor(R.color.colorPrimaryAT)));
+
+        AttractionGOApplication.getAnalyticService().sendVisitAttraction(attraction.getId());
 
         setViewPager();
     }

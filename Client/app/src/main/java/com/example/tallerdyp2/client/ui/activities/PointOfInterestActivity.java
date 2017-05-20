@@ -16,6 +16,7 @@ import com.example.tallerdyp2.client.Entities.PointOfInterest;
 import com.example.tallerdyp2.client.R;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 import com.example.tallerdyp2.client.utils.Helper;
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 /**
  * Created by Sebastian on 18/4/2017.
@@ -43,8 +44,6 @@ public class PointOfInterestActivity extends AppCompatActivity implements OnErro
 
     private void setViewPager() {
 
-        ElementViewUtils.setText(findViewById(R.id.description_poi),R.id.description_poi,poi.getDescription());
-
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
         if(!poi.getImagesURL().isEmpty()) {
             for (String url : poi.getImagesURL()) {
@@ -61,10 +60,8 @@ public class PointOfInterestActivity extends AppCompatActivity implements OnErro
             Helper.blockSlide(mDemoSlider);
         }
 
-//        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
-//        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-//        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-//        mDemoSlider.setDuration(4000);
+        ExpandableTextView expTv1 = (ExpandableTextView) findViewById(R.id.expand_text_view).findViewById(R.id.expand_text_view);
+        expTv1.setText(poi.getDescription());
 
         this.setupVideoView();
     }

@@ -68,12 +68,7 @@ public class DescriptionCIFragment extends Fragment{
             Helper.blockSlide(mDemoSlider);
         }
 
-//        ElementViewUtils.setText(rootView.findViewById(R.id.expandable_text),R.id.expandable_text,city.getDescription());
-        // sample code snippet to set the text content on the ExpandableTextView
-        ExpandableTextView expTv1 = (ExpandableTextView) rootView.findViewById(R.id.expand_text_view)
-                .findViewById(R.id.expand_text_view);
-
-// IMPORTANT - call setText on the ExpandableTextView to set the text content to display
+        ExpandableTextView expTv1 = (ExpandableTextView) rootView.findViewById(R.id.expand_text_view).findViewById(R.id.expand_text_view);
         expTv1.setText(city.getDescription());
 
         this.updateViewAttractions();

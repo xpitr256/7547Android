@@ -68,4 +68,17 @@ public class SharedPreferencesUtils {
 
         editor.commit();
     }
+
+    public static String getAndroidId() {
+        String token = prefs.getString(Constants.ANDROID_ID, Constants.EMPTY_STRING);
+
+        return token;
+    }
+
+    public static void setAndroidId(String androidId) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(Constants.ANDROID_ID, androidId);
+
+        editor.commit();
+    }
 }
