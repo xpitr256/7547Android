@@ -68,8 +68,8 @@ public class SplexService implements SplexCallable {
             SharedPreferencesUtils.setSplexUserName(Constants.EMPTY_STRING);
             SharedPreferencesUtils.setSplexUserId(Constants.EMPTY_STRING);
         }
-        Intent intent = new Intent(AttractionGOApplication.getAppContext(), CityActivity.class);
-        AttractionGOApplication.getAppContext().startActivity(intent);
+
+        logIn();
     }
 
     @Override
@@ -137,10 +137,21 @@ public class SplexService implements SplexCallable {
 
     public void logInFacebook() {
         this.provider = "facebook";
+
+        this.logIn();
     }
 
     public void logInTwitter() {
         this.provider = "twitter";
+
+        this.logIn();
+    }
+
+    private void logIn() {
+        AttractionGOApplication.getAnalyticService().sendAppVisitLogged();
+
+        Intent intent = new Intent(AttractionGOApplication.getAppContext(), CityActivity.class);
+        AttractionGOApplication.getAppContext().startActivity(intent);
     }
 
     public String getSocialNetwork(){

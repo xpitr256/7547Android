@@ -61,6 +61,8 @@ public class InitialActivity extends AppCompatActivity {
 
         AttractionGOApplication.getLanguageService().setLanguage(SharedPreferencesUtils.getLanguage());
 
+        AttractionGOApplication.getAnalyticService().sendAppVisit();
+
         setContentView(R.layout.activity_initial);
 
         ElementViewUtils.setImage(findViewById(R.id.image_view),R.id.image_view,R.drawable.logo,getApplicationContext());

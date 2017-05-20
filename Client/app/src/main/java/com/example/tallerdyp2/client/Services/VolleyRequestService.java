@@ -252,4 +252,19 @@ public class VolleyRequestService {
         // Add the request to the RequestQueue.
         Volley.newRequestQueue(AttractionGOApplication.getAppContext()).add(jsObjRequest);
     }
+
+    public void sendAppVisit(JSONObject data) {
+        final JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.POST, Constants.IP + "/appVisitStatistic",
+                data, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        // Add the request to the RequestQueue.
+        Volley.newRequestQueue(AttractionGOApplication.getAppContext()).add(jsObjRequest);
+    }
 }

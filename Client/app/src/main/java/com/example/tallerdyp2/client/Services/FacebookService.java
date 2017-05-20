@@ -55,8 +55,6 @@ public class FacebookService {
         this.refreshAccessToken();
         if(accessToken != null && !accessToken.isExpired()){
             AttractionGOApplication.getSplexService().logInFacebook();
-            Intent intent = new Intent(AttractionGOApplication.getAppContext(), CityActivity.class);
-            AttractionGOApplication.getAppContext().startActivity(intent);
         }
     }
 

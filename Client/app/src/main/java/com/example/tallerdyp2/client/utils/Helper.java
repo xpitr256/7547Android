@@ -164,6 +164,6 @@ public class Helper {
     }
 
     public static String formatDoubleToString(double value){
-        return String.format("%.2f", value);
+        return String.format("%.2f", value).replace(",",".");
     }
 }

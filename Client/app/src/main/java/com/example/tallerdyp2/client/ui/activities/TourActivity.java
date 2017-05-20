@@ -124,7 +124,7 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
         }
 
         mMap.addPolyline( options );
-        this.focusPosition(tour.getAttractions().get(0).getLatitude(),tour.getAttractions().get(0).getLongitude());
+        this.focusPosition(tour.getAttractions().get(0).getLatitude(),tour.getAttractions().get(0).getLongitude(), 12);
 
         this.markerSelected = this.markers.get(0);
 
@@ -139,7 +139,7 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
                     next.setVisibility(View.VISIBLE);
                     --selected;
                     markerSelected = markers.get(selected);
-                    focusPosition(markersAttractionMap.get(selected).getLatitude(),markersAttractionMap.get(selected).getLongitude());
+                    focusPosition(markersAttractionMap.get(selected).getLatitude(),markersAttractionMap.get(selected).getLongitude(),17);
                     if( selected == 0) previous.setVisibility(View.GONE);
                 }
             }
@@ -153,7 +153,7 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
                     previous.setVisibility(View.VISIBLE);
                     ++selected;
                     markerSelected = markers.get(selected);
-                    focusPosition(markersAttractionMap.get(selected).getLatitude(),markersAttractionMap.get(selected).getLongitude());
+                    focusPosition(markersAttractionMap.get(selected).getLatitude(),markersAttractionMap.get(selected).getLongitude(), 17);
                     if( selected == tour.getAttractions().size()-1) next.setVisibility(View.GONE);
                 }
             }
@@ -162,10 +162,10 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
         previous.setVisibility(View.GONE);
     }
 
-    private void focusPosition(double lat, double lon){
+    private void focusPosition(double lat, double lon, float zoom){
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(lat, lon))
-                .zoom(17)
+                .zoom(zoom)
                 .build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }

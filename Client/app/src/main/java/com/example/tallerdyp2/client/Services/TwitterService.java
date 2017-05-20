@@ -47,8 +47,6 @@ public class TwitterService {
         TwitterSession twitterSession = TwitterCore.getInstance().getSessionManager().getActiveSession();
         if(twitterSession != null){
             AttractionGOApplication.getSplexService().logInTwitter();
-            Intent intent = new Intent(AttractionGOApplication.getAppContext(), CityActivity.class);
-            AttractionGOApplication.getAppContext().startActivity(intent);
         }
     }
 
