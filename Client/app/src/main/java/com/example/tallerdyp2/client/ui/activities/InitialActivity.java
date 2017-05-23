@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.tallerdyp2.client.AttractionGOApplication;
 import com.example.tallerdyp2.client.R;
+import com.example.tallerdyp2.client.Services.LanguageService;
 import com.example.tallerdyp2.client.utils.Constants;
 import com.example.tallerdyp2.client.utils.ElementViewUtils;
 import com.example.tallerdyp2.client.utils.SharedPreferencesUtils;

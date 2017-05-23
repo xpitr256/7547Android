@@ -51,9 +51,9 @@ public class TwitterService {
     }
 
     public void logOut() {
-        CookieSyncManager.createInstance(AttractionGOApplication.getAppContext());
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.removeSessionCookie();
+//        CookieSyncManager.createInstance(AttractionGOApplication.getAppContext());
+//        CookieManager cookieManager = CookieManager.getInstance();
+//        cookieManager.removeSessionCookie();
         Twitter.getSessionManager().clearActiveSession();
         Twitter.logOut();
 

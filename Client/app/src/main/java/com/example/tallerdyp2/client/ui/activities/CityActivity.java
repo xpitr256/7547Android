@@ -40,6 +40,7 @@ import com.example.tallerdyp2.client.utils.ElementViewUtils;
 import com.example.tallerdyp2.client.utils.Helper;
 import com.example.tallerdyp2.client.utils.LocationCallable;
 import com.example.tallerdyp2.client.utils.Parser;
+import com.example.tallerdyp2.client.utils.SharedPreferencesUtils;
 import com.google.android.gms.common.api.Status;
 
 import org.json.JSONArray;
@@ -73,6 +74,8 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
 
         super.onCreate(savedInstanceState);
 
+        AttractionGOApplication.getLanguageService().setLanguage(SharedPreferencesUtils.getLanguage());
+
         setContentView(R.layout.activity_city);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -88,6 +91,7 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) cityName = getIntent().getExtras().getString("cityName");
 
+        String language = SharedPreferencesUtils.getLanguage();
 
         //TABS
         tabsDrawablesId = new ArrayList<>();

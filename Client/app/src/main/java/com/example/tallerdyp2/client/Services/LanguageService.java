@@ -39,7 +39,7 @@ public class LanguageService {
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
-        AttractionGOApplication.getAppBaseContext().getResources().updateConfiguration(config, AttractionGOApplication.getAppBaseContext().getResources().getDisplayMetrics());
+        AttractionGOApplication.getAppContext().getResources().updateConfiguration(config, AttractionGOApplication.getAppContext().getResources().getDisplayMetrics());
 
         SharedPreferencesUtils.setLanguage(language);
     }

@@ -51,6 +51,7 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
     private ArrayList<LatLng> points;
     private Map<Integer, Attraction> markersAttractionMap = new HashMap<Integer, Attraction>();
     private Map<Integer, Marker> markers = new HashMap<Integer, Marker>();
+    private View.OnClickListener onNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,7 +146,7 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
             }
         });
 
-        next.setOnClickListener(new View.OnClickListener() {
+        this.onNext = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int selected = (int)markerSelected.getTag();
@@ -156,6 +157,15 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
                     focusPosition(markersAttractionMap.get(selected).getLatitude(),markersAttractionMap.get(selected).getLongitude(), 17);
                     if( selected == tour.getAttractions().size()-1) next.setVisibility(View.GONE);
                 }
+            }
+        };
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selected = (int)markerSelected.getTag();
+                focusPosition(markersAttractionMap.get(selected).getLatitude(),markersAttractionMap.get(selected).getLongitude(), 17);
+                next.setOnClickListener(onNext);
             }
         });
 
