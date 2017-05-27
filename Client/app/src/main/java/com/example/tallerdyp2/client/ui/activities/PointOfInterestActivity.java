@@ -77,7 +77,7 @@ public class PointOfInterestActivity extends AppCompatActivity implements OnErro
             emVideoView.setVideoURI(Uri.parse(poi.getAudioURL()));
             emVideoView.getVideoControls().setCanHide(false);
         }else{
-            this.onError();
+            findViewById(R.id.audio_view).setVisibility(View.GONE);
         }
     }
 
