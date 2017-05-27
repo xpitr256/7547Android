@@ -18,11 +18,9 @@
     <string name="btn_my_location">My Location</string>
     <string name="welcome">Welcome to</string>
     <string name="attractions_title">Attractions</string>
-    <string name="no_attractions">No attractions to be showed for this city</string>
     <string name="distance_attraction">Distance:</string>
     <string name="choose_language">Choose language:</string>
     <string name="tour_ci">Tour</string>
-    <string name="no_tours">No tours to be showed for this city</string>
     <string name="stops">Stops:</string>
 
 
@@ -37,9 +35,9 @@
     <string name="location_at">Location</string>
     <string name="review_at">Review</string>
     <string name="poi_at">Points</string>
-    <string name="no_reviews">No reviews to be showed for this attraction</string>
-    <string name="no_pois">No points of interest to be showed for this attraction</string>
+    <string name="poi_title">Points of Interest</string>
     <string name="review_not_approved">Comment not showed, contains inappropriate language</string>
+    <string name="no_reviews">No reviews to be showed for this attraction</string>
 
     <!--Activity MyReview-->
     <string name="leave_comment">Leave your message here (0-255)</string>

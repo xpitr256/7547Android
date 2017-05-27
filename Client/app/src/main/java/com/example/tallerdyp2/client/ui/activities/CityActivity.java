@@ -151,7 +151,8 @@ public class CityActivity extends AppCompatActivity implements Callable, Transac
         return new LinkedHashMap<Integer, TabFragmentBuilder>(){{
             put(R.drawable.ic_home, new TabFragmentBuilder<>(descriptionFragment,
                     getString(R.string.description_at), city));
-            put(R.drawable.ic_directions, new TabFragmentBuilder<>(new TourCIFragment(),
+            if(!city.getTours().isEmpty())
+                put(R.drawable.ic_directions, new TabFragmentBuilder<>(new TourCIFragment(),
                     getString(R.string.tour_ci), city));
         }};
     }

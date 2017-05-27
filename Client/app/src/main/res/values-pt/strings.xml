@@ -18,11 +18,9 @@
     <string name="btn_my_location">Minha Localização</string>
     <string name="welcome">Bem-vindo ao</string>
     <string name="attractions_title">Atrações</string>
-    <string name="no_attractions">Nenhuma atração a ser mostrada para esta cidade</string>
     <string name="distance_attraction">Distância:</string>
     <string name="choose_language">Escolha o seu idioma:</string>
     <string name="tour_ci">Tour</string>
-    <string name="no_tours">Nenhuma tours a ser mostrada para esta cidade</string>
     <string name="stops">Pára:</string>
 
     <!--Activity list City-->
@@ -36,9 +34,9 @@
     <string name="location_at">Localização</string>
     <string name="review_at">Reveja</string>
     <string name="poi_at">Pontos</string>
-    <string name="no_reviews">Não há críticas para esta atração</string>
-    <string name="no_pois">Não há pontos de interesse para ser mostrado para esta atração</string>
+    <string name="poi_title">Pontos de Interesse</string>
     <string name="review_not_approved">Comentário não mostrado, contém linguagem inadequada</string>
+    <string name="no_reviews">Não há críticas para esta atração</string>
 
     <!--Activity MyReview-->
     <string name="leave_comment">Deixe sua mensagem aqui (0-255)</string>

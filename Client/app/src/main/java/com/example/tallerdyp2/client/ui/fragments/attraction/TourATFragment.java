@@ -36,18 +36,10 @@ public class TourATFragment extends Fragment {
             attraction = (Attraction) getArguments().
                     getSerializable(getString(R.string.tour_ci));
 
-            if(!attraction.getToursIBelongTo().isEmpty())
-                setViewTour(attraction);
-            else
-                setEmptyView();
+            setViewTour(attraction);
         }
 
         return rootView;
-    }
-
-    private void setEmptyView() {
-        rootView.findViewById(R.id.tours_list).setVisibility(View.GONE);
-        rootView.findViewById(R.id.no_tours).setVisibility(View.VISIBLE);
     }
 
     private void setViewTour(final Attraction attraction) {

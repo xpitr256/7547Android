@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/frame"
     tools:context="com.example.tallerdyp2.client.ui.activities.AttractionActivity">
 
     <RelativeLayout
@@ -25,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="4dp"
             android:textSize="26dp"
 
             tools:text="3.5"/>

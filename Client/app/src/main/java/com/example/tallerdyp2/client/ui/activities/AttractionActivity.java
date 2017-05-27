@@ -100,11 +100,13 @@ public class AttractionActivity extends AppCompatActivity{
                     getString(R.string.description_at), attraction));
             put(R.drawable.ic_place, new TabFragmentBuilder<>(new LocationATFragment(),
                     getString(R.string.location_at), attraction));
-            put(R.drawable.ic_directions, new TabFragmentBuilder<>(new TourATFragment(),
+            if(!attraction.getToursIBelongTo().isEmpty())
+                put(R.drawable.ic_directions, new TabFragmentBuilder<>(new TourATFragment(),
                     getString(R.string.tour_ci), attraction));
             put(R.drawable.ic_comment, new TabFragmentBuilder<>(new ReviewFragment(),
                     getString(R.string.review_at), attraction));
-            put(R.drawable.ic_star, new TabFragmentBuilder<>(new PointOfInterestFragment(),
+            if(!attraction.getPois().isEmpty())
+                put(R.drawable.ic_star, new TabFragmentBuilder<>(new PointOfInterestFragment(),
                     getString(R.string.poi_at), attraction));
         }};
     }

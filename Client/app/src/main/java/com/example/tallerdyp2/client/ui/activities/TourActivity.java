@@ -254,7 +254,6 @@ public class TourActivity extends AppCompatActivity implements LocationCallable,
         try {
             Intent intent = new Intent(getApplicationContext(), AttractionActivity.class);
             intent.putExtra("Attraction", Parser.parseAttraction(response));
-            finish();
             startActivity(intent);
         } catch (JSONException e) {
             this.error(null);

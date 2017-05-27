@@ -8,7 +8,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:text="@string/poi_title"
+            android:id="@+id/title_poi"
+            android:textColor="@color/colorPrimaryDarkPOI"
+            android:layout_below="@+id/cv_description_city"
+            style="@style/Subtitle" />
+
         <ListView
+            android:layout_below="@+id/title_poi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/pois_list"
@@ -18,15 +26,6 @@
             android:headerDividersEnabled="false"
             />
 
-        <TextView
-            android:text="@string/no_pois"
-            android:id="@+id/no_pois"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:visibility="gone"
-            style="@style/ErrorDescription" />
     </RelativeLayout>
 
 </FrameLayout>

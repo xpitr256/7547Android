@@ -81,4 +81,17 @@ public class SharedPreferencesUtils {
 
         editor.commit();
     }
+
+    public static String getCountryISO() {
+        String token = prefs.getString(Constants.COUNTRY_ISO, Constants.EMPTY_STRING);
+
+        return token;
+    }
+
+    public static void setCountryISO(String countryISO) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(Constants.COUNTRY_ISO, countryISO);
+
+        editor.commit();
+    }
 }

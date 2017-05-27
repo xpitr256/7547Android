@@ -18,9 +18,7 @@
     <string name="btn_get_cities">Obtener Ciudades</string>
     <string name="welcome">Bienvenido a</string>
     <string name="attractions_title">Atracciones</string>
-    <string name="no_attractions">No hay atracciones para mostrar para esta ciudad</string>
     <string name="tour_ci">Recorrido</string>
-    <string name="no_tours">No hay recorridos para mostrar para esta ciudad</string>
     <string name="stops">Paradas:</string>
 
     <!--Activity list City-->
@@ -36,9 +34,9 @@
     <string name="location_at">Locación</string>
     <string name="review_at">Reseña</string>
     <string name="poi_at">Puntos</string>
-    <string name="no_reviews">No hay reviews para mostrar para esta atracción</string>
-    <string name="no_pois">No hay puntos de interes para mostrar para esta atracción</string>
+    <string name="poi_title">Puntos de Interés</string>
     <string name="review_not_approved">Comentario no mostrado, contiene lenguaje inapropiado</string>
+    <string name="no_reviews">No hay reviews para mostrar para esta atracción</string>
 
     <!--Activity MyReview-->
     <string name="leave_comment">Deje su comentario aqui (0-255)</string>

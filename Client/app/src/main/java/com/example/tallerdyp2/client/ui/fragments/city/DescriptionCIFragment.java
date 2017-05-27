@@ -88,8 +88,10 @@ public class DescriptionCIFragment extends Fragment{
                 list.addView(view);
             }
             rootView.findViewById(R.id.attractions_list).setVisibility(View.VISIBLE);
-        }else
-            rootView.findViewById(R.id.no_attractions).setVisibility(View.VISIBLE);
+        }else{
+            rootView.findViewById(R.id.title_attraction).setVisibility(View.GONE);
+            rootView.findViewById(R.id.attractions_list).setVisibility(View.GONE);
+        }
     }
 
 

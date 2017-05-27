@@ -1,9 +1,11 @@
 package com.example.tallerdyp2.client.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -59,6 +61,10 @@ public class InitialActivity extends AppCompatActivity {
 
         SharedPreferencesUtils.setAndroidId(Settings.Secure.getString(AttractionGOApplication.getAppContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID));
+
+        SharedPreferencesUtils.setCountryISO(((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE)).getSimCountryIso().toUpperCase());
+
+        String country = SharedPreferencesUtils.getCountryISO();
 
         AttractionGOApplication.getLanguageService().setLanguage(SharedPreferencesUtils.getLanguage());
 

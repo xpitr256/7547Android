@@ -23,6 +23,7 @@ public class Constants {
     public static final String TOKEN_SPLEX_SESSION = "TokenSplexSession";
     public static final String LANGUAGE = "Language";
     public static final String ANDROID_ID = "AndroidId";
+    public static final String COUNTRY_ISO = "CountryISO";
 
     public static final String EN = "en";
     public static final String ES = "es";
@@ -36,5 +37,6 @@ public class Constants {
     //SOCIAL NETWORKS
     public static final String FACEBOOK = "FACEBOOK";
     public static final String TWITTER = "TWITTER";
+
 
 }

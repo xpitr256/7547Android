@@ -31,7 +31,6 @@ public class ElementViewUtils {
             Picasso.with(context)
                     .load(content)
                     .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
-//                    .placeholder(R.drawable.ic_image_load_place_holder)
                     .config(Bitmap.Config.RGB_565)
                     .into(imageContent);
         else ElementViewUtils.setDefaultImage(imageContent, context);

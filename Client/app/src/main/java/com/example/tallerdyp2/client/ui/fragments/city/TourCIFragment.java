@@ -36,18 +36,10 @@ public class TourCIFragment extends Fragment {
             city = (City) getArguments().
                     getSerializable(getString(R.string.tour_ci));
 
-            if(!city.getTours().isEmpty())
-                setViewTour(city);
-            else
-                setEmptyView();
+            setViewTour(city);
         }
 
         return rootView;
-    }
-
-    private void setEmptyView() {
-        rootView.findViewById(R.id.tours_list).setVisibility(View.GONE);
-        rootView.findViewById(R.id.no_tours).setVisibility(View.VISIBLE);
     }
 
     private void setViewTour(final City city) {

@@ -80,7 +80,7 @@ public class DescriptionATFragment extends Fragment implements OnErrorListener {
             emVideoView.setVideoURI(Uri.parse(attraction.getAudioURL()));
             emVideoView.getVideoControls().setCanHide(false);
         }else{
-            this.onError();
+            rootView.findViewById(R.id.audio_view).setVisibility(View.GONE);
         }
     }
 

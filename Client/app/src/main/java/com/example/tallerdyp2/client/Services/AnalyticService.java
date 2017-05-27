@@ -40,6 +40,7 @@ public class AnalyticService {
         try {
             body.put("androidId", SharedPreferencesUtils.getAndroidId());
             body.put("userId", SharedPreferencesUtils.getSplexUserId());
+            body.put("country", SharedPreferencesUtils.getCountryISO());
             body.put("socialNetwork", AttractionGOApplication.getSplexService().getSocialNetwork());
             AttractionGOApplication.getVolleyRequestService().sendAppVisit(body);
         } catch (JSONException e) {
